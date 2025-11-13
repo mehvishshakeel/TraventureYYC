@@ -107,34 +107,140 @@
   margin-bottom: var(--spacing-md);
 }
 
+/* Date Selector - Horizontal Scrollable Carousel */
+.date-selector-wrapper {
+  position: -webkit-sticky; /* Safari support */
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background-color: var(--color-background);
+  margin: 0;
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm) var(--spacing-md);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  width: 100%;
+}
+
 .date-selector {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
   overflow-x: auto;
-  margin-bottom: var(--spacing-md);
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 50%;
+  padding: var(--spacing-md) calc(50% - 70px);
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  position: relative;
+}
+
+.date-selector::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .date-tab {
-  padding: var(--spacing-sm) var(--spacing-md);
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  padding: var(--spacing-md) var(--spacing-lg);
   background-color: var(--color-background);
   border: 2px solid var(--color-primary-light);
-  border-radius: var(--radius-sm);
-  font-size: 14px;
+  border-radius: var(--radius-md);
   white-space: nowrap;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              min-width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 60px;
+  max-width: 75px;
+  width: auto;
+  text-align: center;
+  flex-shrink: 0;
+  transform: scale(0.75);
+  opacity: 0.5;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  will-change: transform, opacity, min-width, max-width, padding;
 }
 
 .date-tab.active {
   background-color: var(--color-primary);
   color: var(--color-text-white);
   border-color: var(--color-primary);
+  transform: scale(1.3) !important;
+  opacity: 1 !important;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(180, 113, 107, 0.4);
+  z-index: 5;
+  min-width: 95px !important;
+  max-width: 110px !important;
+  padding: var(--spacing-md) var(--spacing-xl) !important;
+}
+
+.date-tab__day {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  line-height: 1.2;
+}
+
+.date-tab__month {
+  display: block;
+  font-size: 10px;
+  opacity: 0.8;
+  transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  line-height: 1.2;
+}
+
+.date-tab.active .date-tab__day {
+  font-size: 22px;
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.date-tab.active .date-tab__month {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Timeline Container - Part of scrollable content */
+.timeline-container {
+  position: relative;
+  padding: var(--spacing-md);
+  padding-left: var(--spacing-xl);
+  padding-top: var(--spacing-md);
+  padding-bottom: var(--spacing-2xl); /* Extra padding at bottom for scrolling */
+  min-height: 400px;
+  overflow: visible;
+  transition: opacity 0.3s ease;
+}
+
+/* Custom scrollbar for content area */
+.itinerary-page .content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.itinerary-page .content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.itinerary-page .content::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary-light);
+  border-radius: 2px;
+}
+
+.timeline-container.fade-out {
+  opacity: 0;
 }
 
 .timeline {
   position: relative;
-  padding-left: var(--spacing-xl);
+  padding-bottom: var(--spacing-xl);
 }
 
 .timeline::before {
@@ -151,6 +257,16 @@
   position: relative;
   margin-bottom: var(--spacing-lg);
   padding-left: var(--spacing-lg);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .timeline-item::before {
@@ -163,6 +279,7 @@
   border-radius: var(--radius-full);
   background-color: var(--color-primary);
   border: 3px solid var(--color-background);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .timeline-time {
@@ -178,11 +295,15 @@
   padding: var(--spacing-md);
   box-shadow: var(--shadow-sm);
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-.timeline-event:hover {
+.timeline-event:hover,
+.timeline-event:active {
   transform: translateX(4px);
+  box-shadow: var(--shadow-md);
 }
 
 .timeline-event__title {
@@ -195,6 +316,58 @@
 .timeline-event__details {
   font-size: 14px;
   color: var(--color-text-dark);
+  line-height: 1.5;
+}
+
+.timeline-event__address {
+  font-size: 12px;
+  color: var(--color-text-dark);
+  opacity: 0.7;
+  margin-top: var(--spacing-xs);
+}
+
+/* Current Date Display */
+.current-date-display {
+  position: -webkit-sticky; /* Safari support */
+  position: sticky;
+  top: 85px; /* Below date selector (updated by JS dynamically) */
+  z-index: 199;
+  text-align: center;
+  margin: 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-background);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  transition: top 0.2s ease;
+}
+
+.current-date-display h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-black);
+  transition: all 0.3s ease;
+}
+
+/* Empty State */
+.timeline-empty {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--color-text-dark);
+  opacity: 0.6;
+}
+
+.timeline-empty__icon {
+  font-size: 48px;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+
+.timeline-empty__text {
+  font-size: 16px;
 }
 
 /* Emergency Page */

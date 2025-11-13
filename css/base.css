@@ -3,7 +3,7 @@
 /* App Container - iPhone 16 (393×852) */
 .app-container {
   width: var(--mobile-width);
-  min-height: var(--mobile-height);
+  height: var(--mobile-height);
   max-height: var(--mobile-height);
   margin: 0 auto;
   background-color: var(--color-background);
@@ -50,9 +50,12 @@
   padding-top: var(--safe-area-top);
   height: calc(var(--safe-area-top) + 20px);
   min-height: 47px;
+  max-height: 47px;
   background-color: var(--color-background);
   z-index: 10;
   position: relative;
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
 .status-bar__left {
@@ -85,6 +88,10 @@
   align-items: center;
   padding: var(--spacing-md);
   background-color: var(--color-background);
+  flex-shrink: 0;
+  flex-grow: 0;
+  min-height: 60px;
+  max-height: 60px;
 }
 
 .top-bar__logo {
@@ -117,22 +124,37 @@
 /* Content Area */
 .content {
   padding: var(--spacing-md);
-  padding-bottom: 90px; /* Space for bottom navigation */
+  padding-bottom: var(--spacing-md);
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   min-height: 0; /* Allow flexbox to shrink */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Itinerary page specific - scrollable content with sticky dates */
+.itinerary-page .content {
+  padding: 0;
+  padding-bottom: 0;
+  overflow-y: auto; /* Content area is scrollable */
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: block; /* Change to block for sticky to work */
+  position: relative;
+  margin-bottom: 0;
 }
 
 /* Bottom Navigation - iPhone 16 */
 .bottom-nav {
-  position: fixed;
+  position: relative;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: var(--mobile-width);
-  max-width: var(--mobile-width);
+  left: 0;
+  right: 0;
+  width: 100%;
   background-color: var(--color-primary);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   display: flex;
@@ -141,16 +163,16 @@
   padding: var(--spacing-sm) 0;
   padding-bottom: calc(var(--safe-area-bottom) + var(--spacing-sm));
   min-height: 70px;
+  max-height: 80px;
+  height: 70px;
   z-index: 1000;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
 @media (max-width: 393px) {
   .bottom-nav {
-    width: 100%;
-    max-width: 100%;
-    left: 0;
-    transform: none;
     border-radius: 0;
   }
 }
