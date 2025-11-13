@@ -1,0 +1,51 @@
+/* CSS Variables */
+:root {
+  /* Colors */
+  --color-primary: rgba(180, 113, 107, 1);
+  --color-primary-light: rgba(236, 207, 195, 1);
+  --color-background: rgba(255, 255, 255, 1);
+  --color-card-bg: rgba(255, 235, 234, 1);
+  --color-text-black: rgba(0, 0, 0, 1);
+  --color-text-white: rgba(255, 255, 255, 1);
+  --color-text-dark: rgba(26, 26, 26, 1);
+  --color-text-accent: rgba(128, 61, 61, 1);
+  --color-border-blue: rgba(31, 74, 168, 1);
+  --color-emergency-red: rgba(220, 53, 69, 1);
+  
+  /* Fonts */
+  --font-primary: -apple-system, BlinkMacSystemFont, 'SF Compact Rounded', 'Segoe UI', Roboto, sans-serif;
+  --font-secondary: -apple-system, BlinkMacSystemFont, 'SF Compact', 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Neucha', cursive, sans-serif;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  
+  /* Border Radius */
+  --radius-sm: 10px;
+  --radius-md: 15px;
+  --radius-lg: 30px;
+  --radius-xl: 45px;
+  --radius-full: 1000px;
+  
+  /* Shadows */
+  --shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0px 4px 4px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  
+  /* Mobile dimensions - iPhone 16 */
+  --mobile-width: 393px;
+  --mobile-height: 852px;
+  
+  /* Status bar height */
+  --status-bar-height: 47px;
+  
+  /* Safe area insets for iPhone notch/Dynamic Island */
+  --safe-area-top: env(safe-area-inset-top, 47px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 34px);
+}
+

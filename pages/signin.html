@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Sign In - TraventureYYC</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-bar__left">
+        <div class="status-bar__time">9:41</div>
+      </div>
+      <div class="status-bar__right">
+        <div class="status-bar__signal">
+          <img src="../images/mobile-signal-60.svg" alt="Signal">
+        </div>
+        <div class="status-bar__wifi">
+          <img src="../images/wifi-59.svg" alt="WiFi">
+        </div>
+        <div class="status-bar__battery">
+          <img src="../images/rectangle-56.svg" alt="Battery">
+          <img src="../images/combined-shape-57.svg" alt="Battery">
+          <img src="../images/rectangle-58.svg" alt="Battery">
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar__logo">
+        Traventure<span class="top-bar__logo-accent">YYC</span>
+      </div>
+      <div class="top-bar__actions">
+        <div class="language-selector">
+          <span>ENG</span>
+          <img src="../images/english-51.png" alt="English" style="width: 20px; height: 20px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Auth Content -->
+    <div class="auth-page">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="auth-header__logo">
+            Traventure<span class="auth-header__logo-accent">YYC</span>
+          </div>
+          <h1 class="auth-header__title">Welcome Back!</h1>
+        </div>
+
+        <div class="content">
+          <form>
+            <div class="form-group">
+              <label class="form-label" for="email">Email Address</label>
+              <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="password">Password</label>
+              <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
+            </div>
+
+            <div class="form-group">
+              <a href="#" style="color: var(--color-primary); font-size: 14px;">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--full mb-md">
+              Sign In
+            </button>
+          </form>
+
+          <div class="divider">
+            <span class="divider__text">Or continue with</span>
+          </div>
+
+          <div class="social-login">
+            <div class="social-button" style="background-color: #4285F4;">
+              <span style="color: white; font-weight: bold;">G</span>
+            </div>
+            <div class="social-button" style="background-color: #000;">
+              <span style="color: white;">🍎</span>
+            </div>
+            <div class="social-button" style="background-color: #1877F2;">
+              <span style="color: white; font-weight: bold;">f</span>
+            </div>
+          </div>
+
+          <div class="text-center mt-lg">
+            <p style="color: var(--color-text-dark);">
+              Don't have an account? <a href="signup.html" style="color: var(--color-primary); font-weight: 600;">Sign Up</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      window.location.href = 'homepage.html';
+    });
+  </script>
+</body>
+</html>
+

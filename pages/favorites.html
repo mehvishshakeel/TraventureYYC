@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Favorites - TraventureYYC</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-bar__left">
+        <div class="status-bar__time">9:41</div>
+      </div>
+      <div class="status-bar__right">
+        <div class="status-bar__signal">
+          <img src="../images/mobile-signal-60.svg" alt="Signal">
+        </div>
+        <div class="status-bar__wifi">
+          <img src="../images/wifi-59.svg" alt="WiFi">
+        </div>
+        <div class="status-bar__battery">
+          <img src="../images/rectangle-56.svg" alt="Battery">
+          <img src="../images/combined-shape-57.svg" alt="Battery">
+          <img src="../images/rectangle-58.svg" alt="Battery">
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <a href="homepage.html" style="color: var(--color-text-black);">←</a>
+      <div class="top-bar__logo">
+        Traventure<span class="top-bar__logo-accent">YYC</span>
+      </div>
+      <div class="top-bar__actions">
+        <div class="language-selector">
+          <span>ENG</span>
+          <img src="../images/english-51.png" alt="English" style="width: 20px; height: 20px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-md);">Favorites</h1>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <div class="tab" onclick="switchTab('restaurants')">Restaurants</div>
+        <div class="tab active" onclick="switchTab('events')">Events</div>
+        <div class="tab" onclick="switchTab('activities')">Activities</div>
+      </div>
+
+      <!-- Events Tab Content -->
+      <div id="eventsTab" class="tab-content">
+        <div class="list-item">
+          <img src="../images/events-image-30.png" alt="Canada Day" class="list-item__image">
+          <div class="list-item__content">
+            <div class="list-item__title">Canada Day in Calgary</div>
+            <div class="list-item__subtitle">July 1st</div>
+          </div>
+          <div class="list-item__actions">
+            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
+            <span style="font-size: 20px; cursor: pointer;">📍</span>
+            <span style="font-size: 20px; cursor: pointer;">+</span>
+          </div>
+        </div>
+
+        <div class="list-item">
+          <img src="../images/events-image-30.png" alt="Calgary Stampede" class="list-item__image">
+          <div class="list-item__content">
+            <div class="list-item__title">Calgary Stampede</div>
+            <div class="list-item__subtitle">July 7 - July 17</div>
+          </div>
+          <div class="list-item__actions">
+            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
+            <span style="font-size: 20px; cursor: pointer;">📍</span>
+            <span style="font-size: 20px; cursor: pointer;">+</span>
+          </div>
+        </div>
+
+        <div class="list-item">
+          <img src="../images/events-image-30.png" alt="Wild PC vs Vancouver" class="list-item__image">
+          <div class="list-item__content">
+            <div class="list-item__title">Wild PC vs Vancouver</div>
+            <div class="list-item__subtitle">July 8</div>
+          </div>
+          <div class="list-item__actions">
+            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
+            <span style="font-size: 20px; cursor: pointer;">📍</span>
+            <span style="font-size: 20px; cursor: pointer;">+</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Restaurants Tab Content -->
+      <div id="restaurantsTab" class="tab-content" style="display: none;">
+        <div class="list-item">
+          <img src="../images/foods-image-18.png" alt="Wendy's" class="list-item__image">
+          <div class="list-item__content">
+            <div class="list-item__title">Wendy's</div>
+            <div class="list-item__subtitle">
+              <div class="rating">
+                <span class="rating__value">4.5</span>
+                <span class="rating__count">(2k)</span>
+              </div>
+              <div>10-20 min away</div>
+            </div>
+          </div>
+          <div class="list-item__actions">
+            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
+            <span style="font-size: 20px; cursor: pointer;">📍</span>
+            <span style="font-size: 20px; cursor: pointer;">+</span>
+          </div>
+        </div>
+
+        <div class="list-item">
+          <img src="../images/foods-image-18.png" alt="Ayana Shawarma" class="list-item__image">
+          <div class="list-item__content">
+            <div class="list-item__title">Ayana Shawarma</div>
+            <div class="list-item__subtitle">
+              <div class="rating">
+                <span class="rating__value">4.3</span>
+                <span class="rating__count">(1k)</span>
+              </div>
+              <div>10-20 min away</div>
+            </div>
+          </div>
+          <div class="list-item__actions">
+            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
+            <span style="font-size: 20px; cursor: pointer;">📍</span>
+            <span style="font-size: 20px; cursor: pointer;">+</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activities Tab Content -->
+      <div id="activitiesTab" class="tab-content" style="display: none;">
+        <div class="list-item">
+          <img src="../images/things-to-do-image-26.png" alt="Calgary Tower" class="list-item__image">
+          <div class="list-item__content">
+            <div class="list-item__title">Calgary Tower</div>
+            <div class="list-item__subtitle">Iconic observation tower</div>
+          </div>
+          <div class="list-item__actions">
+            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
+            <span style="font-size: 20px; cursor: pointer;">📍</span>
+            <span style="font-size: 20px; cursor: pointer;">+</span>
+          </div>
+        </div>
+
+        <div class="list-item">
+          <img src="../images/things-to-do-image-26.png" alt="Prince's Island Park" class="list-item__image">
+          <div class="list-item__content">
+            <div class="list-item__title">Prince's Island Park</div>
+            <div class="list-item__subtitle">Beautiful park in the heart of Calgary</div>
+          </div>
+          <div class="list-item__actions">
+            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
+            <span style="font-size: 20px; cursor: pointer;">📍</span>
+            <span style="font-size: 20px; cursor: pointer;">+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <a href="itinerary.html" class="bottom-nav__item">
+        <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Itinerary</span>
+      </a>
+      <a href="homepage.html" class="bottom-nav__item active">
+        <img src="../images/home-42.svg" alt="Home" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Home</span>
+      </a>
+      <a href="emergency.html" class="bottom-nav__item">
+        <img src="../images/icon-emergency-44.png" alt="Emergency" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Emergency</span>
+      </a>
+      <a href="settings.html" class="bottom-nav__item">
+        <img src="../images/node-46.png" alt="Settings" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Settings</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      // Hide all tabs
+      document.getElementById('eventsTab').style.display = 'none';
+      document.getElementById('restaurantsTab').style.display = 'none';
+      document.getElementById('activitiesTab').style.display = 'none';
+
+      // Remove active class from all tabs
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+
+      // Show selected tab
+      if (tab === 'events') {
+        document.getElementById('eventsTab').style.display = 'block';
+        document.querySelectorAll('.tab')[1].classList.add('active');
+      } else if (tab === 'restaurants') {
+        document.getElementById('restaurantsTab').style.display = 'block';
+        document.querySelectorAll('.tab')[0].classList.add('active');
+      } else if (tab === 'activities') {
+        document.getElementById('activitiesTab').style.display = 'block';
+        document.querySelectorAll('.tab')[2].classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
+

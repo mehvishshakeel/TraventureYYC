@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Itinerary - TraventureYYC</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-bar__left">
+        <div class="status-bar__time">9:41</div>
+      </div>
+      <div class="status-bar__right">
+        <div class="status-bar__signal">
+          <img src="../images/mobile-signal-60.svg" alt="Signal">
+        </div>
+        <div class="status-bar__wifi">
+          <img src="../images/wifi-59.svg" alt="WiFi">
+        </div>
+        <div class="status-bar__battery">
+          <img src="../images/rectangle-56.svg" alt="Battery">
+          <img src="../images/combined-shape-57.svg" alt="Battery">
+          <img src="../images/rectangle-58.svg" alt="Battery">
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <a href="homepage.html" style="color: var(--color-text-black);">←</a>
+      <div class="top-bar__logo">
+        Traventure<span class="top-bar__logo-accent">YYC</span>
+      </div>
+      <div class="top-bar__actions">
+        <a href="itinerary-add.html" style="color: var(--color-primary); font-size: 24px; font-weight: bold;">+</a>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <!-- Date Selector -->
+      <div class="date-selector">
+        <div class="date-tab">13th</div>
+        <div class="date-tab active">14th</div>
+        <div class="date-tab">15th</div>
+        <div class="date-tab">16th</div>
+      </div>
+
+      <div style="text-align: center; margin-bottom: var(--spacing-md);">
+        <h2 style="font-size: 18px; font-weight: 600; color: var(--color-text-black);">
+          Tuesday - July 14, 2026
+        </h2>
+      </div>
+
+      <!-- Timeline -->
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-time">10:00</div>
+          <div class="timeline-event" onclick="window.location.href='itinerary-detail.html'">
+            <div class="timeline-event__title">Calgary Zoo</div>
+            <div class="timeline-event__details">10:00 - 13:00</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-time">12:00</div>
+          <div class="timeline-event">
+            <div class="timeline-event__title">Peace Bridge</div>
+            <div class="timeline-event__details">12:00 - 13:00</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-time">17:00</div>
+          <div class="timeline-event">
+            <div class="timeline-event__title">Ten Foot Henry</div>
+            <div class="timeline-event__details">17:00 - 18:00</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-time">19:00</div>
+          <div class="timeline-event">
+            <div class="timeline-event__title">Anesta Swarms</div>
+            <div class="timeline-event__details">19:00 - 20:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <a href="itinerary.html" class="bottom-nav__item active">
+        <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Itinerary</span>
+      </a>
+      <a href="homepage.html" class="bottom-nav__item">
+        <img src="../images/home-42.svg" alt="Home" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Home</span>
+      </a>
+      <a href="emergency.html" class="bottom-nav__item">
+        <img src="../images/icon-emergency-44.png" alt="Emergency" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Emergency</span>
+      </a>
+      <a href="settings.html" class="bottom-nav__item">
+        <img src="../images/node-46.png" alt="Settings" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Settings</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
+

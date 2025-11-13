@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Currency Conversion - TraventureYYC</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-bar__left">
+        <div class="status-bar__time">9:41</div>
+      </div>
+      <div class="status-bar__right">
+        <div class="status-bar__signal">
+          <img src="../images/mobile-signal-60.svg" alt="Signal">
+        </div>
+        <div class="status-bar__wifi">
+          <img src="../images/wifi-59.svg" alt="WiFi">
+        </div>
+        <div class="status-bar__battery">
+          <img src="../images/rectangle-56.svg" alt="Battery">
+          <img src="../images/combined-shape-57.svg" alt="Battery">
+          <img src="../images/rectangle-58.svg" alt="Battery">
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <a href="homepage.html" style="color: var(--color-text-black);">←</a>
+      <div class="top-bar__logo">
+        Traventure<span class="top-bar__logo-accent">YYC</span>
+      </div>
+      <div class="top-bar__actions">
+        <div class="language-selector">
+          <span>ENG</span>
+          <img src="../images/english-51.png" alt="English" style="width: 20px; height: 20px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <div class="currency-converter">
+        <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-xl); text-align: center;">
+          Currency Conversion
+        </h1>
+
+        <!-- From Currency -->
+        <div class="form-group">
+          <label class="form-label" for="fromCurrency">From</label>
+          <select id="fromCurrency" class="form-input">
+            <option value="USD">USD - US Dollar</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="CNY">CNY - Chinese Yuan</option>
+            <option value="KSH">KSH - Kenyan Shilling</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="amount">Amount</label>
+          <input type="number" id="amount" class="form-input" placeholder="Enter amount" value="500">
+        </div>
+
+        <!-- Swap Button -->
+        <div class="currency-swap">
+          <button class="currency-swap__button" onclick="swapCurrencies()">⇅</button>
+        </div>
+
+        <!-- To Currency -->
+        <div class="form-group">
+          <label class="form-label" for="toCurrency">To</label>
+          <select id="toCurrency" class="form-input">
+            <option value="CAD" selected>CAD - Canadian Dollar</option>
+            <option value="USD">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="CNY">CNY - Chinese Yuan</option>
+            <option value="KSH">KSH - Kenyan Shilling</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="convertedAmount">Converted Amount</label>
+          <input type="text" id="convertedAmount" class="form-input" placeholder="0.00" readonly>
+        </div>
+
+        <button class="btn btn--primary btn--full mb-md" onclick="convertCurrency()">
+          Convert
+        </button>
+
+        <!-- Exchange Rate -->
+        <div class="exchange-rate" id="exchangeRate">
+          Indicative Exchange Rate: 1 CNY = 0.28 CAD
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <a href="itinerary.html" class="bottom-nav__item">
+        <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Itinerary</span>
+      </a>
+      <a href="homepage.html" class="bottom-nav__item active">
+        <img src="../images/home-42.svg" alt="Home" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Home</span>
+      </a>
+      <a href="emergency.html" class="bottom-nav__item">
+        <img src="../images/icon-emergency-44.png" alt="Emergency" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Emergency</span>
+      </a>
+      <a href="settings.html" class="bottom-nav__item">
+        <img src="../images/node-46.png" alt="Settings" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Settings</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Mock exchange rates (in real app, fetch from API)
+    const exchangeRates = {
+      USD: { CAD: 1.35, EUR: 0.92, GBP: 0.79, CNY: 7.25, KSH: 130 },
+      CAD: { USD: 0.74, EUR: 0.68, GBP: 0.58, CNY: 5.37, KSH: 96 },
+      EUR: { USD: 1.09, CAD: 1.47, GBP: 0.86, CNY: 7.88, KSH: 141 },
+      GBP: { USD: 1.27, CAD: 1.71, EUR: 1.16, CNY: 9.18, KSH: 164 },
+      CNY: { USD: 0.14, CAD: 0.19, EUR: 0.13, GBP: 0.11, KSH: 18 },
+      KSH: { USD: 0.0077, CAD: 0.010, EUR: 0.0071, GBP: 0.0061, CNY: 0.056 }
+    };
+
+    function updateExchangeRate() {
+      const from = document.getElementById('fromCurrency').value;
+      const to = document.getElementById('toCurrency').value;
+      const rate = exchangeRates[from]?.[to] || 1;
+      document.getElementById('exchangeRate').textContent = 
+        `Indicative Exchange Rate: 1 ${from} = ${rate.toFixed(2)} ${to}`;
+    }
+
+    function convertCurrency() {
+      const from = document.getElementById('fromCurrency').value;
+      const to = document.getElementById('toCurrency').value;
+      const amount = parseFloat(document.getElementById('amount').value) || 0;
+      const rate = exchangeRates[from]?.[to] || 1;
+      const converted = (amount * rate).toFixed(2);
+      document.getElementById('convertedAmount').value = converted;
+      updateExchangeRate();
+    }
+
+    function swapCurrencies() {
+      const from = document.getElementById('fromCurrency');
+      const to = document.getElementById('toCurrency');
+      const temp = from.value;
+      from.value = to.value;
+      to.value = temp;
+      updateExchangeRate();
+      convertCurrency();
+    }
+
+    document.getElementById('fromCurrency').addEventListener('change', updateExchangeRate);
+    document.getElementById('toCurrency').addEventListener('change', updateExchangeRate);
+    document.getElementById('amount').addEventListener('input', convertCurrency);
+
+    // Initialize
+    updateExchangeRate();
+    convertCurrency();
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Edit Itinerary - TraventureYYC</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-bar__left">
+        <div class="status-bar__time">9:41</div>
+      </div>
+      <div class="status-bar__right">
+        <div class="status-bar__signal">
+          <img src="../images/mobile-signal-60.svg" alt="Signal">
+        </div>
+        <div class="status-bar__wifi">
+          <img src="../images/wifi-59.svg" alt="WiFi">
+        </div>
+        <div class="status-bar__battery">
+          <img src="../images/rectangle-56.svg" alt="Battery">
+          <img src="../images/combined-shape-57.svg" alt="Battery">
+          <img src="../images/rectangle-58.svg" alt="Battery">
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <a href="itinerary-detail.html" style="color: var(--color-text-black);">←</a>
+      <div class="top-bar__logo">
+        Traventure<span class="top-bar__logo-accent">YYC</span>
+      </div>
+      <div class="top-bar__actions">
+        <a href="itinerary-detail.html" style="color: var(--color-primary); font-weight: 600;">Save</a>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <form>
+        <div class="form-group">
+          <label class="form-label" for="title">Title</label>
+          <input type="text" id="title" class="form-input" value="Calgary Zoo" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="date">Date</label>
+          <input type="date" id="date" class="form-input" value="2026-07-14" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="time">Time</label>
+          <input type="time" id="timeStart" class="form-input" value="10:00" required>
+          <span style="margin: 0 var(--spacing-sm);">-</span>
+          <input type="time" id="timeEnd" class="form-input" value="13:00" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="location">Location</label>
+          <input type="text" id="location" class="form-input" value="210 St. George's Drive NE, Calgary, AB T2E 7V6" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="notes">Notes</label>
+          <textarea id="notes" class="form-input" rows="4" placeholder="Add notes...">Bring hat</textarea>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--full" onclick="event.preventDefault(); window.location.href='itinerary-detail.html';">
+          Save Changes
+        </button>
+      </form>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <a href="itinerary.html" class="bottom-nav__item active">
+        <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Itinerary</span>
+      </a>
+      <a href="homepage.html" class="bottom-nav__item">
+        <img src="../images/home-42.svg" alt="Home" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Home</span>
+      </a>
+      <a href="emergency.html" class="bottom-nav__item">
+        <img src="../images/icon-emergency-44.png" alt="Emergency" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Emergency</span>
+      </a>
+      <a href="settings.html" class="bottom-nav__item">
+        <img src="../images/node-46.png" alt="Settings" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Settings</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
+
