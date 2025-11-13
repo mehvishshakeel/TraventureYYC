@@ -156,18 +156,6 @@ TraventureYYC/
 - Images are placeholder images from the `images/` folder
 - All navigation is handled via HTML links
 
-## Future Enhancements
-
-- Backend API integration
-- User authentication system
-- Real-time data (events, restaurants, etc.)
-- Map integration (Google Maps, Mapbox)
-- Real currency exchange rates API
-- Push notifications
-- Offline mode
-- Social sharing features
-- Multi-language support
-- Dark mode
 
 ## Development
 
