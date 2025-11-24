@@ -136,14 +136,19 @@
 
 /* Itinerary page specific - scrollable content with sticky dates */
 .itinerary-page .content {
-  padding: 0;
-  padding-bottom: 0;
+  padding: 0 !important;
+  padding-top: 0 !important;
+  padding-right: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 0 !important;
+  margin-top: calc(var(--spacing-xs) * -1);
   overflow-y: auto; /* Content area is scrollable */
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   flex: 1 1 auto;
   min-height: 0;
-  display: block; /* Change to block for sticky to work */
+  display: block !important; /* Change to block for sticky to work */
+  flex-direction: unset !important;
   position: relative;
   margin-bottom: 0;
 }
