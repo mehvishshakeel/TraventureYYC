@@ -5,6 +5,83 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Itinerary Detail - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
+  <style>
+    .undo-notification {
+      position: fixed;
+      top: 107px; /* Below status bar (47px) + top bar (60px) */
+      left: 50%;
+      transform: translateX(-50%) translateY(-100%);
+      z-index: 1000;
+      width: 100%;
+      max-width: var(--mobile-width);
+      background-color: #323232;
+      color: white;
+      padding: var(--spacing-md);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: none;
+    }
+    .undo-notification__content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+    .undo-notification__message {
+      font-size: 16px;
+      font-weight: 500;
+      flex: 1;
+    }
+    .undo-notification__button {
+      background-color: var(--color-primary);
+      color: white;
+      border: none;
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .undo-notification__button:hover,
+    .undo-notification__button:active {
+      background-color: var(--color-primary-light);
+    }
+    .event-actions {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-md);
+      padding-top: var(--spacing-md);
+      border-top: 1px solid var(--color-primary-light);
+    }
+    .event-action-btn {
+      flex: 1;
+      padding: var(--spacing-md);
+      border: 2px solid var(--color-primary);
+      border-radius: var(--radius-sm);
+      background-color: var(--color-background);
+      color: var(--color-primary);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .event-action-btn:hover,
+    .event-action-btn:active {
+      background-color: var(--color-primary);
+      color: white;
+    }
+    .event-action-btn.delete {
+      border-color: #dc3545;
+      color: #dc3545;
+    }
+    .event-action-btn.delete:hover,
+    .event-action-btn.delete:active {
+      background-color: #dc3545;
+      color: white;
+    }
+  </style>
 </head>
 <body>
   <div class="app-container">
@@ -35,7 +112,15 @@
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
       <div class="top-bar__actions">
-        <a href="itinerary-edit.html" style="color: var(--color-primary); font-size: 18px;">✏️</a>
+        <!-- Edit button removed - using bottom action buttons instead -->
+      </div>
+    </div>
+
+    <!-- Undo Notification -->
+    <div id="undoNotification" class="undo-notification">
+      <div class="undo-notification__content">
+        <span class="undo-notification__message">Event deleted</span>
+        <button class="undo-notification__button" id="undoButton">Undo</button>
       </div>
     </div>
 
@@ -43,26 +128,30 @@
     <div class="content">
       <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
-          <h1 style="font-size: 24px; font-weight: 700;">Calgary Zoo</h1>
-          <a href="itinerary-edit.html" style="color: var(--color-primary); font-size: 20px;">✏️</a>
+          <h1 id="eventTitle" style="font-size: 24px; font-weight: 700;">Calgary Zoo</h1>
         </div>
 
         <div style="margin-bottom: var(--spacing-md);">
           <div style="font-size: 16px; color: var(--color-text-dark); margin-bottom: var(--spacing-sm);">
-            <strong>Date:</strong> Monday, 14 July, 2026
+            <strong>Date:</strong> <span id="eventDate">Monday, 14 July, 2026</span>
           </div>
           <div style="font-size: 16px; color: var(--color-text-dark); margin-bottom: var(--spacing-sm);">
-            <strong>Time:</strong> 10:00 - 13:00
+            <strong>Time:</strong> <span id="eventTime">10:00 - 13:00</span>
           </div>
           <div style="font-size: 16px; color: var(--color-text-dark); margin-bottom: var(--spacing-sm);">
-            <strong>Location:</strong> 210 St. George's Drive NE, Calgary, AB T2E 7V6
+            <strong>Location:</strong> <span id="eventAddress">210 St. George's Drive NE, Calgary, AB T2E 7V6</span>
           </div>
-          <div style="font-size: 16px; color: var(--color-text-dark);">
-            <strong>Note:</strong> Bring hat
+          <div style="font-size: 16px; color: var(--color-text-dark); margin-bottom: var(--spacing-sm);">
+            <strong>Note:</strong> <span id="eventNote" style="white-space: pre-wrap; word-wrap: break-word;">Bring hat</span>
           </div>
         </div>
 
-        <img src="../images/calgaryZOO.png" alt="Calgary Zoo" style="width: 100%; border-radius: var(--radius-sm); margin-top: var(--spacing-md);">
+        <img id="eventImage" src="../images/calgaryZOO.png" alt="Event Image" style="width: 100%; border-radius: var(--radius-sm); margin-top: var(--spacing-md);">
+
+        <div class="event-actions">
+          <button class="event-action-btn" id="editActionBtn">Edit</button>
+          <button class="event-action-btn delete" id="deleteActionBtn">Delete</button>
+        </div>
       </div>
     </div>
 
@@ -86,6 +175,213 @@
       </a>
     </div>
   </div>
+
+  <script>
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const dateStr = urlParams.get('date') || '2026-07-14';
+    const eventIndex = urlParams.get('index') !== null ? parseInt(urlParams.get('index')) : 0;
+
+    // Load itinerary data from sessionStorage
+    let itineraryData = {};
+    try {
+      const saved = sessionStorage.getItem('itineraryData');
+      if (saved) {
+        itineraryData = JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error('Error loading itinerary data:', e);
+    }
+
+    // Default data if no saved data
+    if (!itineraryData['2026-07-14']) {
+      itineraryData = {
+        '2026-07-14': {
+          date: 'Tuesday - July 14, 2026',
+          events: [
+            {
+              time: '10:00',
+              title: 'Calgary Zoo',
+              details: '10:00 - 13:00',
+              address: '210 St. George\'s Drive NE, Calgary, AB T2E 7V6'
+            },
+            {
+              time: '13:00',
+              title: 'Peace Bridge',
+              details: '13:00 - 14:00',
+              address: '98 Memorial Dr NW, Calgary, AB T2N 5C1'
+            },
+            {
+              time: '17:15',
+              title: 'Ten Foot Henry',
+              details: '17:15 - 19:00',
+              address: '1209 1 St SW, Calgary, AB T2R 0V3'
+            },
+            {
+              time: '19:00',
+              title: 'Avesta Shawarma',
+              details: '19:00 - 20:00',
+              address: '698 Eau Claire Ave SW, Calgary, AB T2P 5N4'
+            }
+          ]
+        }
+      };
+      sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+    }
+
+    // Load event data
+    let currentEvent = null;
+    function loadEventData() {
+      if (itineraryData[dateStr] && itineraryData[dateStr].events[eventIndex]) {
+        currentEvent = itineraryData[dateStr].events[eventIndex];
+        const data = itineraryData[dateStr];
+        
+        document.getElementById('eventTitle').textContent = currentEvent.title;
+        document.getElementById('eventDate').textContent = data.date;
+        document.getElementById('eventTime').textContent = currentEvent.details;
+        document.getElementById('eventAddress').textContent = currentEvent.address;
+        // Display notes or "No notes" if empty
+        const notesDisplay = currentEvent.note && currentEvent.note.trim() ? currentEvent.note : 'No notes';
+        document.getElementById('eventNote').textContent = notesDisplay;
+
+        // Set image based on title
+        const imageMap = {
+          'Calgary Zoo': '../images/calgaryZOO.png',
+          'Peace Bridge': '../images/The_Peace_Bridge_in_Calgary_an_HDR_photo.png',
+          'Ten Foot Henry': '../images/tenfoothenry.png',
+          'Avesta Shawarma': '../images/avesta.png',
+          'River Café': '../images/riverCafe.png',
+          'River Cafe': '../images/riverCafe.png'
+        };
+        const imageSrc = imageMap[currentEvent.title] || '../images/calgaryZOO.png';
+        document.getElementById('eventImage').src = imageSrc;
+        document.getElementById('eventImage').alt = currentEvent.title;
+      }
+    }
+
+    // Store deleted event info for undo
+    let deletedEventInfo = null;
+    let undoTimeout = null;
+
+    // Show undo notification
+    function showUndoNotification() {
+      const notification = document.getElementById('undoNotification');
+      notification.style.display = 'block';
+      setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateX(-50%) translateY(0)';
+      }, 10);
+    }
+
+    // Hide undo notification
+    function hideUndoNotification() {
+      const notification = document.getElementById('undoNotification');
+      notification.style.opacity = '0';
+      notification.style.transform = 'translateX(-50%) translateY(-100%)';
+      setTimeout(() => {
+        notification.style.display = 'none';
+        deletedEventInfo = null;
+      }, 300);
+    }
+
+    // Delete event function
+    function deleteEvent() {
+      if (!currentEvent) return;
+      
+      if (confirm(`Are you sure you want to delete "${currentEvent.title}"?`)) {
+        // Store event info for undo
+        deletedEventInfo = {
+          dateStr: dateStr,
+          eventIndex: eventIndex,
+          event: JSON.parse(JSON.stringify(currentEvent))
+        };
+
+        // Remove event from array
+        itineraryData[dateStr].events.splice(eventIndex, 1);
+
+        // Save to sessionStorage
+        sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+
+        // Save deleted event info to sessionStorage for undo (will be handled on itinerary page)
+        sessionStorage.setItem('pendingUndo', JSON.stringify(deletedEventInfo));
+
+        // Redirect back to itinerary page immediately
+        window.location.href = 'itinerary.html';
+
+        // Auto-hide notification after 5 seconds (if still on page)
+        if (undoTimeout) {
+          clearTimeout(undoTimeout);
+        }
+        undoTimeout = setTimeout(() => {
+          hideUndoNotification();
+          deletedEventInfo = null;
+        }, 5000);
+      }
+    }
+
+    // Undo delete function
+    function undoDelete() {
+      if (!deletedEventInfo) return;
+
+      const { dateStr, eventIndex, event } = deletedEventInfo;
+
+      // Ensure date entry exists
+      if (!itineraryData[dateStr]) {
+        const date = new Date(dateStr + 'T00:00:00');
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        itineraryData[dateStr] = {
+          date: `${dayNames[date.getDay()]} - ${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`,
+          events: []
+        };
+      }
+
+      // Insert event back at original position
+      itineraryData[dateStr].events.splice(eventIndex, 0, event);
+
+      // Re-sort events by time
+      itineraryData[dateStr].events.sort((a, b) => {
+        const timeA = parseTime(a.time);
+        const timeB = parseTime(b.time);
+        return timeA - timeB;
+      });
+
+      // Save to sessionStorage
+      sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+
+      // Hide notification
+      hideUndoNotification();
+
+      // Clear undo timeout
+      if (undoTimeout) {
+        clearTimeout(undoTimeout);
+        undoTimeout = null;
+      }
+
+      // Redirect back to itinerary page to see restored event
+      window.location.href = 'itinerary.html';
+    }
+
+    // Parse time string to minutes since midnight
+    function parseTime(timeStr) {
+      const [hours, minutes] = timeStr.split(':').map(Number);
+      return hours * 60 + minutes;
+    }
+
+    // Edit event function
+    function editEvent() {
+      if (!currentEvent) return;
+      const [startTime, endTime] = currentEvent.details.split(' - ');
+      window.location.href = `itinerary-edit.html?date=${dateStr}&index=${eventIndex}&title=${encodeURIComponent(currentEvent.title)}&startTime=${startTime}&endTime=${endTime}&address=${encodeURIComponent(currentEvent.address)}`;
+    }
+
+    // Event listeners
+    document.getElementById('editActionBtn').addEventListener('click', editEvent);
+    document.getElementById('deleteActionBtn').addEventListener('click', deleteEvent);
+    document.getElementById('undoButton').addEventListener('click', undoDelete);
+
+    // Load event data on page load
+    loadEventData();
+  </script>
 </body>
 </html>
-

@@ -39,6 +39,14 @@
       </div>
     </div>
 
+    <!-- Undo Notification -->
+    <div id="undoNotification" class="undo-notification" style="display: none;">
+      <div class="undo-notification__content">
+        <span class="undo-notification__message">Event deleted</span>
+        <button class="undo-notification__button" id="undoButton">Undo</button>
+      </div>
+    </div>
+
     <!-- Content -->
     <div class="content itinerary-page">
       <!-- Date Selector Wrapper -->
@@ -83,8 +91,20 @@
   </div>
 
   <script>
-    // Itinerary data for different dates
-    const itineraryData = {
+    // Load itinerary data from sessionStorage or use default
+    let itineraryData = {};
+    try {
+      const saved = sessionStorage.getItem('itineraryData');
+      if (saved) {
+        itineraryData = JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error('Error loading itinerary data:', e);
+    }
+
+    // Default itinerary data if no saved data exists
+    if (!itineraryData['2026-07-14']) {
+      itineraryData = {
       '2026-07-11': {
         date: 'Saturday - July 11, 2026',
         events: [
@@ -261,6 +281,15 @@
         ]
       }
     };
+      
+      // Save default data to sessionStorage
+      sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+    }
+
+    // Function to save itinerary data
+    function saveItineraryData() {
+      sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+    }
 
     // Generate dates (14 days starting from July 11, 2026)
     function generateDates() {
@@ -352,12 +381,14 @@
             imageHtml = `<img class="timeline-event__image" src="../images/tenfoothenry.png" alt="Ten Foot Henry">`;
           } else if (event.title === 'Avesta Shawarma') {
             imageHtml = `<img class="timeline-event__image" src="../images/avesta.png" alt="Avesta Shawarma">`;
+          } else if (event.title === 'River Café' || event.title === 'River Cafe') {
+            imageHtml = `<img class="timeline-event__image" src="../images/riverCafe.png" alt="River Café">`;
           }
           
           return `
           <div class="timeline-item" style="animation-delay: ${index * 0.1}s">
             <div class="timeline-time">${event.time}</div>
-            <div class="timeline-event" onclick="window.location.href='itinerary-detail.html'">
+            <div class="timeline-event" onclick="window.location.href='itinerary-detail.html?date=${dateStr}&index=${index}'">
               ${imageHtml}
               <div class="timeline-event__title">${event.title}</div>
               <div class="timeline-event__details">${event.details}</div>
@@ -510,9 +541,34 @@
       }
     }
 
+    // Check for pending undo and show notification
+    function checkPendingUndo() {
+      try {
+        const pendingUndo = sessionStorage.getItem('pendingUndo');
+        if (pendingUndo) {
+          deletedEventInfo = JSON.parse(pendingUndo);
+          showUndoNotification();
+          
+          // Auto-hide notification after 5 seconds
+          if (undoTimeout) {
+            clearTimeout(undoTimeout);
+          }
+          undoTimeout = setTimeout(() => {
+            hideUndoNotification();
+            sessionStorage.removeItem('pendingUndo');
+            deletedEventInfo = null;
+          }, 5000);
+        }
+      } catch (e) {
+        console.error('Error checking pending undo:', e);
+      }
+    }
+
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       generateDates();
+      setupUndoButton();
+      checkPendingUndo();
       
       const dateSelector = document.getElementById('dateSelector');
       
@@ -631,6 +687,246 @@
         dateSelector.addEventListener('scrollend', handleDateScroll);
       }
     });
+
+
+    // Check for time conflicts
+    function checkTimeConflict(dateStr, startTime, endTime, excludeIndex = -1) {
+      const events = itineraryData[dateStr].events;
+      const conflicts = [];
+      
+      const start = parseTime(startTime);
+      const end = parseTime(endTime);
+      
+      events.forEach((event, index) => {
+        if (index === excludeIndex) return; // Skip the event being edited
+        
+        const [eventStartStr, eventEndStr] = event.details.split(' - ');
+        const eventStart = parseTime(eventStartStr);
+        const eventEnd = parseTime(eventEndStr);
+        
+        // Check for overlap
+        if ((start >= eventStart && start < eventEnd) ||
+            (end > eventStart && end <= eventEnd) ||
+            (start <= eventStart && end >= eventEnd)) {
+          conflicts.push({
+            title: event.title,
+            time: event.details
+          });
+        }
+      });
+      
+      return conflicts;
+    }
+
+    // Parse time string to minutes since midnight
+    function parseTime(timeStr) {
+      const [hours, minutes] = timeStr.split(':').map(Number);
+      return hours * 60 + minutes;
+    }
+
+    // Format time from minutes to HH:MM
+    function formatTime(minutes) {
+      const hours = Math.floor(minutes / 60);
+      const mins = minutes % 60;
+      return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+    }
+
+    // Add new event
+    function addEvent(dateStr, eventData) {
+      if (!itineraryData[dateStr]) {
+        // Create date entry if it doesn't exist
+        const date = new Date(dateStr + 'T00:00:00');
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        itineraryData[dateStr] = {
+          date: `${dayNames[date.getDay()]} - ${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`,
+          events: []
+        };
+      }
+      
+      // Check for conflicts before adding
+      const conflicts = checkTimeConflict(dateStr, eventData.startTime, eventData.endTime);
+      
+      if (conflicts.length > 0) {
+        return {
+          success: false,
+          conflicts: conflicts
+        };
+      }
+      
+      // Add event in sorted order by time
+      const newEvent = {
+        time: eventData.startTime,
+        title: eventData.title,
+        details: `${eventData.startTime} - ${eventData.endTime}`,
+        address: eventData.address
+      };
+      
+      itineraryData[dateStr].events.push(newEvent);
+      itineraryData[dateStr].events.sort((a, b) => {
+        const timeA = parseTime(a.time);
+        const timeB = parseTime(b.time);
+        return timeA - timeB;
+      });
+      
+      // Update display
+      updateTimeline(dateStr);
+      saveItineraryData();
+      
+      return {
+        success: true,
+        conflicts: []
+      };
+    }
+
+    // Update event
+    function updateEvent(dateStr, eventIndex, updatedEvent) {
+      const conflicts = checkTimeConflict(dateStr, updatedEvent.startTime, updatedEvent.endTime, eventIndex);
+      
+      if (conflicts.length > 0) {
+        return {
+          success: false,
+          conflicts: conflicts
+        };
+      }
+      
+      itineraryData[dateStr].events[eventIndex] = {
+        time: updatedEvent.startTime,
+        title: updatedEvent.title,
+        details: `${updatedEvent.startTime} - ${updatedEvent.endTime}`,
+        address: updatedEvent.address
+      };
+      
+      // Re-sort events
+      itineraryData[dateStr].events.sort((a, b) => {
+        const timeA = parseTime(a.time);
+        const timeB = parseTime(b.time);
+        return timeA - timeB;
+      });
+      
+      // Update display
+      updateTimeline(dateStr);
+      saveItineraryData();
+      
+      return {
+        success: true,
+        conflicts: []
+      };
+    }
+
+    // Reload data from sessionStorage on page visibility change (when coming back from edit)
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        try {
+          const saved = sessionStorage.getItem('itineraryData');
+          if (saved) {
+            const savedData = JSON.parse(saved);
+            // Merge saved data with current data
+            Object.keys(savedData).forEach(date => {
+              itineraryData[date] = savedData[date];
+            });
+            // Refresh the timeline if we're viewing a date that was edited
+            if (itineraryData[currentActiveDate]) {
+              updateTimeline(currentActiveDate);
+            }
+          }
+        } catch (e) {
+          console.error('Error loading saved itinerary data:', e);
+        }
+      }
+    });
+    
+    // Also reload on page focus (for better compatibility)
+    window.addEventListener('focus', () => {
+      try {
+        const saved = sessionStorage.getItem('itineraryData');
+        if (saved) {
+          const savedData = JSON.parse(saved);
+          Object.keys(savedData).forEach(date => {
+            itineraryData[date] = savedData[date];
+          });
+          if (itineraryData[currentActiveDate]) {
+            updateTimeline(currentActiveDate);
+          }
+        }
+      } catch (e) {
+        console.error('Error loading saved itinerary data:', e);
+      }
+    });
+
+    // Store deleted event info for undo
+    let deletedEventInfo = null;
+    let undoTimeout = null;
+
+
+    // Show undo notification
+    function showUndoNotification() {
+      const notification = document.getElementById('undoNotification');
+      notification.classList.add('show');
+    }
+
+    // Hide undo notification
+    function hideUndoNotification() {
+      const notification = document.getElementById('undoNotification');
+      notification.classList.remove('show');
+      setTimeout(() => {
+        deletedEventInfo = null;
+      }, 300);
+    }
+
+    // Undo delete function
+    function undoDelete() {
+      if (!deletedEventInfo) {
+        return;
+      }
+
+      const { dateStr, eventIndex, event } = deletedEventInfo;
+
+      // Ensure date entry exists
+      if (!itineraryData[dateStr]) {
+        const date = new Date(dateStr + 'T00:00:00');
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        itineraryData[dateStr] = {
+          date: `${dayNames[date.getDay()]} - ${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`,
+          events: []
+        };
+      }
+
+      // Insert event back at original position
+      itineraryData[dateStr].events.splice(eventIndex, 0, event);
+
+      // Re-sort events by time
+      itineraryData[dateStr].events.sort((a, b) => {
+        const timeA = parseTime(a.time);
+        const timeB = parseTime(b.time);
+        return timeA - timeB;
+      });
+
+      // Update display
+      updateTimeline(dateStr);
+      saveItineraryData();
+
+      // Hide notification
+      hideUndoNotification();
+
+      // Clear undo timeout
+      if (undoTimeout) {
+        clearTimeout(undoTimeout);
+        undoTimeout = null;
+      }
+
+      // Clear pending undo from sessionStorage
+      sessionStorage.removeItem('pendingUndo');
+    }
+
+    // Setup undo button listener (will be called in DOMContentLoaded)
+    function setupUndoButton() {
+      const undoButton = document.getElementById('undoButton');
+      if (undoButton) {
+        undoButton.onclick = undoDelete;
+      }
+    }
   </script>
 </body>
 </html>
