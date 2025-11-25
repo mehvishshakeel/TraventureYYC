@@ -5,83 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Itinerary Detail - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
-  <style>
-    .undo-notification {
-      position: fixed;
-      top: 107px; /* Below status bar (47px) + top bar (60px) */
-      left: 50%;
-      transform: translateX(-50%) translateY(-100%);
-      z-index: 1000;
-      width: 100%;
-      max-width: var(--mobile-width);
-      background-color: #323232;
-      color: white;
-      padding: var(--spacing-md);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      opacity: 0;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      display: none;
-    }
-    .undo-notification__content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--spacing-md);
-    }
-    .undo-notification__message {
-      font-size: 16px;
-      font-weight: 500;
-      flex: 1;
-    }
-    .undo-notification__button {
-      background-color: var(--color-primary);
-      color: white;
-      border: none;
-      padding: var(--spacing-sm) var(--spacing-md);
-      border-radius: var(--radius-sm);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    .undo-notification__button:hover,
-    .undo-notification__button:active {
-      background-color: var(--color-primary-light);
-    }
-    .event-actions {
-      display: flex;
-      gap: var(--spacing-md);
-      margin-top: var(--spacing-md);
-      padding-top: var(--spacing-md);
-      border-top: 1px solid var(--color-primary-light);
-    }
-    .event-action-btn {
-      flex: 1;
-      padding: var(--spacing-md);
-      border: 2px solid var(--color-primary);
-      border-radius: var(--radius-sm);
-      background-color: var(--color-background);
-      color: var(--color-primary);
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .event-action-btn:hover,
-    .event-action-btn:active {
-      background-color: var(--color-primary);
-      color: white;
-    }
-    .event-action-btn.delete {
-      border-color: #dc3545;
-      color: #dc3545;
-    }
-    .event-action-btn.delete:hover,
-    .event-action-btn.delete:active {
-      background-color: #dc3545;
-      color: white;
-    }
-  </style>
 </head>
 <body>
   <div class="app-container">
@@ -107,20 +30,12 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-      <a href="itinerary.html" style="color: var(--color-text-black);">←</a>
+      <a href="#" id="backButton" style="color: var(--color-text-black);">←</a>
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
       <div class="top-bar__actions">
-        <!-- Edit button removed - using bottom action buttons instead -->
-      </div>
-    </div>
-
-    <!-- Undo Notification -->
-    <div id="undoNotification" class="undo-notification">
-      <div class="undo-notification__content">
-        <span class="undo-notification__message">Event deleted</span>
-        <button class="undo-notification__button" id="undoButton">Undo</button>
+        <a href="itinerary-edit.html" style="color: var(--color-primary); font-size: 18px;">✏️</a>
       </div>
     </div>
 
@@ -128,36 +43,32 @@
     <div class="content">
       <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
-          <h1 id="eventTitle" style="font-size: 24px; font-weight: 700;">Calgary Zoo</h1>
+          <h1 style="font-size: 24px; font-weight: 700;">Calgary Zoo</h1>
+          <a href="itinerary-edit.html" style="color: var(--color-primary); font-size: 20px;">✏️</a>
         </div>
 
         <div style="margin-bottom: var(--spacing-md);">
           <div style="font-size: 16px; color: var(--color-text-dark); margin-bottom: var(--spacing-sm);">
-            <strong>Date:</strong> <span id="eventDate">Monday, 14 July, 2026</span>
+            <strong>Date:</strong> Monday, 14 July, 2026
           </div>
           <div style="font-size: 16px; color: var(--color-text-dark); margin-bottom: var(--spacing-sm);">
-            <strong>Time:</strong> <span id="eventTime">10:00 - 13:00</span>
+            <strong>Time:</strong> 10:00 - 13:00
           </div>
           <div style="font-size: 16px; color: var(--color-text-dark); margin-bottom: var(--spacing-sm);">
-            <strong>Location:</strong> <span id="eventAddress">210 St. George's Drive NE, Calgary, AB T2E 7V6</span>
+            <strong>Location:</strong> 210 St. George's Drive NE, Calgary, AB T2E 7V6
           </div>
-          <div style="font-size: 16px; color: var(--color-text-dark); margin-bottom: var(--spacing-sm);">
-            <strong>Note:</strong> <span id="eventNote" style="white-space: pre-wrap; word-wrap: break-word;">Bring hat</span>
+          <div style="font-size: 16px; color: var(--color-text-dark);">
+            <strong>Note:</strong> Bring hat
           </div>
         </div>
 
-        <img id="eventImage" src="../images/calgaryZOO.png" alt="Event Image" style="width: 100%; border-radius: var(--radius-sm); margin-top: var(--spacing-md);">
-
-        <div class="event-actions">
-          <button class="event-action-btn" id="editActionBtn">Edit</button>
-          <button class="event-action-btn delete" id="deleteActionBtn">Delete</button>
-        </div>
+        <img src="../images/calgaryZOO.png" alt="Calgary Zoo" style="width: 100%; border-radius: var(--radius-sm); margin-top: var(--spacing-md);">
       </div>
     </div>
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-      <a href="itinerary.html" class="bottom-nav__item active">
+      <a href="#" id="bottomNavItinerary" class="bottom-nav__item active">
         <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
         <span class="bottom-nav__label">Itinerary</span>
       </a>
@@ -175,6 +86,8 @@
       </a>
     </div>
   </div>
+<<<<<<< Updated upstream
+=======
 
   <script>
     // Get URL parameters
@@ -251,7 +164,22 @@
           'Ten Foot Henry': '../images/tenfoothenry.png',
           'Avesta Shawarma': '../images/avesta.png',
           'River Café': '../images/riverCafe.png',
-          'River Cafe': '../images/riverCafe.png'
+          'River Cafe': '../images/riverCafe.png',
+          'Studio Bell': '../images/StudioBell.png',
+          'Stephen Avenue Walk': '../images/stephen-avenue.png',
+          'Calgary Farmers Market': '../images/calgary_farmers_market.png',
+          'Fish Creek Provincial Park': '../images/fish_creek_provincial_park.png',
+          'Bow River Pathway': '../images/Bow River Pathway.png',
+          'Prince\'s Island Park': '../images/princes-island-park.png',
+          'Nose Hill Park': '../images/Nose Hill Park.png',
+          'Calgary Stampede': '../images/Calgary Stampede.png',
+          'Chuckwagon Races': '../images/Chuckwagon Races.png',
+          'Evening Concert': '../images/Evening Concert- Coca-Cola Stage.png',
+          'Shopping at Chinook Centre': '../images/Shopping at Chinook Centre.png',
+          'Heritage Park': '../images/Heritage Park.png',
+          'Olympic Plaza': '../images/Olympic Plaza.png',
+          'Calgary Tower': '../images/Calgary Tower.png',
+          'Glenbow Museum': '../images/Glenbow Museum.png'
         };
         const imageSrc = imageMap[currentEvent.title] || '../images/calgaryZOO.png';
         document.getElementById('eventImage').src = imageSrc;
@@ -304,6 +232,8 @@
 
         // Save deleted event info to sessionStorage for undo (will be handled on itinerary page)
         sessionStorage.setItem('pendingUndo', JSON.stringify(deletedEventInfo));
+        // Store the date so we can return to the correct date
+        sessionStorage.setItem('lastViewedDate', dateStr);
 
         // Redirect back to itinerary page immediately
         window.location.href = 'itinerary.html';
@@ -358,6 +288,9 @@
         undoTimeout = null;
       }
 
+      // Store the date so we can return to the correct date
+      sessionStorage.setItem('lastViewedDate', dateStr);
+
       // Redirect back to itinerary page to see restored event
       window.location.href = 'itinerary.html';
     }
@@ -375,13 +308,44 @@
       window.location.href = `itinerary-edit.html?date=${dateStr}&index=${eventIndex}&title=${encodeURIComponent(currentEvent.title)}&startTime=${startTime}&endTime=${endTime}&address=${encodeURIComponent(currentEvent.address)}`;
     }
 
+    // Function to navigate back to itinerary page with correct date
+    function navigateToItinerary() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentDate = urlParams.get('date') || '2026-07-14';
+      sessionStorage.setItem('lastViewedDate', currentDate);
+      window.location.href = 'itinerary.html';
+    }
+
+    // Setup navigation buttons
+    function setupNavigation() {
+      const backButton = document.getElementById('backButton');
+      const bottomNavItinerary = document.getElementById('bottomNavItinerary');
+      
+      if (backButton) {
+        backButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          navigateToItinerary();
+        });
+      }
+      
+      if (bottomNavItinerary) {
+        bottomNavItinerary.addEventListener('click', (e) => {
+          e.preventDefault();
+          navigateToItinerary();
+        });
+      }
+    }
+
     // Event listeners
     document.getElementById('editActionBtn').addEventListener('click', editEvent);
     document.getElementById('deleteActionBtn').addEventListener('click', deleteEvent);
     document.getElementById('undoButton').addEventListener('click', undoDelete);
+    setupNavigation();
 
     // Load event data on page load
     loadEventData();
   </script>
+>>>>>>> Stashed changes
 </body>
 </html>
+
