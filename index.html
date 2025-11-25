@@ -43,12 +43,23 @@
           <a href="pages/signin.html" class="btn btn--primary btn--full mb-md">
             Sign Up / Sign In
           </a>
-          <a href="pages/homepage.html" class="btn btn--secondary btn--full">
+          <a href="pages/homepage.html" class="btn btn--secondary btn--full" id="guestButton">
             Continue as a Guest
           </a>
 </div>
 </div>
 </div>
-</div>
+  </div>
+
+  <script>
+    // Set guest user when clicking "Continue as a Guest"
+    document.getElementById('guestButton').addEventListener('click', function(e) {
+      sessionStorage.setItem('currentUser', JSON.stringify({
+        email: 'guest@guest.com',
+        username: 'guest',
+        name: 'Guest User'
+      }));
+    });
+  </script>
 </body>
 </html>
