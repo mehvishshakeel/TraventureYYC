@@ -58,7 +58,7 @@
       <!-- Profile Section -->
       <div class="profile-section">
         <img src="../images/profile-picture-14.png" alt="Profile" class="profile-picture">
-        <div class="profile-greeting">Hello, Tony N</div>
+        <div class="profile-greeting" id="profileGreeting">Hello, Guest</div>
       </div>
 
       <!-- Itinerary Card (Featured) -->
@@ -141,6 +141,33 @@
       </a>
     </div>
   </div>
+
+  <script>
+    // Load current user from sessionStorage and display name
+    window.addEventListener('DOMContentLoaded', function() {
+      try {
+        const userData = sessionStorage.getItem('currentUser');
+        if (userData) {
+          const user = JSON.parse(userData);
+          const greetingElement = document.getElementById('profileGreeting');
+          if (greetingElement && user.name) {
+            // Extract first name if full name is provided
+            const firstName = user.name.split(' ')[0];
+            greetingElement.textContent = `Hello, ${firstName}`;
+          }
+        } else {
+          // If no user is logged in, redirect to sign in
+          // Or show as guest
+          const greetingElement = document.getElementById('profileGreeting');
+          if (greetingElement) {
+            greetingElement.textContent = 'Hello, Guest';
+          }
+        }
+      } catch (e) {
+        console.error('Error loading user data:', e);
+      }
+    });
+  </script>
 </body>
 </html>
 

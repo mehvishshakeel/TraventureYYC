@@ -1,6 +1,116 @@
-# Demo Script: Itinerary Edit & Add Functionality
+# Demo Script: TraventureYYC Complete Demo Guide
 
 ## Overview
+This demo script covers the complete functionality of TraventureYYC, including user authentication, itinerary management, and event editing.
+
+---
+
+## User Authentication & Login
+
+### Available Demo Accounts
+
+The following hardcoded accounts are available for testing:
+
+#### Account 1: Demo User 1
+- **Email:** `demo1@traventure.com`
+- **Password:** `demo123`
+- **Display Name:** Demo User 1
+
+#### Account 2: Demo User 2
+- **Email:** `demo2@traventure.com`
+- **Password:** `demo123`
+- **Display Name:** Demo User 2
+
+#### Account 3: Alice Johnson
+- **Email:** `alice@traventure.com`
+- **Password:** `alice123`
+- **Display Name:** Alice Johnson
+
+#### Account 4: Bob Smith
+- **Email:** `bob@traventure.com`
+- **Password:** `bob123`
+- **Display Name:** Bob Smith
+
+#### Guest Account
+- **Email:** `guest@guest.com`
+- **Password:** `guest123`
+- **Display Name:** Guest User
+
+**Note:** All users share the same itinerary data. The name displayed on the homepage will change based on which account you log in with.
+
+---
+
+### Sign In Process
+
+1. **Navigate to Sign In Page**
+   - From the welcome page, click "Sign Up / Sign In"
+   - Or directly navigate to `pages/signin.html`
+
+2. **Enter Credentials**
+   - **Email Address:** Type one of the demo email addresses above (e.g., `demo1@traventure.com`)
+   - **Password:** Type the corresponding password (e.g., `demo123`)
+
+3. **Error Handling**
+   - **Invalid Email:** If you enter an email that doesn't exist, you'll see: "Invalid email address. Please check your email and try again."
+   - **Wrong Password:** If you enter the wrong password, you'll see: "Incorrect password. Please try again."
+   - Error messages appear in a red box at the top of the form and automatically disappear after 5 seconds
+
+4. **Successful Login**
+   - After entering correct credentials, you'll be redirected to the homepage
+   - The homepage greeting will display "Hello, [First Name]" based on the logged-in user
+   - Example: If logged in as "Demo User 1", it shows "Hello, Demo"
+
+---
+
+### Sign Up Process (Demo Restriction)
+
+1. **Navigate to Sign Up Page**
+   - From the sign in page, click "Sign Up" link at the bottom
+   - Or navigate to `pages/signup.html`
+
+2. **Attempt to Create Account**
+   - Fill in Email, Username, and Password fields
+   - **Note:** For demo purposes, new account creation is disabled
+   - You'll see an error message: "For demo purposes, please use an existing account. Check DEMO_SCRIPT.md for available accounts."
+
+3. **Use Existing Account Instead**
+   - Click "Sign In" link to go back to sign in page
+   - Use one of the hardcoded demo accounts listed above
+
+---
+
+### Guest Mode
+
+1. **Access Guest Mode**
+   - From the welcome page (`index.html`), click "Continue as a Guest"
+   - This automatically logs you in as "Guest User"
+   - Homepage will display "Hello, Guest"
+
+2. **Guest Account Details**
+   - Guest has the same itinerary access as other users
+   - No password required
+   - Can access all features
+
+---
+
+## Homepage Personalization
+
+### Displaying User Name
+
+- After logging in, the homepage greeting automatically updates:
+  - **Logged in as "Demo User 1":** Shows "Hello, Demo"
+  - **Logged in as "Alice Johnson":** Shows "Hello, Alice"
+  - **Logged in as "Bob Smith":** Shows "Hello, Bob"
+  - **Logged in as Guest:** Shows "Hello, Guest"
+
+- The name is extracted from the user's display name (first word only)
+- If no user is logged in, defaults to "Hello, Guest"
+
+---
+
+## Itinerary Edit & Add Functionality
+
+### Overview
 This demo shows how to edit Calgary Zoo timings with conflict detection and add a new restaurant (River Café) to the itinerary.
 
 ---
