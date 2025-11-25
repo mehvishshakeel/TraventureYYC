@@ -5,6 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Edit Itinerary - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
+  <style>
+    .conflict-warning {
+      background-color: #fff3cd;
+      border: 2px solid #ffc107;
+      border-radius: var(--radius-sm);
+      padding: var(--spacing-md);
+      margin-bottom: var(--spacing-md);
+      display: none;
+    }
+    .conflict-warning.show {
+      display: block;
+    }
+    .conflict-warning__title {
+      font-weight: 700;
+      color: #856404;
+      margin-bottom: var(--spacing-xs);
+    }
+    .conflict-warning__list {
+      margin-top: var(--spacing-sm);
+      padding-left: var(--spacing-md);
+    }
+    .conflict-warning__item {
+      color: #856404;
+      margin-bottom: var(--spacing-xs);
+    }
+    .time-input-group {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+    .time-input-group input {
+      flex: 1;
+    }
+    .location-input-wrapper {
+      position: relative;
+    }
+    .location-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: white;
+      border: 2px solid var(--color-primary-light);
+      border-top: none;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      max-height: 150px;
+      overflow-y: auto;
+      z-index: 1000;
+      display: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .location-dropdown.show {
+      display: block;
+    }
+    .location-dropdown-item {
+      padding: var(--spacing-md);
+      cursor: pointer;
+      border-bottom: 1px solid var(--color-primary-light);
+      transition: background-color 0.2s;
+    }
+    .location-dropdown-item:last-child {
+      border-bottom: none;
+    }
+    .location-dropdown-item:hover,
+    .location-dropdown-item:active {
+      background-color: var(--color-primary-light);
+    }
+    .location-dropdown-item__text {
+      font-size: 14px;
+      color: var(--color-text-dark);
+    }
+  </style>
 </head>
 <body>
   <div class="app-container">
@@ -30,47 +102,62 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-      <a href="itinerary-detail.html" style="color: var(--color-text-black);">←</a>
+      <a href="itinerary.html" style="color: var(--color-text-black);">←</a>
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
       <div class="top-bar__actions">
-        <a href="itinerary-detail.html" style="color: var(--color-primary); font-weight: 600;">Save</a>
+        <!-- Save button removed - using bottom form button instead -->
       </div>
     </div>
 
     <!-- Content -->
     <div class="content">
-      <form>
+      <div id="conflictWarning" class="conflict-warning">
+        <div class="conflict-warning__title">⚠️ Time Conflict Detected!</div>
+        <div>This time slot conflicts with the following events:</div>
+        <ul id="conflictList" class="conflict-warning__list"></ul>
+      </div>
+
+      <form id="editForm">
         <div class="form-group">
           <label class="form-label" for="title">Title</label>
-          <input type="text" id="title" class="form-input" value="Calgary Zoo" required>
+          <input type="text" id="title" class="form-input" required>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="date">Date</label>
-          <input type="date" id="date" class="form-input" value="2026-07-14" required>
+          <input type="date" id="date" class="form-input" required>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="time">Time</label>
-          <input type="time" id="timeStart" class="form-input" value="10:00" required>
-          <span style="margin: 0 var(--spacing-sm);">-</span>
-          <input type="time" id="timeEnd" class="form-input" value="13:00" required>
+          <div class="time-input-group">
+            <input type="time" id="timeStart" class="form-input" required>
+            <span>-</span>
+            <input type="time" id="timeEnd" class="form-input" required>
+          </div>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="location">Location</label>
-          <input type="text" id="location" class="form-input" value="210 St. George's Drive NE, Calgary, AB T2E 7V6" required>
+          <div class="location-input-wrapper">
+            <input type="text" id="location" class="form-input" required autocomplete="off">
+            <div id="locationDropdown" class="location-dropdown">
+              <div class="location-dropdown-item" onclick="selectLocation('25 Prince\'s Island Park, SW, Calgary, AB T2P 0R1')">
+                <div class="location-dropdown-item__text">25 Prince's Island Park, SW, Calgary, AB T2P 0R1</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="notes">Notes</label>
-          <textarea id="notes" class="form-input" rows="4" placeholder="Add notes...">Bring hat</textarea>
+          <textarea id="notes" class="form-input" rows="4" placeholder="Add notes..."></textarea>
         </div>
 
-        <button type="submit" class="btn btn--primary btn--full" onclick="event.preventDefault(); window.location.href='itinerary-detail.html';">
-          Save Changes
+        <button type="submit" class="btn btn--primary btn--full">
+          Save
         </button>
       </form>
     </div>
@@ -95,6 +182,317 @@
       </a>
     </div>
   </div>
+
+  <script>
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    let dateStr = urlParams.get('date') || '2026-07-14';
+    const eventIndex = urlParams.get('index') !== null ? parseInt(urlParams.get('index')) : -1;
+    const isNewEvent = eventIndex === -1;
+
+    // Get itinerary data from sessionStorage or use default
+    let itineraryData = {};
+    try {
+      const saved = sessionStorage.getItem('itineraryData');
+      if (saved) {
+        itineraryData = JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error('Error loading itinerary data:', e);
+    }
+
+    // If no saved data, initialize with default data
+    if (!itineraryData['2026-07-14']) {
+      itineraryData = {
+        '2026-07-14': {
+          date: 'Tuesday - July 14, 2026',
+          events: [
+            {
+              time: '10:00',
+              title: 'Calgary Zoo',
+              details: '10:00 - 13:00',
+              address: '210 St. George\'s Drive NE, Calgary, AB T2E 7V6'
+            },
+            {
+              time: '13:00',
+              title: 'Peace Bridge',
+              details: '13:00 - 14:00',
+              address: '98 Memorial Dr NW, Calgary, AB T2N 5C1'
+            },
+            {
+              time: '17:15',
+              title: 'Ten Foot Henry',
+              details: '17:15 - 19:00',
+              address: '1209 1 St SW, Calgary, AB T2R 0V3'
+            },
+            {
+              time: '19:00',
+              title: 'Avesta Shawarma',
+              details: '19:00 - 20:00',
+              address: '698 Eau Claire Ave SW, Calgary, AB T2P 5N4'
+            }
+          ]
+        }
+      };
+      sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+    }
+
+    // Parse time string to minutes since midnight
+    function parseTime(timeStr) {
+      const [hours, minutes] = timeStr.split(':').map(Number);
+      return hours * 60 + minutes;
+    }
+
+    // Check for time conflicts
+    function checkTimeConflict(dateStr, startTime, endTime, excludeIndex = -1) {
+      if (!itineraryData[dateStr] || !itineraryData[dateStr].events) {
+        return [];
+      }
+      
+      const events = itineraryData[dateStr].events;
+      const conflicts = [];
+      
+      const start = parseTime(startTime);
+      const end = parseTime(endTime);
+      
+      if (start >= end) {
+        return [{ title: 'Invalid Time Range', time: 'End time must be after start time' }];
+      }
+      
+      events.forEach((event, index) => {
+        if (index === excludeIndex) return;
+        
+        const [eventStartStr, eventEndStr] = event.details.split(' - ');
+        const eventStart = parseTime(eventStartStr);
+        const eventEnd = parseTime(eventEndStr);
+        
+        // Check for overlap
+        if ((start >= eventStart && start < eventEnd) ||
+            (end > eventStart && end <= eventEnd) ||
+            (start <= eventStart && end >= eventEnd)) {
+          conflicts.push({
+            title: event.title,
+            time: event.details
+          });
+        }
+      });
+      
+      return conflicts;
+    }
+
+    // Load form data
+    function loadFormData() {
+      document.getElementById('date').value = urlParams.get('date') || dateStr;
+      
+      // Check if we have URL parameters for new event
+      const urlTitle = urlParams.get('title');
+      const urlStartTime = urlParams.get('startTime');
+      const urlEndTime = urlParams.get('endTime');
+      const urlAddress = urlParams.get('address');
+      
+      if (!isNewEvent && itineraryData[dateStr] && itineraryData[dateStr].events[eventIndex]) {
+        // Loading existing event for editing
+        const event = itineraryData[dateStr].events[eventIndex];
+        document.getElementById('title').value = event.title;
+        const [startTime, endTime] = event.details.split(' - ');
+        document.getElementById('timeStart').value = startTime;
+        document.getElementById('timeEnd').value = endTime;
+        document.getElementById('location').value = event.address;
+        document.getElementById('notes').value = event.note || ''; // Load notes if they exist
+      } else if (isNewEvent && urlTitle) {
+        // Pre-fill from URL parameters (e.g., River Café)
+        document.getElementById('title').value = urlTitle;
+        document.getElementById('timeStart').value = urlStartTime || '08:00';
+        document.getElementById('timeEnd').value = urlEndTime || '09:30';
+        document.getElementById('location').value = decodeURIComponent(urlAddress || '25 Prince\'s Island Park, SW, Calgary, AB T2P 0R1');
+      }
+    }
+
+    // Show conflict warning
+    function showConflictWarning(conflicts) {
+      const warningDiv = document.getElementById('conflictWarning');
+      const conflictList = document.getElementById('conflictList');
+      
+      if (conflicts.length > 0) {
+        conflictList.innerHTML = conflicts.map(conflict => 
+          `<li class="conflict-warning__item">${conflict.title} (${conflict.time})</li>`
+        ).join('');
+        warningDiv.classList.add('show');
+      } else {
+        warningDiv.classList.remove('show');
+      }
+    }
+
+    // Check conflicts on time change
+    function checkConflicts() {
+      const startTime = document.getElementById('timeStart').value;
+      const endTime = document.getElementById('timeEnd').value;
+      
+      if (startTime && endTime) {
+        const conflicts = checkTimeConflict(dateStr, startTime, endTime, isNewEvent ? -1 : eventIndex);
+        showConflictWarning(conflicts);
+        return conflicts.length === 0;
+      }
+      return true;
+    }
+
+    // Save event
+    function saveEvent() {
+      const title = document.getElementById('title').value;
+      const startTime = document.getElementById('timeStart').value;
+      const endTime = document.getElementById('timeEnd').value;
+      const location = document.getElementById('location').value;
+      
+      // Check conflicts before saving
+      const conflicts = checkTimeConflict(dateStr, startTime, endTime, isNewEvent ? -1 : eventIndex);
+      
+      if (conflicts.length > 0) {
+        if (!confirm(`There are ${conflicts.length} time conflict(s). Do you still want to save?`)) {
+          return false;
+        }
+      }
+      
+      const notes = document.getElementById('notes').value.trim();
+      
+      const eventData = {
+        time: startTime,
+        title: title,
+        details: `${startTime} - ${endTime}`,
+        address: location,
+        note: notes || '' // Save notes, empty string if no notes
+      };
+      
+      if (!itineraryData[dateStr]) {
+        const date = new Date(dateStr + 'T00:00:00');
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        itineraryData[dateStr] = {
+          date: `${dayNames[date.getDay()]} - ${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`,
+          events: []
+        };
+      }
+      
+      if (isNewEvent) {
+        itineraryData[dateStr].events.push(eventData);
+      } else {
+        itineraryData[dateStr].events[eventIndex] = eventData;
+      }
+      
+      // Sort events by time
+      itineraryData[dateStr].events.sort((a, b) => {
+        const timeA = parseTime(a.time);
+        const timeB = parseTime(b.time);
+        return timeA - timeB;
+      });
+      
+      // Save to sessionStorage
+      sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+      
+      // Return the updated index of the saved event (in case sorting changed it)
+      // Find the event by matching all properties
+      const savedIndex = itineraryData[dateStr].events.findIndex(e => 
+        e.title === eventData.title && 
+        e.time === eventData.time &&
+        e.details === eventData.details &&
+        e.address === eventData.address &&
+        e.note === eventData.note
+      );
+      
+      return savedIndex !== -1 ? savedIndex : true;
+    }
+
+    // Location dropdown functions
+    function shouldShowDropdown() {
+      const title = document.getElementById('title').value.trim().toLowerCase();
+      const locationInput = document.getElementById('location');
+      
+      // Show dropdown if title contains "river cafe" and location field is focused
+      return (title.includes('river cafe') || title.includes('river café')) && 
+             document.activeElement === locationInput;
+    }
+
+    function showLocationDropdown() {
+      if (shouldShowDropdown()) {
+        document.getElementById('locationDropdown').classList.add('show');
+      }
+    }
+
+    function hideLocationDropdown() {
+      document.getElementById('locationDropdown').classList.remove('show');
+    }
+
+    function selectLocation(address) {
+      document.getElementById('location').value = address;
+      hideLocationDropdown();
+    }
+
+    // Check title when user types in location field
+    function checkTitleAndShowDropdown() {
+      if (shouldShowDropdown()) {
+        showLocationDropdown();
+      } else {
+        hideLocationDropdown();
+      }
+    }
+
+    // Event listeners
+    document.getElementById('timeStart').addEventListener('change', checkConflicts);
+    document.getElementById('timeEnd').addEventListener('change', checkConflicts);
+    
+    // Location dropdown listeners
+    document.getElementById('title').addEventListener('input', () => {
+      // Check if we should show dropdown when title changes
+      checkTitleAndShowDropdown();
+    });
+    
+    document.getElementById('location').addEventListener('focus', () => {
+      // Show dropdown when location field is focused (if title is River Cafe)
+      checkTitleAndShowDropdown();
+    });
+    
+    document.getElementById('location').addEventListener('input', () => {
+      // Show dropdown when user starts typing in location field (if title is River Cafe)
+      checkTitleAndShowDropdown();
+    });
+    
+    document.getElementById('location').addEventListener('blur', (e) => {
+      // Delay hiding to allow click on dropdown item
+      setTimeout(() => {
+        if (!shouldShowDropdown()) {
+          hideLocationDropdown();
+        }
+      }, 200);
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const locationWrapper = document.querySelector('.location-input-wrapper');
+      if (!locationWrapper.contains(e.target)) {
+        hideLocationDropdown();
+      }
+    });
+    
+    document.getElementById('editForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const result = saveEvent();
+      if (result !== false) {
+        // If editing an existing event, go back to detail page
+        // Otherwise, go to itinerary page
+        if (!isNewEvent && urlParams.has('date') && urlParams.has('index')) {
+          const dateParam = urlParams.get('date');
+          // result is the updated index after sorting, or true if not found
+          const newIndex = (typeof result === 'number') ? result : parseInt(urlParams.get('index'));
+          window.location.href = `itinerary-detail.html?date=${dateParam}&index=${newIndex}`;
+        } else {
+          // New event - go to itinerary page to see it in the list
+          window.location.href = 'itinerary.html';
+        }
+      }
+    });
+
+    // Load form data on page load
+    loadFormData();
+    checkConflicts();
+  </script>
 </body>
 </html>
-

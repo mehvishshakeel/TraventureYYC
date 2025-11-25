@@ -353,6 +353,62 @@
   width: 100%;
 }
 
+/* Undo Notification */
+.undo-notification {
+  position: absolute;
+  top: calc(var(--status-bar-height) + 60px + var(--spacing-sm)); /* Below status bar + top bar, with small spacing */
+  left: var(--spacing-md);
+  right: var(--spacing-md);
+  width: calc(100% - var(--spacing-md) * 2);
+  max-width: calc(var(--mobile-width) - var(--spacing-md) * 2);
+  transform: translateY(-120%); /* Start off-screen above */
+  z-index: 1000;
+  background-color: #323232;
+  color: white;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: none; /* Hidden by default */
+}
+
+.undo-notification.show {
+  display: block;
+  transform: translateY(0); /* Slide down into view */
+  opacity: 1;
+}
+
+.undo-notification__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.undo-notification__message {
+  font-size: 16px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.undo-notification__button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.undo-notification__button:hover,
+.undo-notification__button:active {
+  background-color: var(--color-primary-light);
+}
+
 .current-date-display h2 {
   font-size: 18px;
   font-weight: 600;
