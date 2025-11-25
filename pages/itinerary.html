@@ -359,8 +359,6 @@
             imageHtml = `<img class="timeline-event__image" src="../images/tenfoothenry.png" alt="Ten Foot Henry">`;
           } else if (event.title === 'Avesta Shawarma') {
             imageHtml = `<img class="timeline-event__image" src="../images/avesta.png" alt="Avesta Shawarma">`;
-<<<<<<< Updated upstream
-=======
           } else if (event.title === 'River Café' || event.title === 'River Cafe') {
             imageHtml = `<img class="timeline-event__image" src="../images/riverCafe.png" alt="River Café">`;
           } else if (event.title === 'Studio Bell') {
@@ -393,17 +391,12 @@
             imageHtml = `<img class="timeline-event__image" src="../images/Calgary Tower.png" alt="Calgary Tower">`;
           } else if (event.title === 'Glenbow Museum') {
             imageHtml = `<img class="timeline-event__image" src="../images/Glenbow Museum.png" alt="Glenbow Museum">`;
->>>>>>> Stashed changes
           }
           
           return `
           <div class="timeline-item" style="animation-delay: ${index * 0.1}s">
             <div class="timeline-time">${event.time}</div>
-<<<<<<< Updated upstream
-            <div class="timeline-event" onclick="window.location.href='itinerary-detail.html'">
-=======
             <div class="timeline-event" onclick="sessionStorage.setItem('lastViewedDate', '${dateStr}'); window.location.href='itinerary-detail.html?date=${dateStr}&index=${index}'">
->>>>>>> Stashed changes
               ${imageHtml}
               <div class="timeline-event__title">${event.title}</div>
               <div class="timeline-event__details">${event.details}</div>
@@ -548,31 +541,6 @@
     // Note: updateStickyPosition no longer needed as current-date-display 
     // is now inside date-selector-wrapper and moves with it
 
-<<<<<<< Updated upstream
-=======
-    // Check for pending undo and show notification
-    function checkPendingUndo() {
-      try {
-        const pendingUndo = sessionStorage.getItem('pendingUndo');
-        if (pendingUndo) {
-          deletedEventInfo = JSON.parse(pendingUndo);
-          showUndoNotification();
-          
-          // Auto-hide notification after 5 seconds
-          if (undoTimeout) {
-            clearTimeout(undoTimeout);
-          }
-          undoTimeout = setTimeout(() => {
-            hideUndoNotification();
-            sessionStorage.removeItem('pendingUndo');
-            deletedEventInfo = null;
-          }, 5000);
-        }
-      } catch (e) {
-        console.error('Error checking pending undo:', e);
-      }
-    }
-
     // Update padding overlay height to cover space between top-bar and date-selector-wrapper
     function updatePaddingOverlayHeight() {
       const dateSelectorWrapper = document.querySelector('.date-selector-wrapper');
@@ -598,7 +566,6 @@
       }
     }
 
->>>>>>> Stashed changes
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       generateDates();
