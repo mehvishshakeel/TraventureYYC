@@ -117,19 +117,20 @@
   margin: 0;
   margin-top: calc(var(--spacing-xs) * -1);
   padding: 0;
-  overflow: hidden;
+  padding-bottom: var(--spacing-sm); /* Add padding for date display */
+  overflow: visible; /* Changed to visible so date display can show */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   width: 100%;
 }
 
 .date-selector {
   display: flex;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm);
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scroll-padding: 0 50%;
-  padding: var(--spacing-sm) calc(50% - 50px);
+  padding: var(--spacing-sm) calc(50% - 30px); /* Adjusted padding for smaller chips */
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
@@ -143,7 +144,7 @@
 .date-tab {
   scroll-snap-align: center;
   scroll-snap-stop: always;
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-sm) var(--spacing-md);
   background-color: var(--color-background);
   border: 2px solid var(--color-primary-light);
   border-radius: var(--radius-md);
@@ -154,8 +155,8 @@
               padding 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               min-width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  min-width: 45px;
-  max-width: 55px;
+  min-width: 38px;
+  max-width: 46px;
   width: auto;
   text-align: center;
   flex-shrink: 0;
@@ -171,19 +172,19 @@
   background-color: var(--color-primary);
   color: var(--color-text-white);
   border-color: var(--color-primary);
-  transform: scale(1.3) !important;
+  transform: scale(1.2) !important;
   opacity: 1 !important;
   font-weight: 600;
   box-shadow: 0 6px 16px rgba(180, 113, 107, 0.4);
   z-index: 5;
-  min-width: 95px !important;
-  max-width: 110px !important;
-  padding: var(--spacing-md) var(--spacing-xl) !important;
+  min-width: 80px !important;
+  max-width: 92px !important;
+  padding: var(--spacing-sm) var(--spacing-lg) !important;
 }
 
 .date-tab__day {
   display: block;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   margin-bottom: 2px;
   transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -192,20 +193,20 @@
 
 .date-tab__month {
   display: block;
-  font-size: 10px;
+  font-size: 9px;
   opacity: 0.8;
   transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   line-height: 1.2;
 }
 
 .date-tab.active .date-tab__day {
-  font-size: 22px;
+  font-size: 18px;
   margin-bottom: 4px;
   font-weight: 700;
 }
 
 .date-tab.active .date-tab__month {
-  font-size: 14px;
+  font-size: 12px;
   opacity: 0.9;
 }
 
@@ -338,22 +339,18 @@
 
 /* Current Date Display */
 .current-date-display {
-  position: -webkit-sticky; /* Safari support */
-  position: sticky;
-  top: 85px; /* Below date selector (updated by JS dynamically) */
+  position: relative; /* Changed from sticky to relative - moves with wrapper */
   z-index: 199;
   text-align: center;
   margin: 0;
-  margin-top: var(--spacing-sm);
+  margin-top: var(--spacing-md); /* Spacing from date selector */
   padding: var(--spacing-sm) var(--spacing-md);
   min-height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--color-background);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   width: 100%;
-  transition: top 0.2s ease;
 }
 
 .current-date-display h2 {
