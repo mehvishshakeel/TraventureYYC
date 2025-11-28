@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Food - TraventureYYC</title>
+  <link rel="stylesheet" href="../css/main.css">
+
+  <!-- Page-specific layout: middle (.content) scrolls, top/bottom fixed -->
+  <style>
+    body.food-page {
+      margin: 0;
+      height: 100vh;
+    }
+
+    body.food-page .app-container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Make the whole middle content scroll (header + filters + list) */
+    body.food-page .content {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 16px var(--spacing-md) 24px; /* space from top & above bottom nav */
+    }
+
+    body.food-page .bottom-nav {
+      flex-shrink: 0;
+    }
+
+    /* Category filters – custom so they’re not hidden by shared CSS */
+    .food-category-filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+
+      padding: 8px 0;
+      position: relative;
+      z-index: 5;
+
+
+    }
+    /* Hide scrollbar but keep scrolling */
+.content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.content {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+
+    .food-category-filter {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--color-primary-light);
+      background-color: var(--color-background);
+      white-space: nowrap;
+      font-size: 14px;
+      color: var(--color-text-dark);
+      flex-shrink: 0;
+    }
+
+    /* Push the category filters downward so they are not cut off */
+
+
+    .food-category-filter.active {
+      background-color: var(--color-primary);
+      color: var(--color-text-white);
+      border-color: var(--color-primary);
+      font-weight: 600;
+    }
+    /* Make category pills clearly clickable */
+.food-category-filter {
+    cursor: pointer;                     /* shows pointer hand */
+    transition: background 0.2s ease, 
+                color 0.2s ease, 
+                border-color 0.2s ease,
+                transform 0.15s ease;    /* nice interaction feedback */
+}
+
+/* Hover effect (desktop only) */
+.food-category-filter:hover {
+    background-color: var(--color-primary-light);
+    transform: translateY(-2px);
+}
+
+/* Active pill style (already exists but we make it crisp) */
+.food-category-filter.active {
+    background-color: var(--color-primary);
+    color: var(--color-text-white);
+    border-color: var(--color-primary);
+    font-weight: 600;
+}
+
+/* Vertical stacked card */
+.list-item {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+/* Image section */
+.list-item__image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+}
+
+.list-item__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Heart icon */
+.list-item__favorite {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Details bottom area */
+.list-item__details {
+  padding: 8px 12px 10px;   /* ↓ smaller padding */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;                 /* ↓ small gap between title and bottom row */
+}
+
+
+.list-item__title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-text-black);
+}
+
+/* Bottom row: rating + time + icons */
+.list-item__bottom-row {
+  display: flex;
+  align-items: center;
+  min-height: 28px;      /* ↓ reduces overall banner height */
+}
+
+
+.list-item__meta-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--color-text-dark);
+}
+
+.list-item__rating-star {
+  color: #ffd700;
+}
+
+/* Icons */
+.list-item__actions-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 30px; /* <-- Add spacing between meta and icons */
+}
+
+
+.list-item__icon-pill {
+  width: 30px;
+  height: 30px;
+  background: #f3f3f3;
+  border: 1px solid #dadada;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+  </style>
+</head>
+<body class="food-page">
+  <div class="app-container">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-bar__left">
+        <div class="status-bar__time">9:41</div>
+      </div>
+      <div class="status-bar__right">
+        <div class="status-bar__signal">
+          <img src="../images/mobile-signal-60.svg" alt="Signal">
+        </div>
+        <div class="status-bar__wifi">
+          <img src="../images/wifi-59.svg" alt="WiFi">
+        </div>
+        <div class="status-bar__battery">
+          <img src="../images/rectangle-56.svg" alt="Battery">
+          <img src="../images/combined-shape-57.svg" alt="Battery">
+          <img src="../images/rectangle-58.svg" alt="Battery">
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <a href="homepage.html" style="color: var(--color-text-black);">←</a>
+      <div class="top-bar__logo">
+        TRAVENTURE<span class="top-bar__logo-accent">YYC</span>
+      </div>
+      <div class="top-bar__actions">
+        <div class="language-selector">
+          <span>ENG</span>
+          <img src="../images/english-51.png" alt="English" style="width: 20px; height: 20px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Content (scrollable middle) -->
+    <div class="content">
+      <div class="food-header">
+        <h1 class="food-header__title">Let's Eat!</h1>
+      </div>
+
+      <!-- Category Filters (new classes so they’re not hidden) -->
+      <div class="food-category-filters">
+        <div class="food-category-filter active">Fast Foods</div>
+        <div class="food-category-filter">Indian</div>
+        <div class="food-category-filter">Hotel</div>
+        <div class="food-category-filter">Dessert</div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <span>🔍</span>
+        <input type="text" class="search-bar__input" placeholder="What are you craving today?">
+      </div>
+
+      <!-- Popular Section -->
+      <div class="popular-section">
+        <h2 class="section-title">Popular Near You</h2>
+
+        <!-- JSON places will load here -->
+        <div id="popular-list"></div>
+      </div>
+    </div> <!-- end .content -->
+
+    <!-- Bottom Navigation (fixed at bottom of app-container) -->
+    <div class="bottom-nav">
+      <a href="itinerary.html" class="bottom-nav__item">
+        <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Itinerary</span>
+      </a>
+      <a href="homepage.html" class="bottom-nav__item active">
+        <img src="../images/home-42.svg" alt="Home" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Home</span>
+      </a>
+      <a href="emergency.html" class="bottom-nav__item">
+        <img src="../images/icon-emergency-44.png" alt="Emergency" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Emergency</span>
+      </a>
+      <a href="settings.html" class="bottom-nav__item">
+        <img src="../images/node-46.png" alt="Settings" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Settings</span>
+      </a>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+
+  <!-- JSON loading script -->
+  <script>
+    // Path to your JSON file
+    const PLACES_JSON_URL = "../calgary_places.json";
+
+    const listContainer = document.getElementById("popular-list");
+    function renderPlaces(places) {
+  listContainer.innerHTML = "";
+
+  places.forEach(place => {
+
+    const mapUrl = `map.html?place=${encodeURIComponent(place.name)}`;
+    const phoneHref = place.phone
+      ? `tel:${place.phone.replace(/[^0-9]/g, "")}`
+      : "#";
+
+    const item = document.createElement("div");
+    item.className = "list-item";
+
+    item.innerHTML = `
+      <!-- IMAGE -->
+      <div class="list-item__image-wrapper">
+        <img src="../images/foods-image-18.png" class="list-item__image">
+        <div class="list-item__favorite">
+          <img src="../images/heart-icon-36.png" width="16">
+        </div>
+      </div>
+
+      <!-- DETAILS -->
+      <div class="list-item__details">
+        <div class="list-item__title">${place.name}</div>
+
+        <div class="list-item__bottom-row">
+          <div class="list-item__meta-block">
+            <div class="list-item__rating">
+              <span class="list-item__rating-star">★</span>
+              <span>${place.rating}</span>
+            </div>
+            <div class="list-item__time">
+              <span>${place.estimated_time}</span>
+            </div>
+          </div>
+
+          <div class="list-item__actions-inline">
+            <a href="${mapUrl}" class="list-item__icon-pill list-item__map-link">↗</a>
+            <a href="${phoneHref}" class="list-item__icon-pill list-item__phone-link">☎</a>
+            <button class="list-item__icon-pill list-item__add-link">+</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Whole card goes to map.html except icons
+    item.addEventListener("click", (event) => {
+      if (
+        event.target.closest(".list-item__map-link") ||
+        event.target.closest(".list-item__phone-link") ||
+        event.target.closest(".list-item__add-link")
+      ) return;
+
+      window.location.href = mapUrl;
+    });
+
+    listContainer.appendChild(item);
+  });
+}
+
+
+
+
+// CATEGORY FILTER CLICK HANDLER
+function applyCategoryFilters(allPlaces) {
+  const buttons = document.querySelectorAll(".food-category-filter");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+      // Remove old active
+      buttons.forEach(b => b.classList.remove("active"));
+
+      // Mark this one active
+      btn.classList.add("active");
+
+      const label = btn.textContent.trim().toLowerCase();
+
+      // Map button text → JSON category values
+      const map = {
+        "fast foods": "fastfood",
+        "indian": "indian",
+        "hotel": "hotel",
+        "dessert": "dessert"
+      };
+
+      const selectedCategory = map[label];
+
+      // Filter places
+      const filtered = allPlaces.filter(p => p.category === selectedCategory);
+
+      // Render filtered list
+      renderPlaces(filtered);
+    });
+  });
+}
+
+fetch(PLACES_JSON_URL)
+  .then(response => response.json())
+  .then(data => {
+    const allPlaces = data.places;
+
+    // Show default category first (Fast Foods)
+    const defaultList = allPlaces.filter(p => p.category === "fastfood");
+    renderPlaces(defaultList);
+
+    // Enable filtering
+    applyCategoryFilters(allPlaces);
+  })
+  .catch(err => {
+    console.error("Error loading JSON:", err);
+    listContainer.innerHTML = "<p>Could not load places.</p>";
+  });
+
+  </script>
+</body>
+</html>
