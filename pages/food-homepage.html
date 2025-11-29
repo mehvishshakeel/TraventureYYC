@@ -6,8 +6,9 @@
   <title>Food - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
 
-  <!-- Page-specific layout: middle (.content) scrolls, top/bottom fixed -->
+  <!-- Page-specific layout + popup styles -->
   <style>
+    
     body.food-page {
       margin: 0;
       height: 100vh;
@@ -19,40 +20,36 @@
       flex-direction: column;
     }
 
-    /* Make the whole middle content scroll (header + filters + list) */
+    /* Scrollable middle section */
     body.food-page .content {
       flex: 1;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      padding: 16px var(--spacing-md) 24px; /* space from top & above bottom nav */
+      padding: 16px var(--spacing-md) 24px;
     }
 
     body.food-page .bottom-nav {
       flex-shrink: 0;
     }
 
-    /* Category filters – custom so they’re not hidden by shared CSS */
+    /* Hide scrollbars visually */
+    .content::-webkit-scrollbar {
+      display: none;
+    }
+    .content {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Category filters */
     .food-category-filters {
       display: flex;
       gap: 8px;
       margin-bottom: 16px;
-
       padding: 8px 0;
       position: relative;
       z-index: 5;
-
-
     }
-    /* Hide scrollbar but keep scrolling */
-.content::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
-}
-
-.content {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;     /* Firefox */
-}
-
 
     .food-category-filter {
       padding: 6px 12px;
@@ -63,10 +60,18 @@
       font-size: 14px;
       color: var(--color-text-dark);
       flex-shrink: 0;
+      cursor: pointer;
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease;
     }
 
-    /* Push the category filters downward so they are not cut off */
-
+    .food-category-filter:hover {
+      background-color: var(--color-primary-light);
+      transform: translateY(-2px);
+    }
 
     .food-category-filter.active {
       background-color: var(--color-primary);
@@ -74,127 +79,348 @@
       border-color: var(--color-primary);
       font-weight: 600;
     }
-    /* Make category pills clearly clickable */
-.food-category-filter {
-    cursor: pointer;                     /* shows pointer hand */
-    transition: background 0.2s ease, 
-                color 0.2s ease, 
-                border-color 0.2s ease,
-                transform 0.15s ease;    /* nice interaction feedback */
-}
 
-/* Hover effect (desktop only) */
-.food-category-filter:hover {
-    background-color: var(--color-primary-light);
-    transform: translateY(-2px);
-}
+    /* Restaurant cards */
+    .list-item {
+      display: flex;
+      flex-direction: column;
+      background: var(--color-background);
+      border-radius: 16px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      margin-bottom: 16px;
+      cursor: pointer;
+    }
 
-/* Active pill style (already exists but we make it crisp) */
-.food-category-filter.active {
-    background-color: var(--color-primary);
-    color: var(--color-text-white);
-    border-color: var(--color-primary);
-    font-weight: 600;
-}
+    .list-item__image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 160px;
+      overflow: hidden;
+    }
 
-/* Vertical stacked card */
-.list-item {
-  display: flex;
-  flex-direction: column;
-  background: var(--color-background);
-  border-radius: 16px;
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
-  margin-bottom: 16px;
-  cursor: pointer;
-}
+    .list-item__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-/* Image section */
-.list-item__image-wrapper {
-  position: relative;
-  width: 100%;
-  height: 160px;
-  overflow: hidden;
-}
+    .list-item__favorite {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.list-item__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .list-item__details {
+      padding: 8px 12px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
 
-/* Heart icon */
-.list-item__favorite {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.95);
-  display: flex;
-  align-items: center;
+    .list-item__title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--color-text-black);
+    }
+
+    .list-item__bottom-row {
+      display: flex;
+      align-items: center;
+      min-height: 28px;
+    }
+
+    .list-item__meta-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--color-text-dark);
+    }
+
+    .list-item__rating-star {
+      color: #ffd700;
+    }
+
+    .list-item__actions-inline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 30px;
+    }
+
+    .list-item__icon-pill {
+      width: 30px;
+      height: 30px;
+      background: #f3f3f3;
+      border: 1px solid #dadada;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ====== BOTTOM SHEET POPUP (75% height) ====== */
+.place-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: none;
+  align-items: flex-end;   /* bottom sheet */
   justify-content: center;
+  z-index: 999;
 }
 
-/* Details bottom area */
-.list-item__details {
-  padding: 8px 12px 10px;   /* ↓ smaller padding */
+.place-popup-overlay.show {
+  display: flex;
+}
+
+
+.place-popup-panel {
+  width: 100%;
+  max-width: var(--mobile-width, 430px);
+
+  /* 75% of screen height, lifted above bottom nav (~64px tall) */
+  max-height: calc(75vh - 64px);
+  margin-bottom: 64px;
+
+  background: var(--color-background);
+  border-radius: 18px 18px 0 0;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.25);
+  padding: var(--spacing-md) var(--spacing-lg);
+
   display: flex;
   flex-direction: column;
-  gap: 4px;                 /* ↓ small gap between title and bottom row */
+  position: relative;
+  overflow: hidden; /* keep scroll inside .popup-scroll */
+  padding-bottom: 50px;
 }
 
 
-.list-item__title {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--color-text-black);
+
+    .popup-drag {
+      width: 40px;
+      height: 4px;
+      border-radius: 999px;
+      background: #ddd;
+      align-self: center;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .popup-close-btn {
+      position: absolute;
+      top: 10px;
+      right: 16px;
+      border: none;
+      background: transparent;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .popup-header {
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .popup-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-text-black);
+      margin-bottom: 4px;
+    }
+
+    .popup-sub {
+      font-size: 13px;
+      color: var(--color-text-dark);
+      line-height: 1.4;
+    }
+
+    .popup-sub span + span::before {
+      content: " • ";
+      margin: 0 4px;
+    }
+
+.popup-scroll {
+  flex: 1;
+  min-height: 0;                 /* IMPORTANT for flexbox scrolling */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 4px;
 }
 
-/* Bottom row: rating + time + icons */
-.list-item__bottom-row {
+
+    .popup-section-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--color-text-black);
+    }
+
+    .popup-dish-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .popup-dish {
+      display: flex;
+      gap: 10px;
+      padding: 8px;
+      border-radius: 10px;
+      background: var(--color-card-bg, #f7f7f7);
+    }
+
+    .popup-dish__image {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .popup-dish__info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 13px;
+    }
+
+    .popup-dish__name {
+      font-weight: 600;
+      color: var(--color-text-black);
+    }
+
+    .popup-dish__cost {
+      font-weight: 500;
+      color: var(--color-primary);
+      font-size: 13px;
+    }
+
+    .popup-dish__desc {
+      font-size: 12px;
+      color: var(--color-text-dark);
+      opacity: 0.8;
+    }
+
+    .popup-empty {
+      font-size: 13px;
+      color: var(--color-text-dark);
+      opacity: 0.8;
+    }
+
+    /* ====== REVIEWS SECTION ====== */
+    .popup-review-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .popup-review {
+      display: flex;
+      gap: 10px;
+      padding: 8px;
+      border-radius: 10px;
+      background: var(--color-card-bg, #f7f7f7);
+    }
+
+    .popup-review__image {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .popup-review__info {
+      display: flex;
+      flex-direction: column;
+      font-size: 13px;
+    }
+
+    .popup-review__name {
+      font-weight: 600;
+      color: var(--color-text-black);
+    }
+
+    .popup-review__date {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    .popup-review__text {
+      margin-top: 3px;
+      font-size: 13px;
+      color: var(--color-text-dark);
+    }
+    .popup-header-main {
   display: flex;
-  align-items: center;
-  min-height: 28px;      /* ↓ reduces overall banner height */
-}
-
-
-.list-item__meta-block {
-  display: flex;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 12px;
-  font-size: 13px;
-  color: var(--color-text-dark);
 }
 
-.list-item__rating-star {
-  color: #ffd700;
+.popup-header-text {
+  flex: 1;
+  min-width: 0;
 }
 
-/* Icons */
-.list-item__actions-inline {
+.popup-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text-black);
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.popup-header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-left: 30px; /* <-- Add spacing between meta and icons */
+  gap: 6px;
 }
 
-
-.list-item__icon-pill {
+.popup-icon-pill {
   width: 30px;
   height: 30px;
-  background: #f3f3f3;
-  border: 1px solid #dadada;
+  font-size: 14px;
+  padding: 0;
+}
+
+.heart-btn {
+  font-size: 20px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
+
+.heart-btn.active {
+  transform: scale(1.15);
+}
+
+
 
 
   </style>
 </head>
+
 <body class="food-page">
   <div class="app-container">
     <!-- Status Bar -->
@@ -210,7 +436,7 @@
           <img src="../images/wifi-59.svg" alt="WiFi">
         </div>
         <div class="status-bar__battery">
-          <img src="../images/rectangle-56.svg" alt="Battery">
+
           <img src="../images/combined-shape-57.svg" alt="Battery">
           <img src="../images/rectangle-58.svg" alt="Battery">
         </div>
@@ -221,7 +447,7 @@
     <div class="top-bar">
       <a href="homepage.html" style="color: var(--color-text-black);">←</a>
       <div class="top-bar__logo">
-        TRAVENTURE<span class="top-bar__logo-accent">YYC</span>
+        Traventure<span class="top-bar__logo-accent">YYC</span> 
       </div>
       <div class="top-bar__actions">
         <div class="language-selector">
@@ -237,30 +463,28 @@
         <h1 class="food-header__title">Let's Eat!</h1>
       </div>
 
-      <!-- Category Filters (new classes so they’re not hidden) -->
+      <!-- Category Filters -->
       <div class="food-category-filters">
         <div class="food-category-filter active">Fast Foods</div>
         <div class="food-category-filter">Indian</div>
-        <div class="food-category-filter">Hotel</div>
+        <div class="food-category-filter">Halal</div>
         <div class="food-category-filter">Dessert</div>
       </div>
 
       <!-- Search Bar -->
       <div class="search-bar">
         <span>🔍</span>
-        <input type="text" class="search-bar__input" placeholder="What are you craving today?">
+        <input type="text" class="search-bar__input" id="foodSearchInput" placeholder="What are you craving today?">
       </div>
 
       <!-- Popular Section -->
       <div class="popular-section">
         <h2 class="section-title">Popular Near You</h2>
-
-        <!-- JSON places will load here -->
         <div id="popular-list"></div>
       </div>
-    </div> <!-- end .content -->
+    </div>
 
-    <!-- Bottom Navigation (fixed at bottom of app-container) -->
+    <!-- Bottom Navigation -->
     <div class="bottom-nav">
       <a href="itinerary.html" class="bottom-nav__item">
         <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
@@ -281,123 +505,450 @@
     </div>
   </div>
 
+  <!-- 75% HEIGHT PLACE POPUP (bottom sheet) -->
+  <div id="placePopup" class="place-popup-overlay">
+    <div class="place-popup-panel" onclick="event.stopPropagation()">
+      <div class="popup-drag"></div>
+      <button id="popupCloseBtn" class="popup-close-btn">×</button>
+
+<div class="popup-header">
+  <div class="popup-header-main">
+    <div class="popup-header-text">
+      <div id="popupName" class="popup-title"></div>
+      <div class="popup-sub">
+        <span id="popupRating"></span>
+        <span id="popupPhone"></span>
+      </div>
+    </div>
+
+    <div class="popup-header-actions">
+      <a
+        id="popupMapBtn"
+        href="#"
+        class="list-item__icon-pill popup-icon-pill popup-map-link"
+        aria-label="Open map"
+      >↗</a>
+
+      <button
+        id="popupPhoneBtn"
+        class="list-item__icon-pill popup-icon-pill"
+        aria-label="Call restaurant"
+      >☎</button>
+
+      <button
+        id="popupAddBtn"
+        class="list-item__icon-pill popup-icon-pill"
+        aria-label="Add to itinerary"
+      >+</button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="popup-scroll">
+        <div class="popup-section">
+          <div class="popup-section-title">Popular dishes</div>
+          <div id="popupDishesList" class="popup-dish-list"></div>
+        </div>
+
+        <!-- NEW: Customer Reviews section -->
+        <div class="popup-section">
+          <div class="popup-section-title">Customer reviews</div>
+          <div id="popupReviewsList" class="popup-review-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- If you have global JS -->
   <script src="../js/app.js"></script>
 
-  <!-- JSON loading script -->
+  <!-- Page JS -->
   <script>
-    // Path to your JSON file
-    const PLACES_JSON_URL = "../calgary_places.json";
+    const PLACES_JSON_URL  = "../calgary_places.json";
+    const DISHES_JSON_URL  = "../dishes.json";
+    const REVIEWS_JSON_URL = "../reviews.json";
 
-    const listContainer = document.getElementById("popular-list");
-    function renderPlaces(places) {
-  listContainer.innerHTML = "";
+    const listContainer     = document.getElementById("popular-list");
+    const searchInput       = document.getElementById("foodSearchInput");
 
-  places.forEach(place => {
+    // Popup elements
+    const popupOverlay       = document.getElementById("placePopup");
+    const popupCloseBtn      = document.getElementById("popupCloseBtn");
+    const popupNameEl        = document.getElementById("popupName");
+    const popupRatingEl      = document.getElementById("popupRating");
+    const popupPhoneEl       = document.getElementById("popupPhone");
+    const popupDishesListEl  = document.getElementById("popupDishesList");
+    const popupReviewsListEl = document.getElementById("popupReviewsList");
+    const popupMapBtn   = document.getElementById("popupMapBtn");
+const popupPhoneBtn = document.getElementById("popupPhoneBtn");
+const popupAddBtn   = document.getElementById("popupAddBtn");
 
-    const mapUrl = `map.html?place=${encodeURIComponent(place.name)}`;
-    const phoneHref = place.phone
-      ? `tel:${place.phone.replace(/[^0-9]/g, "")}`
-      : "#";
 
-    const item = document.createElement("div");
-    item.className = "list-item";
+    const FOOD_PLACEHOLDER_IMAGE = "../images/foods-image-18.png";
 
-    item.innerHTML = `
-      <!-- IMAGE -->
-      <div class="list-item__image-wrapper">
-        <img src="../images/foods-image-18.png" class="list-item__image">
-        <div class="list-item__favorite">
-          <img src="../images/heart-icon-36.png" width="16">
+    let allPlaces      = [];
+    let dishesByPlace  = {};
+    let reviewsByPlace = {};
+    let currentCategory = "fastfood";
+  function getDishesForPlace(place) {
+  if (!place || !place.name) return [];
+  return dishesByPlace[place.name] || [];
+}
+function openPlacePopup(place) {
+  popupNameEl.textContent   = place.name || "";
+  popupRatingEl.textContent = place.rating || "No rating";
+  popupPhoneEl.textContent  = place.phone || "No phone";
+
+  const mapUrl = `map.html?place=${encodeURIComponent(place.name || "")}`;
+
+  // Map button in header
+  popupMapBtn.href = mapUrl;
+  popupMapBtn.onclick = (e) => {
+    e.stopPropagation();
+    // let the anchor navigate normally
+  };
+
+  // Phone button in header
+  popupPhoneBtn.onclick = (e) => {
+    e.stopPropagation();
+    const phoneNumber = place.phone || "";
+    if (!phoneNumber) return;
+    const confirmCall = confirm(`Call ${phoneNumber}?`);
+    if (confirmCall) {
+      window.location.href = `tel:${phoneNumber.replace(/[^0-9]/g, "")}`;
+    }
+  };
+
+  // Add-to-itinerary button in header
+  popupAddBtn.onclick = (e) => {
+    e.stopPropagation();
+    handleAddToItinerary(place);
+  };
+
+  // ======================
+  //  Popular dishes
+  // ======================
+  const dishes = getDishesForPlace(place);
+
+  if (!dishes.length) {
+    popupDishesListEl.innerHTML =
+      '<p class="popup-empty">No dish information available yet.</p>';
+  } else {
+    popupDishesListEl.innerHTML = dishes.map(dish => `
+      <div class="popup-dish">
+        <img
+          src="${FOOD_PLACEHOLDER_IMAGE}"
+          alt="${dish.name}"
+          class="popup-dish__image"
+        >
+        <div class="popup-dish__info">
+          <div class="popup-dish__name">${dish.name}</div>
+          <div class="popup-dish__cost">${dish.cost || ""}</div>
+          <div class="popup-dish__desc">${dish.description || ""}</div>
         </div>
       </div>
+    `).join("");
+  }
 
-      <!-- DETAILS -->
-      <div class="list-item__details">
-        <div class="list-item__title">${place.name}</div>
-
-        <div class="list-item__bottom-row">
-          <div class="list-item__meta-block">
-            <div class="list-item__rating">
-              <span class="list-item__rating-star">★</span>
-              <span>${place.rating}</span>
-            </div>
-            <div class="list-item__time">
-              <span>${place.estimated_time}</span>
-            </div>
-          </div>
-
-          <div class="list-item__actions-inline">
-            <a href="${mapUrl}" class="list-item__icon-pill list-item__map-link">↗</a>
-            <a href="${phoneHref}" class="list-item__icon-pill list-item__phone-link">☎</a>
-            <button class="list-item__icon-pill list-item__add-link">+</button>
-          </div>
+  // ======================
+  //  Customer reviews
+  // ======================
+  const reviews = (reviewsByPlace[place.name] || []);
+  if (!reviews.length) {
+    popupReviewsListEl.innerHTML = '<p class="popup-empty">No reviews yet.</p>';
+  } else {
+    popupReviewsListEl.innerHTML = reviews.map(r => `
+      <div class="popup-review">
+        <img
+          src="${r.photo || FOOD_PLACEHOLDER_IMAGE}"
+          alt="Food"
+          class="popup-review__image"
+        >
+        <div class="popup-review__info">
+          <div class="popup-review__name">${r.customer_name}</div>
+          <div class="popup-review__date">${r.date}</div>
+          <div class="popup-review__text">${r.review}</div>
         </div>
       </div>
-    `;
+    `).join("");
+  }
 
-    // Whole card goes to map.html except icons
-    item.addEventListener("click", (event) => {
-      if (
-        event.target.closest(".list-item__map-link") ||
-        event.target.closest(".list-item__phone-link") ||
-        event.target.closest(".list-item__add-link")
-      ) return;
-
-      window.location.href = mapUrl;
-    });
-
-    listContainer.appendChild(item);
-  });
+  popupOverlay.classList.add("show");
 }
 
 
+    function closePlacePopup() {
+      popupOverlay.classList.remove("show");
+    }
 
+    popupOverlay.addEventListener("click", (e) => {
+      if (e.target === popupOverlay) {
+        closePlacePopup();
+      }
+    });
+    popupCloseBtn.addEventListener("click", closePlacePopup);
 
-// CATEGORY FILTER CLICK HANDLER
-function applyCategoryFilters(allPlaces) {
-  const buttons = document.querySelectorAll(".food-category-filter");
+    // Favorites (heart)
+    function handleAddToFavorites(place) {
+      const key = "favoriteRestaurants";
+      const existing = JSON.parse(localStorage.getItem(key) || "[]");
+      const alreadySaved = existing.some(fav => fav.name === place.name);
 
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
+      if (!alreadySaved) {
+        existing.push({
+          name: place.name,
+          rating: place.rating,
+          estimated_time: place.estimated_time,
+          image: FOOD_PLACEHOLDER_IMAGE,
+          category: place.category || "restaurant"
+        });
+        localStorage.setItem(key, JSON.stringify(existing));
+        alert(`${place.name} has been added to Favorites.`);
+      } else {
+        alert(`${place.name} is already in your Favorites.`);
+      }
+    }
 
-      // Remove old active
-      buttons.forEach(b => b.classList.remove("active"));
+    // Add to itinerary (+)
+    function handleAddToItinerary(place) {
+      const date = prompt(
+        "Which date do you want to add this to? (YYYY-MM-DD between 2026-07-11 and 2026-07-20)",
+        "2026-07-14"
+      );
+      if (!date) return;
 
-      // Mark this one active
-      btn.classList.add("active");
+      const time = prompt("Start time (HH:MM, 24h format)", "18:00") || "";
+      const detailsInput = prompt("Details (e.g., Dinner, 18:00 - 19:30)", "") || "";
 
-      const label = btn.textContent.trim().toLowerCase();
-
-      // Map button text → JSON category values
-      const map = {
-        "fast foods": "fastfood",
-        "indian": "indian",
-        "hotel": "hotel",
-        "dessert": "dessert"
+      const event = {
+        date: date,
+        time: time,
+        title: place.name,
+        details: detailsInput || (time ? time + " - TBD" : ""),
+        address: place.address || "",
+        image: FOOD_PLACEHOLDER_IMAGE
       };
 
-      const selectedCategory = map[label];
+      const key = "userItineraryEvents";
+      const existing = JSON.parse(localStorage.getItem(key) || "[]");
+      existing.push(event);
+      localStorage.setItem(key, JSON.stringify(existing));
 
-      // Filter places
-      const filtered = allPlaces.filter(p => p.category === selectedCategory);
+      alert(`${place.name} was added to your itinerary on ${date}.`);
+    }
 
-      // Render filtered list
+    // Render list of places into cards
+    function renderPlaces(places) {
+      listContainer.innerHTML = "";
+
+      places.forEach(place => {
+        const mapUrl = `map.html?place=${encodeURIComponent(place.name)}`;
+
+        const item = document.createElement("div");
+        item.className = "list-item";
+
+        item.innerHTML = `
+          <div class="list-item__image-wrapper">
+            <img src="${FOOD_PLACEHOLDER_IMAGE}" class="list-item__image" alt="${place.name}">
+<div class="list-item__favorite heart-btn" data-fav="false">♡</div>
+
+          </div>
+
+          <div class="list-item__details">
+            <div class="list-item__title">${place.name}</div>
+
+            <div class="list-item__bottom-row">
+              <div class="list-item__meta-block">
+                <div class="list-item__rating">
+                  <span class="list-item__rating-star">★</span>
+                  <span>${place.rating}</span>
+                </div>
+                <div class="list-item__time">
+                  <span>${place.estimated_time}</span>
+                </div>
+              </div>
+
+              <div class="list-item__actions-inline">
+                <a href="${mapUrl}" class="list-item__icon-pill list-item__map-link">↗</a>
+                <button class="list-item__icon-pill list-item__phone-link" data-phone="${place.phone || ""}">☎</button>
+                <button class="list-item__icon-pill list-item__add-link">+</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Whole card click → popup
+        item.addEventListener("click", () => {
+          openPlacePopup(place);
+        });
+
+        // Heart
+// Heart toggle
+const favoriteButton = item.querySelector(".heart-btn");
+
+favoriteButton.addEventListener("click", (event) => {
+  event.stopPropagation();
+
+  const isFav = favoriteButton.dataset.fav === "true";
+
+  if (!isFav) {
+    favoriteButton.dataset.fav = "true";
+    favoriteButton.classList.add("active");
+    favoriteButton.textContent = "❤️";
+    handleAddToFavorites(place);
+  } else {
+    favoriteButton.dataset.fav = "false";
+    favoriteButton.classList.remove("active");
+    favoriteButton.textContent = "♡";
+    removeFromFavorites(place);
+  }
+});
+
+
+        // Map button
+        const mapLink = item.querySelector(".list-item__map-link");
+        mapLink.addEventListener("click", (event) => {
+          event.stopPropagation(); // don't open popup
+          // normal navigation via href
+        });
+
+        // Phone button
+        const phoneButton = item.querySelector(".list-item__phone-link");
+        phoneButton.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const phoneNumber = phoneButton.dataset.phone || "";
+          if (!phoneNumber) return;
+          const confirmCall = confirm(`Call ${phoneNumber}?`);
+          if (confirmCall) {
+            window.location.href = `tel:${phoneNumber.replace(/[^0-9]/g, "")}`;
+          }
+        });
+
+        // Add to itinerary
+        const addButton = item.querySelector(".list-item__add-link");
+        addButton.addEventListener("click", (event) => {
+          event.stopPropagation();
+          handleAddToItinerary(place);
+        });
+
+        listContainer.appendChild(item);
+      });
+    }
+
+    // Category filters
+    function applyCategoryFilters() {
+      const buttons = document.querySelectorAll(".food-category-filter");
+
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          buttons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          const label = btn.textContent.trim().toLowerCase();
+          const map = {
+            "fast foods": "fastfood",
+            "indian": "indian",
+            "halal": "halal",
+            "dessert": "dessert"
+          };
+
+          currentCategory = map[label] || "fastfood";
+          filterAndRender();
+        });
+      });
+    }
+
+    // Simple search filter by name within current category
+    function filterAndRender() {
+      const query = (searchInput.value || "").toLowerCase();
+      const filtered = allPlaces.filter(p =>
+        p.category === currentCategory &&
+        (!query || p.name.toLowerCase().includes(query))
+      );
       renderPlaces(filtered);
-    });
-  });
-}
+    }
 
-fetch(PLACES_JSON_URL)
-  .then(response => response.json())
-  .then(data => {
-    const allPlaces = data.places;
+    searchInput.addEventListener("input", filterAndRender);
 
-    // Show default category first (Fast Foods)
+    // Fetch JSON + init
+// Fetch JSON + init (with structure detection + better errors)
+Promise.all([
+  fetch(PLACES_JSON_URL).then(resp => {
+    if (!resp.ok) throw new Error("places.json HTTP " + resp.status);
+    return resp.json();
+  }),
+  fetch(DISHES_JSON_URL).then(resp => {
+    if (!resp.ok) throw new Error("dishes.json HTTP " + resp.status);
+    return resp.json();
+  }).catch(err => {
+    console.error("Failed to load dishes.json:", err);
+    return {}; // fallback
+  }),
+  fetch(REVIEWS_JSON_URL).then(resp => {
+    if (!resp.ok) throw new Error("reviews.json HTTP " + resp.status);
+    return resp.json();
+  }).catch(err => {
+    console.error("Failed to load reviews.json:", err);
+    return {}; // fallback
+  })
+])
+  .then(([placesJson, dishesJson, reviewsJson]) => {
+    console.log("placesJson:", placesJson);
+    console.log("dishesJson:", dishesJson);
+    console.log("reviewsJson:", reviewsJson);
+
+    // --- Places ---
+    allPlaces = placesJson.places || [];
+    console.log("Loaded places:", allPlaces.length);
+
+    // --- Dishes: handle BOTH possible formats ---
+    const rawDishes = dishesJson || {};
+    if (rawDishes.dishesByPlace) {
+      // Preferred structure:
+      // { "dishesByPlace": { "Peter's Drive-In": [ ... ] } }
+      dishesByPlace = rawDishes.dishesByPlace;
+    } else if (Array.isArray(rawDishes.places)) {
+      // Legacy structure:
+      // { "places": [ { name: "...", dishes: [...] }, ... ] }
+      dishesByPlace = {};
+      rawDishes.places.forEach(p => {
+        if (p.name && Array.isArray(p.dishes)) {
+          dishesByPlace[p.name] = p.dishes;
+        }
+      });
+    } else {
+      dishesByPlace = {};
+      console.warn("Unknown dishes.json structure:", rawDishes);
+    }
+
+    // --- Reviews: handle BOTH possible formats ---
+    const rawReviews = reviewsJson || {};
+    if (rawReviews.reviewsByPlace) {
+      // Preferred structure:
+      // { "reviewsByPlace": { "Peter's Drive-In": [ ... ] } }
+      reviewsByPlace = rawReviews.reviewsByPlace;
+    } else if (Array.isArray(rawReviews.places)) {
+      // Legacy structure:
+      // { "places": [ { name: "...", reviews: [...] }, ... ] }
+      reviewsByPlace = {};
+      rawReviews.places.forEach(p => {
+        if (p.name && Array.isArray(p.reviews)) {
+          reviewsByPlace[p.name] = p.reviews;
+        }
+      });
+    } else {
+      reviewsByPlace = {};
+      console.warn("Unknown reviews.json structure:", rawReviews);
+    }
+
+    console.log("dishesByPlace keys:", Object.keys(dishesByPlace));
+    console.log("reviewsByPlace keys:", Object.keys(reviewsByPlace));
+
+    // initial list = fast food
     const defaultList = allPlaces.filter(p => p.category === "fastfood");
     renderPlaces(defaultList);
-
-    // Enable filtering
-    applyCategoryFilters(allPlaces);
+    applyCategoryFilters();
   })
   .catch(err => {
     console.error("Error loading JSON:", err);
