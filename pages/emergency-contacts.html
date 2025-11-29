@@ -78,17 +78,31 @@
       <div class="list-item" style="border: 2px solid #E0E6F1; border-radius: 16px; box-shadow: 0px 6px 12px rgba(0,0,0,0.12);">
         <div class="list-item__content">
           <div class="list-item__title">City Services</div>
-          <div class="list-item__subtitle">911</div>
+          <div class="list-item__subtitle">311</div>
         </div>
-        <button class="btn btn--danger" onclick="window.location.href='tel:911'">Call</button>
+        <button class="btn btn--primary" 
+        onclick="openCallModal(
+          'City Services',
+          '311',
+          'Contact 311 for City of Calgary services — non-emergency municipal issues, bylaw questions, garbage collection, pothole reporting, street maintenance, and other civic services.'
+        )">
+        Call
+      </button>
       </div>
 
       <div class="list-item" style="border: 2px solid #E0E6F1; border-radius: 16px; box-shadow: 0px 6px 12px rgba(0,0,0,0.12);">
         <div class="list-item__content">
           <div class="list-item__title">Visitor Information Center</div>
-          <div class="list-item__subtitle">911</div>
+          <div class="list-item__subtitle">1-800-661-1678</div>
         </div>
-        <button class="btn btn--danger" onclick="window.location.href='tel:911'">Call</button>
+        <button class="btn btn--primary" 
+        onclick="openCallModal(
+          'Visitor Information Center',
+          '1-800-661-1678',
+          'Tourism Calgary Visitor Information Centre — call for maps, city guides, attraction info, events, and general help for visitors to Calgary.'
+        )">
+        Call
+      </button>
       </div>
     </div>
 
