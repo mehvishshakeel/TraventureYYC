@@ -1,376 +1,256 @@
-/* Base Styles */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Map - TraventureYYC</title>
+  <link rel="stylesheet" href="../css/main.css">
 
-/* App Container - iPhone 16 (393×852) */
-.app-container {
-  width: var(--mobile-width);
-  height: var(--mobile-height);
-  max-height: var(--mobile-height);
-  margin: 0 auto;
-  background-color: var(--color-background);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
-}
+  <style>
+    /* Make sure the map container has a nice fixed height */
+    .map-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto var(--spacing-md);
+      border-radius: 12px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+    }
 
-/* Desktop view - center the mobile app */
-@media (min-width: 394px) {
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
-    padding: 20px;
-  }
+    /* Map image should scale nicely without breaking layout */
+    #map-image {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    /* Map controls look clickable */
+    .map-controls {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 0 auto var(--spacing-md);
+    }
+
+    .map-control {
+      padding: 6px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--color-primary-light);
+      background-color: var(--color-background);
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .map-control.active {
+      background-color: var(--color-primary);
+      color: var(--color-text-white);
+      border-color: var(--color-primary);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-bar__left">
+        <div class="status-bar__time">9:41</div>
+      </div>
+      <div class="status-bar__right">
+        <div class="status-bar__signal">
+          <img src="../images/mobile-signal-60.svg" alt="Signal">
+        </div>
+        <div class="status-bar__wifi">
+          <img src="../images/wifi-59.svg" alt="WiFi">
+        </div>
+        <div class="status-bar__battery">
+          <img src="../images/rectangle-56.svg" alt="Battery">
+          <img src="../images/combined-shape-57.svg" alt="Battery">
+          <img src="../images/rectangle-58.svg" alt="Battery">
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <a href="food-homepage.html" style="color: var(--color-text-black);">←</a>
+      <div class="top-bar__logo">
+        Traventure<span class="top-bar__logo-accent">YYC</span>
+      </div>
+      <div class="top-bar__actions">
+        <div class="language-selector">
+          <span>ENG</span>
+          <img src="../images/english-51.png" alt="English" style="width: 20px; height: 20px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <!-- Map Container -->
+      <div class="map-container">
+        <iframe
+          id="map-frame"
+          width="100%"
+          height="100%"
+          style="border:0; border-radius: 12px;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
+      </div>
+      
+
+      <!-- Map Controls -->
+      <div class="map-controls">
+        <div class="map-control active" data-mode="drive">Drive</div>
+        <div class="map-control" data-mode="transit">Transit</div>
+        <div class="map-control" data-mode="walk">Walk</div>
+      </div>
+
+      <!-- Location Details -->
+      <div class="card">
+        <h3 id="place-title"
+            style="font-size: 20px; font-weight: 600; margin-bottom: var(--spacing-sm);">
+          Loading...
+        </h3>
+        <p id="place-address"
+           style="color: var(--color-text-dark); margin-bottom: var(--spacing-xs);">
+          Calgary, AB
+        </p>
+        <p id="place-phone"
+           style="color: var(--color-text-dark); margin-bottom: var(--spacing-md);">
+          Phone: N/A
+        </p>
+        <button class="btn btn--primary btn--full">START</button>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <a href="itinerary.html" class="bottom-nav__item">
+        <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Itinerary</span>
+      </a>
+      <a href="homepage.html" class="bottom-nav__item">
+        <img src="../images/home-42.svg" alt="Home" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Home</span>
+      </a>
+      <a href="emergency.html" class="bottom-nav__item">
+        <img src="../images/icon-emergency-44.png" alt="Emergency" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Emergency</span>
+      </a>
+      <a href="settings.html" class="bottom-nav__item">
+        <img src="../images/node-46.png" alt="Settings" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Settings</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- JS: load place details + embedded route + START button -->
+  <script>
+    // --- hard-coded origin ---
+    const ORIGIN_ADDRESS = "30 Brentwood Common NW, Calgary, AB T2L 2L8";
   
-  .app-container {
-    border-radius: 20px;
-    overflow: hidden;
-  }
-}
-
-/* Mobile devices - full width */
-@media (max-width: 393px) {
-  .app-container {
-    width: 100%;
-    max-width: 100%;
-    min-height: 100vh;
-    max-height: 100vh;
-  }
-}
-
-/* Status Bar - iPhone 16 */
-.status-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--spacing-sm) var(--spacing-md);
-  padding-top: var(--safe-area-top);
-  height: calc(var(--safe-area-top) + 20px);
-  min-height: 47px;
-  max-height: 47px;
-  background-color: var(--color-background);
-  z-index: 10;
-  position: relative;
-  flex-shrink: 0;
-  flex-grow: 0;
-}
-
-.status-bar__left {
-  display: flex;
-  align-items: center;
-}
-
-.status-bar__right {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-}
-
-.status-bar__time {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.status-bar__battery,
-.status-bar__wifi,
-.status-bar__signal {
-  display: flex;
-  align-items: center;
-}
-
-/* Top Bar / Header */
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--spacing-md);
-  background-color: var(--color-background);
-  flex-shrink: 0;
-  flex-grow: 0;
-  min-height: 60px;
-  max-height: 60px;
-}
-
-.top-bar__logo {
-  font-family: var(--font-display);
-  font-size: 28px;
-  color: var(--color-text-black);
-}
-
-.top-bar__logo-accent {
-  color: var(--color-text-accent);
-}
-
-.top-bar__actions {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-}
-
-.language-selector {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  background-color: var(--color-primary);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  color: var(--color-text-white);
-  font-size: 13px;
-}
-
-/* Content Area */
-.content {
-  padding: var(--spacing-md);
-  padding-bottom: var(--spacing-md);
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  min-height: 0; /* Allow flexbox to shrink */
-  display: flex;
-  flex-direction: column;
-}
-
-/* Itinerary page specific - scrollable content with sticky dates */
-.itinerary-page .content {
-  padding: 0;
-  padding-bottom: 0;
-  overflow-y: auto; /* Content area is scrollable */
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  flex: 1 1 auto;
-  min-height: 0;
-  display: block; /* Change to block for sticky to work */
-  position: relative;
-  margin-bottom: 0;
-}
-
-/* Bottom Navigation - iPhone 16 */
-.bottom-nav {
-  position: relative;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  background-color: var(--color-primary);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: var(--spacing-sm) 0;
-  padding-bottom: calc(var(--safe-area-bottom) + var(--spacing-sm));
-  min-height: 70px;
-  max-height: 80px;
-  height: 70px;
-  z-index: 1000;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-  flex-shrink: 0;
-  flex-grow: 0;
-}
-
-@media (max-width: 393px) {
-  .bottom-nav {
-    border-radius: 0;
-  }
-}
-
-.bottom-nav__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-xs);
-  color: var(--color-text-white);
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.bottom-nav__item:hover,
-.bottom-nav__item.active {
-  opacity: 0.8;
-}
-
-.bottom-nav__icon {
-  width: 24px;
-  height: 24px;
-  margin-bottom: var(--spacing-xs);
-  display: block;
-}
-
-.bottom-nav__icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.bottom-nav__label {
-  font-size: 10px;
-}
-
-/* Buttons */
-.btn {
-  padding: var(--spacing-md) var(--spacing-xl);
-  border-radius: var(--radius-sm);
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-block;
-  text-align: center;
-}
-
-.btn--primary {
-  background-color: var(--color-primary);
-  color: var(--color-text-white);
-}
-
-.btn--primary:hover {
-  background-color: var(--color-text-accent);
-}
-
-.btn--secondary {
-  background-color: var(--color-text-white);
-  color: var(--color-primary);
-  border: 2px solid var(--color-primary);
-}
-
-.btn--secondary:hover {
-  background-color: var(--color-primary-light);
-}
-
-.btn--danger {
-  background-color: var(--color-emergency-red);
-  color: var(--color-text-white);
-}
-
-.btn--danger:hover {
-  opacity: 0.9;
-}
-
-.btn--full {
-  width: 100%;
-}
-
-/* Cards */
-.card {
-  background-color: var(--color-background);
-  border-radius: var(--radius-sm);
-  padding: var(--spacing-md);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-.card:hover,
-.card:active {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.card__image {
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-sm);
-  margin-bottom: var(--spacing-sm);
-  opacity: 0.8;
-}
-
-.card__title {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--color-text-black);
-  margin-bottom: var(--spacing-xs);
-}
-
-.card__subtitle {
-  font-size: 16px;
-  color: var(--color-text-dark);
-}
-
-/* Grid */
-.grid {
-  display: grid;
-  gap: var(--spacing-md);
-}
-
-.grid--2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.grid--3 {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-/* Typography */
-.text-center {
-  text-align: center;
-}
-
-.text-bold {
-  font-weight: 700;
-}
-
-.text-large {
-  font-size: 28px;
-}
-
-.text-medium {
-  font-size: 22px;
-}
-
-.text-small {
-  font-size: 14px;
-}
-
-/* Utilities */
-.mt-sm { margin-top: var(--spacing-sm); }
-.mt-md { margin-top: var(--spacing-md); }
-.mt-lg { margin-top: var(--spacing-lg); }
-.mb-sm { margin-bottom: var(--spacing-sm); }
-.mb-md { margin-bottom: var(--spacing-md); }
-.mb-lg { margin-bottom: var(--spacing-lg); }
-
-.p-sm { padding: var(--spacing-sm); }
-.p-md { padding: var(--spacing-md); }
-.p-lg { padding: var(--spacing-lg); }
-
-/* Responsive adjustments for iPhone 16 */
-@media (max-width: 393px) {
-  .app-container {
-    width: 100vw;
-    min-height: 100vh;
-    max-height: 100vh;
-  }
+    // --- read place name from URL (?place=Peter's Drive-In) ---
+    const params = new URLSearchParams(window.location.search);
+    const placeName = params.get("place") || "Calgary, AB";
   
-  .content {
-    padding: var(--spacing-sm);
-  }
+    const titleEl   = document.getElementById("place-title");
+    const addressEl = document.getElementById("place-address");
+    const phoneEl   = document.getElementById("place-phone");
+    const mapFrame  = document.getElementById("map-frame");
+    const controls  = document.querySelectorAll(".map-control");
+    const startBtn  = document.querySelector(".btn--primary");
   
-  .bottom-nav {
-    width: 100vw;
-  }
-}
-
-/* Landscape mode adjustments */
-@media (max-height: 500px) and (orientation: landscape) {
-  .app-container {
-    min-height: 100vh;
-    max-height: none;
-  }
+    let currentMode = "driving"; // "driving" | "transit" | "walking"
+    let destinationFull = placeName + ", Calgary, AB"; // will refine after JSON
   
-  .content {
-    padding-bottom: 80px;
-  }
+    // --- 1) load text details from JSON (name, address, phone) ---
+    fetch("../calgary_places.json")
+      .then(response => response.json())
+      .then(data => {
+        const places = data.places || [];
+        const place  = places.find(p => p.name === placeName);
   
-  .bottom-nav {
-    min-height: 60px;
-    padding: var(--spacing-xs) 0;
-    padding-bottom: calc(var(--safe-area-bottom) + var(--spacing-xs));
-  }
-}
-
+        if (!place) {
+          titleEl.textContent   = placeName;
+          addressEl.innerHTML   = "Calgary<br>AB";
+          phoneEl.textContent   = "Phone: N/A";
+        } else {
+          titleEl.textContent = place.name;
+          if (place.address) {
+            // convert "\n" to <br> for display
+            addressEl.innerHTML = place.address.replace(/\n/g, "<br>");
+            // use a comma version as the full destination address
+            destinationFull = place.address.replace(/\n/g, ", ");
+          } else {
+            addressEl.innerHTML = "Calgary<br>AB";
+          }
+          phoneEl.textContent = "Phone: " + (place.phone || "N/A");
+        }
+  
+        // once we know the place, set up the embedded map
+        updateEmbeddedMap();
+      })
+      .catch(err => {
+        console.error("Error loading place info:", err);
+        titleEl.textContent   = placeName;
+        addressEl.innerHTML   = "Calgary<br>AB";
+        phoneEl.textContent   = "Phone: N/A";
+        updateEmbeddedMap(); // still show a generic route
+      });
+  
+    // --- 2) build an EMBED URL that shows directions & respects mode ---
+    function updateEmbeddedMap() {
+      // dirflg: d = driving, r = transit, w = walking
+      let flag = "d";
+      if (currentMode === "transit") flag = "r";
+      if (currentMode === "walking") flag = "w";
+  
+      const url =
+        "https://www.google.com/maps?saddr=" +
+        encodeURIComponent(ORIGIN_ADDRESS) +
+        "&daddr=" +
+        encodeURIComponent(destinationFull) +
+        "&dirflg=" + flag +
+        "&output=embed";
+  
+      mapFrame.src = url;
+    }
+  
+    // --- 3) hook up Drive / Transit / Walk chips (update map too) ---
+    controls.forEach(ctrl => {
+      ctrl.addEventListener("click", () => {
+        // visual active state
+        controls.forEach(c => c.classList.remove("active"));
+        ctrl.classList.add("active");
+  
+        const modeAttr = ctrl.dataset.mode; // "drive", "transit", "walk"
+        if (modeAttr === "drive")   currentMode = "driving";
+        if (modeAttr === "transit") currentMode = "transit";
+        if (modeAttr === "walk")    currentMode = "walking";
+  
+        // 🔥 reload the iframe with the new mode
+        updateEmbeddedMap();
+      });
+    });
+  
+    // --- 4) START button: open full Google Maps directions with origin + mode ---
+    if (startBtn) {
+      startBtn.addEventListener("click", () => {
+        const directionsUrl =
+          "https://www.google.com/maps/dir/?api=1" +
+          "&origin=" + encodeURIComponent(ORIGIN_ADDRESS) +
+          "&destination=" + encodeURIComponent(destinationFull) +
+          "&travelmode=" + encodeURIComponent(currentMode);
+  
+        window.open(directionsUrl, "_blank");
+      });
+    }
+  </script>
+  
+  
+</body>
+</html>
