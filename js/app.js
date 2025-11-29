@@ -159,3 +159,29 @@ function setupAddToItineraryButtons() {
     });
   });
 }
+
+/* ---------------------------------------
+   4. OPEN CALL MODAL (EMERGENCY CONTACTS)
+   --------------------------------------- */
+let currentCallNumber = "";
+
+// Opens modal
+function openCallModal(title, number, description) {
+  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("modalDescription").textContent = description;
+  document.getElementById("modalNumberDisplay").textContent = number;
+
+  currentCallNumber = number;
+
+  document.getElementById("callModal").style.display = "flex";
+}
+
+// Closes modal
+function closeCallModal() {
+  document.getElementById("callModal").style.display = "none";
+}
+
+// Confirm call 
+document.getElementById("confirmCallBtn").addEventListener("click", () => {
+  window.location.href = `tel:${currentCallNumber}`;
+});

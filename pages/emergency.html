@@ -43,62 +43,40 @@
     </div>
 
     <!-- Content -->
-    <div class="content">
-      <div class="emergency-hero">
-        <div class="emergency-hero__icon">🚨</div>
-        <h1 class="emergency-hero__title">Call 911</h1>
-        <p style="color: var(--color-text-dark); margin-top: var(--spacing-sm);">For life-threatening emergencies</p>
+  <div class="content emergency-layout">
+
+    <!-- Top Alarm Circle -->
+    <div class="emergency-top">
+      <div class="alarm-circle">
+        <div class="alarm-emoji">🚨</div>
       </div>
-
-      <div class="emergency-options">
-        <a href="emergency-hospitals.html" class="emergency-option">
-          <div class="emergency-option__icon">🏥</div>
-          <div class="emergency-option__text">Hospitals/Clinics</div>
-          <div>→</div>
-        </a>
-
-        <a href="emergency-embassy.html" class="emergency-option">
-          <div class="emergency-option__icon">🏛️</div>
-          <div class="emergency-option__text">Embassy/Consulate</div>
-          <div>→</div>
-        </a>
-
-        <a href="emergency-contacts.html" class="emergency-option">
-          <div class="emergency-option__icon">📞</div>
-          <div class="emergency-option__text">Emergency Contacts</div>
-          <div>→</div>
-        </a>
-      </div>
-
-      <!-- Non-Emergency Section -->
-      <div style="margin-top: var(--spacing-xl);">
-        <h2 class="section-title">Non-Emergency Contacts</h2>
-        
-        <div class="list-item">
-          <div class="list-item__content">
-            <div class="list-item__title">Police (Non-Emergency)</div>
-            <div class="list-item__subtitle">403-266-1234</div>
-          </div>
-          <button class="btn btn--primary" onclick="showAlert('Police (Non-Emergency)', '403-266-1234')">Call</button>
-        </div>
-
-        <div class="list-item">
-          <div class="list-item__content">
-            <div class="list-item__title">City Services</div>
-            <div class="list-item__subtitle">311</div>
-          </div>
-          <button class="btn btn--primary" onclick="showAlert('City Services', '311')">Call</button>
-        </div>
-
-        <div class="list-item">
-          <div class="list-item__content">
-            <div class="list-item__title">Visitor Information Center</div>
-            <div class="list-item__subtitle">403-263-8510</div>
-          </div>
-          <button class="btn btn--primary" onclick="showAlert('Visitor Information Center', '403-263-8510')">Call</button>
-        </div>
-      </div>
+      <h2 class="call-911-text">Call 911</h2>
     </div>
+
+    <!-- Grid of Emergency Options -->
+    <div class="emergency-grid">
+
+      <a href="emergency-hospitals.html" class="emergency-card">
+        <div class="card-emoji">🏥</div>
+        <p>Nearest<br>Hospitals/Clinics</p>
+      </a>
+
+      <a href="emergency-embassy.html" class="emergency-card">
+        <div class="card-emoji">🏛️</div>
+        <p>Embassy &<br>Consulate</p>
+      </a>
+    </div>
+
+    <div class="other-services-wrapper">
+      <a href="emergency-contacts.html" class="emergency-card">
+        <div class="card-emoji">📞</div>
+        <p>Other Services</p>
+      </a>
+    </div>
+
+
+
+  </div>
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
