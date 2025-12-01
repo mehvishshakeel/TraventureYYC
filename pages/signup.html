@@ -21,7 +21,6 @@
           <img src="../images/wifi-59.svg" alt="WiFi">
         </div>
         <div class="status-bar__battery">
-          <img src="../images/rectangle-56.svg" alt="Battery">
           <img src="../images/combined-shape-57.svg" alt="Battery">
           <img src="../images/rectangle-58.svg" alt="Battery">
         </div>
@@ -30,17 +29,37 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-      <a href="../index.html" style="color: var(--color-text-black);">←</a>
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
       <div class="top-bar__actions">
+        <a href="signup.html" style="color: var(--color-primary); font-size: 14px; margin-right: var(--spacing-sm);">Sign up</a>
         <div class="language-selector">
-          <span>ENG</span>
-          <img src="../images/english-51.png" alt="English" style="width: 20px; height: 20px;">
+          <button class="lang-btn">
+            <span class="lang-text">ENG</span>
+            <img src="../images/english-51.png" alt="English" class="flag-icon">
+          </button>
+          <div class="lang-menu">
+            <div class="lang-option" data-lang="en">English</div>
+            <div class="lang-option" data-lang="fr">Français</div>
+            <div class="lang-option" data-lang="es">Español</div>
+            <div class="lang-option" data-lang="ch">中文</div>
+            <div class="lang-option" data-lang="jp">日本語</div>
+          </div>
         </div>
       </div>
     </div>
+
+    <div id="langModal" class="call-modal-overlay" style="display:none;">
+      <div class="call-modal">
+        <h2>Language Feature</h2>
+        <p>This feature is currently in development.</p>
+
+        <button class="modal-cancel-btn" onclick="closeLangModal()">Close</button>
+      </div>
+    </div>
+
+    <script src="../js/app.js"></script>
 
     <!-- Auth Content -->
     <div class="auth-page">
