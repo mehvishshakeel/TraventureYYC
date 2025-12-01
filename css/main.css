@@ -561,6 +561,12 @@
   text-align: center;
 }
 
+.list-item--emergency {
+  border: 2px solid #E0E6F1; 
+  border-radius: 16px;
+  box-shadow: 0px 6px 12px rgba(0,0,0,0.12);
+}
+
 /*Emergency Contacts - Non-Emergency page*/
 .call-modal-overlay {
   position: fixed;
@@ -628,7 +634,7 @@
 }
 
 /*Emergency Contacts - Embassy & Consulate Page*/
-.embassy-actions {
+.emergency-actions {
   display: flex;
   flex-direction: row;
   gap: 12px;

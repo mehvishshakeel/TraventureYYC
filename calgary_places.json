@@ -362,6 +362,16 @@
       "estimated_time": "4–5 min away",
       "address": "130 10 Street NW\nCalgary, AB T2N 1V3",
       "phone": "(403) 457-0040"
+    },
+    {
+      "name": "US Consulate in Calgary",
+      "address": "615 Macleod Trail SE\nCalgary, AB T2G 4T8",
+      "phone": "403-229-1700"
+    },
+    {
+      "name": "Foothills Medical Centre",
+      "address": "1403 29 St NW\nCalgary, AB T2N 2T9",
+      "phone": "403-944-1110"
     }
   ]
 }
