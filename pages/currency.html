@@ -7,45 +7,33 @@
   <title>Currency Conversion - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
 
-  <!-- Currency-page specific styles -->
   <style>
+    /* --- Layout wrappers --- */
     .currency-top-bar {
-      border-bottom: none;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
     }
 
     .currency-header {
-      text-align: center;
-      font-weight: 700;
-      margin-top: 8px;
-      padding: 0 var(--spacing-lg);
+      padding: var(--spacing-md) var(--spacing-lg) 0 var(--spacing-lg);
+      text-align: left;
     }
 
     .currency-header h1 {
-      font-size: 18px;
-      letter-spacing: 1px;
-      margin: 0;
-    }
-
-    .currency-header::after {
-      content: "";
-      display: block;
-      width: 70%;
-      height: 2px;
-      margin: 6px auto 0;
-      background-color: #3b2a2e;
+      font-size: 16px;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      color: var(--color-text-dark, #222);
     }
 
     .currency-content {
-      padding: var(--spacing-lg);
-      padding-bottom: 96px;
+      padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg) var(--spacing-lg);
     }
 
     .currency-card {
       background: #ffffff;
       border-radius: 24px;
-      padding: 18px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-      margin-top: 18px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+      padding: 18px 16px;
     }
 
     .currency-row {
@@ -55,134 +43,191 @@
     }
 
     .currency-row + .currency-row {
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
     .currency-label {
-      font-size: 13px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
       font-weight: 600;
+      color: #222;
     }
 
     .currency-label--muted {
-      opacity: 0.7;
+      color: #808080;
     }
 
     .currency-row__inner {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 8px;
+    }
+
+    .currency-row__inner--disabled {
+      opacity: 0.9;
     }
 
     .currency-input {
       flex: 1;
       border-radius: 14px;
-      border: 1px solid #e4dde0;
+      border: 1px solid rgba(0, 0, 0, 0.10);
       padding: 10px 12px;
-      font-size: 14px;
+      font-size: 16px;
+      font-weight: 600;
       text-align: right;
-      background: #f9f6f8;
+      outline: none;
+      background-color: #fafafa;
     }
 
-    .currency-divider-row {
-      display: flex;
+    .currency-input:focus {
+      border-color: var(--color-primary, #ff7d5c);
+      box-shadow: 0 0 0 1px rgba(255, 125, 92, 0.25);
+      background-color: #ffffff;
+    }
+
+    /* --- Custom currency selector (pill + dropdown) --- */
+    .currency-select-wrapper {
+      position: relative;         /* 🔑 anchor for dropdown */
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      margin: 10px 0;
-      gap: 8px;
     }
 
-    .currency-divider {
-      flex: 1;
-      height: 1px;
-      background: #e4dde0;
-    }
-
-    .currency-swap {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: none;
-      background: #4f3c7a;
-      color: #ffffff;
-      font-size: 18px;
-      line-height: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .currency-convert-btn {
-      margin-top: 22px;
-      border-radius: 24px;
-    }
-
-    .exchange-rate {
-      margin-top: 16px;
-      text-align: center;
-      font-size: 13px;
-    }
-
-    /* Custom dropdown with flags */
-    .currency-chip {
+    .currency-select-trigger {
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
       padding: 6px 10px;
-      border-radius: 24px;
-      background: #ffffff;
-      border: 1px solid #e4dde0;
+      background: #f7f7f7;
       cursor: pointer;
-      min-width: 90px;
-      position: relative;
-    }
-
-    .currency-flag {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .currency-code-text {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
     }
 
-    .currency-select-hidden {
-      display: none;
+    .currency-select-trigger span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .dropdown-list {
+    .currency-flag {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      object-fit: cover;
+    }
+
+    .currency-code {
+      font-weight: 600;
+      color: #222;
+    }
+
+    .currency-arrow {
+      font-size: 11px;
+      color: #666;
+      margin-left: 2px;
+      transform-origin: center;
+      transition: transform 0.18s ease;
+    }
+
+    .currency-select-wrapper.open .currency-arrow {
+      transform: rotate(180deg);
+    }
+
+    .currency-select-menu {
       position: absolute;
-      top: 42px;
+      top: 100%;
       left: 0;
+      margin-top: 8px;
+      min-width: 180px;
       background: #ffffff;
-      border-radius: 14px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
       padding: 6px 0;
-      width: 180px;
-      z-index: 200;
+      z-index: 1000;
       display: none;
     }
 
-    .dropdown-item {
+    .currency-select-wrapper.open .currency-select-menu {
+      display: block;
+    }
+
+    .currency-option {
+      width: 100%;
+      border: none;
+      background: transparent;
       padding: 8px 12px;
       display: flex;
       align-items: center;
       gap: 8px;
       cursor: pointer;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .currency-option:hover {
+      background: #f5f5f5;
+    }
+
+    .currency-option__label-main {
+      font-weight: 600;
+      color: #222;
       font-size: 13px;
     }
 
-    .dropdown-item:hover {
-      background: #f3eef4;
+    .currency-option__label-sub {
+      font-size: 11px;
+      color: #888;
     }
 
-    .dropdown-item img {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
+    /* --- Divider with swap icon --- */
+    .currency-divider-row {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .currency-divider {
+      flex: 1;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    .currency-swap {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .currency-swap:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.16);
+    }
+
+    /* --- Convert button and exchange rate --- */
+    .currency-convert-btn {
+      margin-top: 18px;
+      letter-spacing: 0.12em;
+    }
+
+    .exchange-rate {
+      margin-top: 10px;
+      font-size: 11px;
+      color: #555;
+      text-align: center;
+      line-height: 1.4;
     }
   </style>
 </head>
@@ -210,7 +255,7 @@
 
     <!-- Top Bar -->
     <div class="top-bar currency-top-bar">
-      <a href="homepage.html" class="top-bar__back">←</a>
+      <a href="homepage.html" class="top-bar__back" style="color: var(--color-text-black);">←</a>
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
@@ -234,24 +279,60 @@
         <div class="currency-row">
           <span class="currency-label">Amount</span>
           <div class="currency-row__inner">
-            <!-- Custom dropdown trigger -->
-            <div class="currency-chip" id="fromDropdown">
-              <img id="fromFlag" src="../images/flag-cn.png" alt="CNY" class="currency-flag">
-              <span id="fromCode" class="currency-code-text">CNY</span>
+            <!-- FROM selector -->
+            <div class="currency-select-wrapper" data-role="from">
+              <button type="button" class="currency-select-trigger">
+                <img src="../images/flag-cn.png" alt="CNY" class="currency-flag">
+                <span>
+                  <span class="currency-code">CNY</span>
+                </span>
+                <span class="currency-arrow">▾</span>
+              </button>
+              <div class="currency-select-menu">
+                <button type="button" class="currency-option" data-code="CNY" data-flag="../images/flag-cn.png">
+                  <img src="../images/flag-cn.png" class="currency-flag" alt="CNY">
+                  <div>
+                    <div class="currency-option__label-main">CNY</div>
+                    <div class="currency-option__label-sub">Chinese Yuan</div>
+                  </div>
+                </button>
+                <button type="button" class="currency-option" data-code="USD" data-flag="../images/flag-us.png">
+                  <img src="../images/flag-us.png" class="currency-flag" alt="USD">
+                  <div>
+                    <div class="currency-option__label-main">USD</div>
+                    <div class="currency-option__label-sub">US Dollar</div>
+                  </div>
+                </button>
+                <button type="button" class="currency-option" data-code="CAD" data-flag="../images/flag-ca.png">
+                  <img src="../images/flag-ca.png" class="currency-flag" alt="CAD">
+                  <div>
+                    <div class="currency-option__label-main">CAD</div>
+                    <div class="currency-option__label-sub">Canadian Dollar</div>
+                  </div>
+                </button>
+                <button type="button" class="currency-option" data-code="EUR" data-flag="../images/flag-eu.png">
+                  <img src="../images/flag-eu.png" class="currency-flag" alt="EUR">
+                  <div>
+                    <div class="currency-option__label-main">EUR</div>
+                    <div class="currency-option__label-sub">Euro</div>
+                  </div>
+                </button>
+                <button type="button" class="currency-option" data-code="GBP" data-flag="../images/flag-gb.png">
+                  <img src="../images/flag-gb.png" class="currency-flag" alt="GBP">
+                  <div>
+                    <div class="currency-option__label-main">GBP</div>
+                    <div class="currency-option__label-sub">British Pound</div>
+                  </div>
+                </button>
+                <button type="button" class="currency-option" data-code="KSH" data-flag="../images/flag-ke.png">
+                  <img src="../images/flag-ke.png" class="currency-flag" alt="KSH">
+                  <div>
+                    <div class="currency-option__label-main">KSH</div>
+                    <div class="currency-option__label-sub">Kenyan Shilling</div>
+                  </div>
+                </button>
+              </div>
             </div>
-
-            <!-- Hidden select backing the logic -->
-            <select id="fromCurrency" class="currency-select-hidden">
-              <option value="CNY" data-flag="../images/flag-cn.png" selected>CNY</option>
-              <option value="USD" data-flag="../images/flag-us.png">USD</option>
-              <option value="CAD" data-flag="../images/flag-ca.png">CAD</option>
-              <option value="EUR" data-flag="../images/flag-eu.png">EUR</option>
-              <option value="GBP" data-flag="../images/flag-gb.png">GBP</option>
-              <option value="KSH" data-flag="../images/flag-ke.png">KSH</option>
-            </select>
-
-            <!-- Dropdown list -->
-            <div class="dropdown-list" id="fromDropdownList"></div>
 
             <input
               type="number"
@@ -266,32 +347,68 @@
         <!-- Divider + swap icon -->
         <div class="currency-divider-row">
           <div class="currency-divider"></div>
-          <button class="currency-swap" type="button" onclick="swapCurrencies()">↕</button>
+          <button class="currency-swap" type="button" id="swapBtn">↕</button>
           <div class="currency-divider"></div>
         </div>
 
         <!-- TO / CONVERTED -->
         <div class="currency-row">
           <span class="currency-label currency-label--muted">Converted Amount</span>
-          <div class="currency-row__inner">
-            <!-- Custom dropdown trigger -->
-            <div class="currency-chip" id="toDropdown">
-              <img id="toFlag" src="../images/flag-ca.png" alt="CAD" class="currency-flag">
-              <span id="toCode" class="currency-code-text">CAD</span>
+          <div class="currency-row__inner currency-row__inner--disabled">
+            <!-- TO selector -->
+            <div class="currency-select-wrapper" data-role="to">
+              <button type="button" class="currency-select-trigger">
+                <img src="../images/flag-ca.png" alt="CAD" class="currency-flag">
+                <span>
+                  <span class="currency-code">CAD</span>
+                </span>
+                <span class="currency-arrow">▾</span>
+              </button>
+              <div class="currency-select-menu">
+                <button type="button" class="currency-option" data-code="CAD" data-flag="../images/flag-ca.png">
+                  <img src="../images/flag-ca.png" class="currency-flag" alt="CAD">
+                  <div>
+                    <div class="currency-option__label-main">CAD</div>
+                    <div class="currency-option__label-sub">Canadian Dollar</div>
+                  </div>
+                </button>
+                <button type="button" class="currency-option" data-code="USD" data-flag="../images/flag-us.png">
+                  <img src="../images/flag-us.png" class="currency-flag" alt="USD">
+                  <div>
+                    <div class="currency-option__label-main">USD</div>
+                    <div class="currency-option__label-sub">US Dollar</div>
+                  </div>
+                </button>
+                <button type="button" class="currency-option" data-code="EUR" data-flag="../images/flag-eu.png">
+                  <img src="../images/flag-eu.png" class="currency-flag" alt="EUR">
+                  <div>
+                    <div class="currency-option__label-main">EUR</div>
+                    <div class="currency-option__label-sub">Euro</div>
+                  </div>
+                </button>
+                <button type="button" class="currency-option" data-code="GBP" data-flag="../images/flag-gb.png">
+                  <img src="../images/flag-gb.png" class="currency-flag" alt="GBP">
+                  <div>
+                    <div class="currency-option__label-main">GBP</div>
+                    <div class="currency-option__label-sub">British Pound</div>
+                  </div>
+                </button>
+                <button type="button" class="currency-option" data-code="CNY" data-flag="../images/flag-cn.png">
+                  <img src="../images/flag-cn.png" class="currency-flag" alt="CNY">
+                  <div>
+                    <div class="currency-option__label-main">CNY</div>
+                    <div class="currency-option__label-sub">Chinese Yuan</div>
+                  </div>
+                </button>
+                <button type="button" class="currency-option" data-code="KSH" data-flag="../images/flag-ke.png">
+                  <img src="../images/flag-ke.png" class="currency-flag" alt="KSH">
+                  <div>
+                    <div class="currency-option__label-main">KSH</div>
+                    <div class="currency-option__label-sub">Kenyan Shilling</div>
+                  </div>
+                </button>
+              </div>
             </div>
-
-            <!-- Hidden select backing the logic -->
-            <select id="toCurrency" class="currency-select-hidden">
-              <option value="CAD" data-flag="../images/flag-ca.png" selected>CAD</option>
-              <option value="USD" data-flag="../images/flag-us.png">USD</option>
-              <option value="EUR" data-flag="../images/flag-eu.png">EUR</option>
-              <option value="GBP" data-flag="../images/flag-gb.png">GBP</option>
-              <option value="CNY" data-flag="../images/flag-cn.png">CNY</option>
-              <option value="KSH" data-flag="../images/flag-ke.png">KSH</option>
-            </select>
-
-            <!-- Dropdown list -->
-            <div class="dropdown-list" id="toDropdownList"></div>
 
             <input
               type="text"
@@ -305,7 +422,7 @@
       </div>
 
       <!-- Convert button -->
-      <button class="btn btn--primary btn--full currency-convert-btn" onclick="convertCurrency()">
+      <button class="btn btn--primary btn--full currency-convert-btn" id="convertBtn">
         CONVERT
       </button>
 
@@ -338,7 +455,7 @@
   </div>
 
   <script>
-    /* ---------- Static exchange rates (prototype) ---------- */
+    /* ---------- Currency data ---------- */
     const exchangeRates = {
       USD: { CAD: 1.35, EUR: 0.92, GBP: 0.79, CNY: 7.25, KSH: 130 },
       CAD: { USD: 0.74, EUR: 0.68, GBP: 0.58, CNY: 5.37, KSH: 96 },
@@ -348,110 +465,139 @@
       KSH: { USD: 0.0077, CAD: 0.010, EUR: 0.0071, GBP: 0.0061, CNY: 0.056 }
     };
 
-    const currencyOptions = [
-      { code: "CNY", flag: "../images/flag-cn.png" },
-      { code: "USD", flag: "../images/flag-us.png" },
-      { code: "CAD", flag: "../images/flag-ca.png" },
-      { code: "EUR", flag: "../images/flag-eu.png" },
-      { code: "GBP", flag: "../images/flag-gb.png" },
-      { code: "KSH", flag: "../images/flag-ke.png" },
-    ];
+    let currentFrom = 'CNY';
+    let currentTo   = 'CAD';
 
-    function updateExchangeRate() {
-      const from = document.getElementById('fromCurrency').value;
-      const to   = document.getElementById('toCurrency').value;
-      const rate = exchangeRates[from]?.[to] || 1;
-      document.getElementById('exchangeRate').innerHTML =
-        `Indicative Exchange Rate<br>1 ${from} = ${rate.toFixed(2)} ${to}`;
+    function getRate(from, to) {
+      if (from === to) return 1;
+      return (exchangeRates[from] && exchangeRates[from][to]) || 1;
+    }
+
+    function updateExchangeRateText() {
+      const rate = getRate(currentFrom, currentTo);
+      const el = document.getElementById('exchangeRate');
+      if (!el) return;
+      el.innerHTML = `Indicative Exchange Rate<br>1 ${currentFrom} = ${rate.toFixed(2)} ${currentTo}`;
     }
 
     function convertCurrency() {
-      const from = document.getElementById('fromCurrency').value;
-      const to   = document.getElementById('toCurrency').value;
-      const amount = parseFloat(document.getElementById('amount').value) || 0;
-      const rate   = exchangeRates[from]?.[to] || 1;
-      document.getElementById('convertedAmount').value = (amount * rate).toFixed(2);
-      updateExchangeRate();
+      const amountInput = document.getElementById('amount');
+      const outInput    = document.getElementById('convertedAmount');
+      const amt = parseFloat(amountInput.value || '0') || 0;
+
+      const rate = getRate(currentFrom, currentTo);
+      const converted = (amt * rate).toFixed(2);
+
+      outInput.value = converted;
+      updateExchangeRateText();
     }
 
-    function refreshFlags() {
-      const fromSelect = document.getElementById('fromCurrency');
-      const toSelect   = document.getElementById('toCurrency');
+    function updateTriggerUI(role, code, flagSrc) {
+      const wrapper = document.querySelector(`.currency-select-wrapper[data-role="${role}"]`);
+      if (!wrapper) return;
+      const trigger = wrapper.querySelector('.currency-select-trigger');
+      const img     = trigger.querySelector('.currency-flag');
+      const codeSpan = trigger.querySelector('.currency-code');
 
-      const fromCode = fromSelect.value;
-      const toCode   = toSelect.value;
-
-      const fromMeta = currencyOptions.find(c => c.code === fromCode);
-      const toMeta   = currencyOptions.find(c => c.code === toCode);
-
-      if (fromMeta) {
-        document.getElementById('fromFlag').src = fromMeta.flag;
-        document.getElementById('fromFlag').alt = fromMeta.code;
-        document.getElementById('fromCode').textContent = fromMeta.code;
-      }
-
-      if (toMeta) {
-        document.getElementById('toFlag').src = toMeta.flag;
-        document.getElementById('toFlag').alt = toMeta.code;
-        document.getElementById('toCode').textContent = toMeta.code;
-      }
+      if (img) img.src = flagSrc;
+      if (img) img.alt = code;
+      if (codeSpan) codeSpan.textContent = code;
     }
 
-    function swapCurrencies() {
-      const fromSelect = document.getElementById('fromCurrency');
-      const toSelect   = document.getElementById('toCurrency');
-      const tmp = fromSelect.value;
-      fromSelect.value = toSelect.value;
-      toSelect.value   = tmp;
-      refreshFlags();
-      convertCurrency();
-    }
+    function setupCustomSelects() {
+      const wrappers = document.querySelectorAll('.currency-select-wrapper');
 
-    /* ------- Custom dropdown setup ------- */
-    function setupDropdown(triggerId, listId, selectId) {
-      const trigger = document.getElementById(triggerId);
-      const list    = document.getElementById(listId);
-      const select  = document.getElementById(selectId);
+      wrappers.forEach(wrapper => {
+        const trigger = wrapper.querySelector('.currency-select-trigger');
+        const menu    = wrapper.querySelector('.currency-select-menu');
+        const options = wrapper.querySelectorAll('.currency-option');
+        const role    = wrapper.dataset.role; // "from" or "to"
 
-      // build list
-      list.innerHTML = currencyOptions.map(
-        item => `
-          <div class="dropdown-item" data-code="${item.code}">
-            <img src="${item.flag}" alt="${item.code}">${item.code}
-          </div>`
-      ).join('');
+        if (!trigger || !menu) return;
 
-      trigger.addEventListener('click', () => {
-        const isOpen = list.style.display === 'block';
-        document.querySelectorAll('.dropdown-list').forEach(l => l.style.display = 'none');
-        list.style.display = isOpen ? 'none' : 'block';
+        // Open / close dropdown
+        trigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // close others
+          document.querySelectorAll('.currency-select-wrapper.open')
+            .forEach(w => { if (w !== wrapper) w.classList.remove('open'); });
+          wrapper.classList.toggle('open');
+        });
+
+        // Option click
+        options.forEach(opt => {
+          opt.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const code = opt.dataset.code;
+            const flag = opt.dataset.flag;
+
+            if (role === 'from') {
+              currentFrom = code;
+            } else {
+              currentTo = code;
+            }
+
+            updateTriggerUI(role, code, flag);
+            wrapper.classList.remove('open');
+            convertCurrency();
+          });
+        });
       });
 
-      list.addEventListener('click', (e) => {
-        const item = e.target.closest('.dropdown-item');
-        if (!item) return;
-        const code = item.dataset.code;
-        select.value = code;
-        refreshFlags();
+      // Close when clicking outside
+      document.addEventListener('click', () => {
+        document.querySelectorAll('.currency-select-wrapper.open')
+          .forEach(w => w.classList.remove('open'));
+      });
+    }
+
+    function setupSwapButton() {
+      const swapBtn = document.getElementById('swapBtn');
+      if (!swapBtn) return;
+
+      swapBtn.addEventListener('click', () => {
+        const oldFrom = currentFrom;
+        const oldTo   = currentTo;
+        currentFrom = oldTo;
+        currentTo   = oldFrom;
+
+        // find a representative option for each code so we can grab its flag
+        const fromOpt = document.querySelector(
+          `.currency-select-wrapper[data-role="from"] .currency-option[data-code="${currentFrom}"]`
+        );
+        const toOpt = document.querySelector(
+          `.currency-select-wrapper[data-role="to"] .currency-option[data-code="${currentTo}"]`
+        );
+
+        if (fromOpt) {
+          updateTriggerUI('from', currentFrom, fromOpt.dataset.flag);
+        }
+        if (toOpt) {
+          updateTriggerUI('to', currentTo, toOpt.dataset.flag);
+        }
+
         convertCurrency();
-        list.style.display = 'none';
       });
     }
 
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.currency-chip')) {
-        document.querySelectorAll('.dropdown-list').forEach(l => l.style.display = 'none');
+    document.addEventListener('DOMContentLoaded', () => {
+      setupCustomSelects();
+      setupSwapButton();
+
+      const convertBtn = document.getElementById('convertBtn');
+      if (convertBtn) {
+        convertBtn.addEventListener('click', convertCurrency);
       }
+
+      const amount = document.getElementById('amount');
+      if (amount) {
+        amount.addEventListener('input', convertCurrency);
+      }
+
+      // initial render
+      updateExchangeRateText();
+      convertCurrency();
     });
-
-    // init on load
-    setupDropdown('fromDropdown', 'fromDropdownList', 'fromCurrency');
-    setupDropdown('toDropdown', 'toDropdownList', 'toCurrency');
-    refreshFlags();
-    convertCurrency();
-
-    document.getElementById('amount').addEventListener('input', convertCurrency);
   </script>
 </body>
 </html>
