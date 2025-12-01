@@ -3,7 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
   setupSearchFilters();
   setupWishlistToggles();
   setupAddToItineraryButtons();
+  setupBottomNavHighlight();
+  setupCurrencyConverter();     // ✅ NEW
 });
+
+
 
 /* -------------------------
    1. SEARCH FILTERS
@@ -157,5 +161,39 @@ function setupAddToItineraryButtons() {
         });
       }
     });
+  });
+}
+
+
+/* -------------------------
+   5. CURRENCY CONVERSION
+   ------------------------- */
+
+function setupCurrencyConverter() {
+  const input = document.getElementById('currency-input');
+  const output = document.getElementById('currency-output');
+  const convertBtn = document.querySelector('.currency-convert-btn');
+
+  if (!input || !output || !convertBtn) return; // not on this page
+
+  const RATE = 0.20; // 1 CNY = 0.20 CAD
+
+  function convert() {
+    const value = parseFloat(input.value);
+    if (isNaN(value) || value < 0) {
+      output.value = '';
+      return;
+    }
+    const result = value * RATE;
+    output.value = result.toFixed(2);
+  }
+
+  convertBtn.addEventListener('click', convert);
+
+  // Optional: hit Enter to convert
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      convert();
+    }
   });
 }
