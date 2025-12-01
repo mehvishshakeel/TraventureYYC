@@ -88,9 +88,16 @@
     </div>
   </div>
 
+  <!-- Your global JS -->
+  <script src="../js/app.js"></script>
+
+  <!-- Itinerary-specific JS -->
   <script>
-    // Itinerary data for different dates
-    const itineraryData = {
+    /* ------------------------------
+       1. DEFAULT ITINERARY DATA
+       ------------------------------ */
+
+    const DEFAULT_ITINERARY_DATA = {
       '2026-07-11': {
         date: 'Saturday - July 11, 2026',
         events: [
@@ -98,7 +105,7 @@
             time: '10:00',
             title: 'Calgary Zoo',
             details: '10:00 - 13:00',
-            address: '210 St. George\'s Drive NE, Calgary, AB T2E 7V6'
+            address: "210 St. George's Drive NE, Calgary, AB T2E 7V6"
           },
           {
             time: '14:00',
@@ -136,7 +143,7 @@
         events: [
           {
             time: '11:00',
-            title: 'Prince\'s Island Park',
+            title: "Prince's Island Park",
             details: '11:00 - 13:00',
             address: '698 Eau Claire Ave SW, Calgary, AB T2P 5N4'
           },
@@ -155,7 +162,7 @@
             time: '10:00',
             title: 'Calgary Zoo',
             details: '10:00 - 13:00',
-            address: '210 St. George\'s Drive NE, Calgary, AB T2E 7V6'
+            address: "210 St. George's Drive NE, Calgary, AB T2E 7V6"
           },
           {
             time: '13:00',
@@ -268,6 +275,28 @@
       }
     };
 
+    // Global itinerary object used on this page
+    let itineraryData = {};
+
+    // Load from sessionStorage if available, otherwise use default
+    function loadItineraryData() {
+      try {
+        const stored = sessionStorage.getItem('itineraryData');
+        if (stored) {
+          itineraryData = JSON.parse(stored);
+        } else {
+          itineraryData = DEFAULT_ITINERARY_DATA;
+        }
+      } catch (e) {
+        console.warn('Could not read itineraryData from sessionStorage, using defaults', e);
+        itineraryData = DEFAULT_ITINERARY_DATA;
+      }
+    }
+
+    /* ------------------------------
+       2. DATE STRIP + TIMELINE
+       ------------------------------ */
+
     // Generate dates (14 days starting from July 11, 2026)
     function generateDates() {
       const dateSelector = document.getElementById('dateSelector');
@@ -277,15 +306,13 @@
       const dates = [];
       
       for (let i = 0; i < 14; i++) {
-        // Create date using local timezone to avoid timezone issues
         const date = new Date(startYear, startMonth, startDay + i);
         dates.push(date);
       }
 
       dates.forEach((date, index) => {
-        // Format date string manually to ensure consistency
         const year = date.getFullYear();
-        const month = date.getMonth() + 1; // getMonth() is 0-indexed
+        const month = date.getMonth() + 1;
         const day = date.getDate();
         const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         
@@ -295,7 +322,7 @@
         const dateTab = document.createElement('div');
         dateTab.className = 'date-tab';
         dateTab.dataset.date = dateStr;
-        if (index === 3) { // July 14 is the default selected date
+        if (index === 3) { // July 14 default
           dateTab.classList.add('active');
         }
         
@@ -307,7 +334,7 @@
         dateSelector.appendChild(dateTab);
       });
 
-      // Set initial date
+      // Initial date
       updateTimeline('2026-07-14');
     }
 
@@ -321,7 +348,6 @@
       }
     }
 
-    // Update timeline based on selected date
     function updateTimeline(dateStr) {
       const timeline = document.getElementById('timeline');
       const timelineContainer = document.getElementById('timelineContainer');
@@ -341,15 +367,15 @@
 
         currentDateDisplay.textContent = data.date;
 
-        if (data.events.length === 0) {
+        if (!data.events || data.events.length === 0) {
           timeline.innerHTML = '<div class="timeline-empty"><div class="timeline-empty__icon">📅</div><div class="timeline-empty__text">No events scheduled for this day</div></div>';
           timelineContainer.classList.remove('fade-out');
           return;
         }
 
         timeline.innerHTML = data.events.map((event, index) => {
-          // Determine image based on event title
           let imageHtml = '';
+
           if (event.title === 'Calgary Zoo') {
             imageHtml = `<img class="timeline-event__image" src="../images/calgaryZOO.png" alt="Calgary Zoo">`;
           } else if (event.title === 'Peace Bridge') {
@@ -370,7 +396,7 @@
             imageHtml = `<img class="timeline-event__image" src="../images/fish_creek_provincial_park.png" alt="Fish Creek Provincial Park">`;
           } else if (event.title === 'Bow River Pathway') {
             imageHtml = `<img class="timeline-event__image" src="../images/Bow River Pathway.png" alt="Bow River Pathway">`;
-          } else if (event.title === 'Prince\'s Island Park') {
+          } else if (event.title === "Prince's Island Park") {
             imageHtml = `<img class="timeline-event__image" src="../images/princes-island-park.png" alt="Prince's Island Park">`;
           } else if (event.title === 'Nose Hill Park') {
             imageHtml = `<img class="timeline-event__image" src="../images/Nose Hill Park.png" alt="Nose Hill Park">`;
@@ -391,24 +417,25 @@
           } else if (event.title === 'Glenbow Museum') {
             imageHtml = `<img class="timeline-event__image" src="../images/Glenbow Museum.png" alt="Glenbow Museum">`;
           }
-          
+
+          // Note: no notes/description rendered here – just title, time, address
           return `
-          <div class="timeline-item" style="animation-delay: ${index * 0.1}s">
-            <div class="timeline-time">${event.time}</div>
-            <div class="timeline-event" onclick="sessionStorage.setItem('lastViewedDate', '${dateStr}'); window.location.href='itinerary-detail.html?date=${dateStr}&index=${index}'">
-              ${imageHtml}
-              <div class="timeline-event__title">${event.title}</div>
-              <div class="timeline-event__details">${event.details}</div>
-              <div class="timeline-event__address">${event.address}</div>
+            <div class="timeline-item" style="animation-delay: ${index * 0.1}s">
+              <div class="timeline-time">${event.time}</div>
+              <div class="timeline-event"
+                   onclick="sessionStorage.setItem('lastViewedDate', '${dateStr}');
+                            window.location.href='itinerary-detail.html?date=${dateStr}&index=${index}'">
+                ${imageHtml}
+                <div class="timeline-event__title">${event.title}</div>
+                <div class="timeline-event__details">${event.details}</div>
+                <div class="timeline-event__address">${event.address}</div>
+              </div>
             </div>
-          </div>
-        `;
+          `;
         }).join('');
 
-        // Fade in
         timelineContainer.classList.remove('fade-out');
-        
-        // Scroll content to top (to show dates)
+
         const contentArea = document.querySelector('.itinerary-page.content');
         if (contentArea) {
           contentArea.scrollTop = 0;
@@ -416,10 +443,8 @@
       }, 150);
     }
 
-    // Track current active date
     let currentActiveDate = '2026-07-14';
 
-    // Handle date selector scroll with dynamic sizing
     function handleDateScroll() {
       const dateSelector = document.getElementById('dateSelector');
       const dateTabs = Array.from(dateSelector.querySelectorAll('.date-tab'));
@@ -430,8 +455,6 @@
       let closestTab = null;
       let closestDistance = Infinity;
 
-      // Calculate distances and find closest tab to center
-      // Use offsetLeft for consistent coordinate system relative to scroll container
       dateTabs.forEach((tab) => {
         const tabLeft = tab.offsetLeft;
         const tabWidth = tab.offsetWidth;
@@ -444,25 +467,21 @@
         }
       });
 
-      // Apply sizes based on pixel distance from center with threshold-based sizing
       dateTabs.forEach((tab) => {
         const tabLeft = tab.offsetLeft;
         const tabWidth = tab.offsetWidth;
         const tabCenter = tabLeft + tabWidth / 2;
         const pixelDistance = Math.abs(center - tabCenter);
-        
-        // Define thresholds in pixels for different size levels
-        const threshold1 = 60;  // Adjacent dates
-        const threshold2 = 120; // Next dates
-        const threshold3 = 180; // Further dates
+
+        const threshold1 = 60;
+        const threshold2 = 120;
+        const threshold3 = 180;
         
         let scale, opacity, minWidth, maxWidth, padding, dayFontSize, monthFontSize;
         
-        // Remove active class first
         tab.classList.remove('active');
         
         if (pixelDistance < 30) {
-          // Center date - largest (within 30px of center)
           scale = 1.1;
           opacity = 1;
           minWidth = 55;
@@ -472,7 +491,6 @@
           monthFontSize = '11px';
           tab.classList.add('active');
         } else if (pixelDistance < threshold1) {
-          // Adjacent dates (13th, 15th) - medium-large
           scale = 0.9;
           opacity = 0.85;
           minWidth = 46;
@@ -481,7 +499,6 @@
           dayFontSize = '14px';
           monthFontSize = '10px';
         } else if (pixelDistance < threshold2) {
-          // Next dates (12th, 16th) - medium
           scale = 0.8;
           opacity = 0.7;
           minWidth = 42;
@@ -490,7 +507,6 @@
           dayFontSize = '12px';
           monthFontSize = '9px';
         } else if (pixelDistance < threshold3) {
-          // Further dates (11th, 17th) - small
           scale = 0.7;
           opacity = 0.6;
           minWidth = 38;
@@ -499,7 +515,6 @@
           dayFontSize = '11px';
           monthFontSize = '8px';
         } else {
-          // Furthest dates - smallest
           scale = 0.65;
           opacity = 0.5;
           minWidth = 35;
@@ -509,25 +524,18 @@
           monthFontSize = '7px';
         }
         
-        // Apply styles to tab
         tab.style.transform = `scale(${scale})`;
         tab.style.opacity = opacity;
         tab.style.minWidth = `${minWidth}px`;
         tab.style.maxWidth = `${maxWidth}px`;
         tab.style.padding = padding;
         
-        // Apply font sizes to day and month
         const dayElement = tab.querySelector('.date-tab__day');
         const monthElement = tab.querySelector('.date-tab__month');
-        if (dayElement) {
-          dayElement.style.fontSize = dayFontSize;
-        }
-        if (monthElement) {
-          monthElement.style.fontSize = monthFontSize;
-        }
+        if (dayElement) dayElement.style.fontSize = dayFontSize;
+        if (monthElement) monthElement.style.fontSize = monthFontSize;
       });
 
-      // Update timeline if date changed
       if (closestTab) {
         const selectedDate = closestTab.dataset.date;
         if (selectedDate !== currentActiveDate) {
@@ -537,10 +545,6 @@
       }
     }
 
-    // Note: updateStickyPosition no longer needed as current-date-display 
-    // is now inside date-selector-wrapper and moves with it
-
-    // Update padding overlay height to cover space between top-bar and date-selector-wrapper
     function updatePaddingOverlayHeight() {
       const dateSelectorWrapper = document.querySelector('.date-selector-wrapper');
       const topOverlay = document.querySelector('.padding-overlay-top');
@@ -549,85 +553,66 @@
       
       if (dateSelectorWrapper && topOverlay) {
         const wrapperHeight = dateSelectorWrapper.offsetHeight;
-        // Get CSS variable value for spacing-md (16px)
         const spacingMd = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--spacing-md')) || 16;
-        // Set height to cover from top of content (below top-bar) down to bottom of date-selector-wrapper plus extra
         const overlayHeight = wrapperHeight + spacingMd;
         
-        // Update all overlays to match this height (only covering the date selector area)
         topOverlay.style.height = `${overlayHeight}px`;
-        if (leftOverlay) {
-          leftOverlay.style.height = `${overlayHeight}px`;
-        }
-        if (rightOverlay) {
-          rightOverlay.style.height = `${overlayHeight}px`;
-        }
+        if (leftOverlay) leftOverlay.style.height = `${overlayHeight}px`;
+        if (rightOverlay) rightOverlay.style.height = `${overlayHeight}px`;
       }
     }
 
-    // Initialize
+    /* ------------------------------
+       3. INIT
+       ------------------------------ */
+
     document.addEventListener('DOMContentLoaded', () => {
+      loadItineraryData();
       generateDates();
       
       const dateSelector = document.getElementById('dateSelector');
       
-      // Check if there's a stored date from navigation (e.g., coming back from detail page)
       const storedDate = sessionStorage.getItem('lastViewedDate');
       const initialDate = storedDate || '2026-07-14';
+      if (storedDate) sessionStorage.removeItem('lastViewedDate');
       
-      // Clear the stored date after using it so future loads default to July 14th
-      if (storedDate) {
-        sessionStorage.removeItem('lastViewedDate');
-      }
-      
-      // Scroll to initial active date (use stored date or default to July 14th)
       setTimeout(() => {
         const dateTabs = Array.from(dateSelector.querySelectorAll('.date-tab'));
-        const activeTab = dateTabs.find(tab => tab.dataset.date === initialDate) || dateTabs.find(tab => tab.dataset.date === '2026-07-14') || dateTabs[3];
+        const activeTab =
+          dateTabs.find(tab => tab.dataset.date === initialDate) ||
+          dateTabs.find(tab => tab.dataset.date === '2026-07-14') ||
+          dateTabs[3];
+
         if (activeTab) {
           const selectedDate = activeTab.dataset.date;
           currentActiveDate = selectedDate;
           updateTimeline(selectedDate);
           
           const containerWidth = dateSelector.offsetWidth;
-          const scrollPosition = activeTab.offsetLeft - (containerWidth / 2) + (activeTab.offsetWidth / 2);
-          dateSelector.scrollTo({
-            left: scrollPosition,
-            behavior: 'auto' // Use 'auto' for instant scroll on load
-          });
+          const scrollPosition =
+            activeTab.offsetLeft - (containerWidth / 2) + (activeTab.offsetWidth / 2);
+          dateSelector.scrollTo({ left: scrollPosition, behavior: 'auto' });
           
-          // Update sizes after scroll
           setTimeout(() => {
             handleDateScroll();
-            // Update padding overlay height after dates are rendered
             updatePaddingOverlayHeight();
           }, 50);
         }
       }, 200);
       
-      // Update padding overlay height on window resize
       window.addEventListener('resize', updatePaddingOverlayHeight);
-      
-      // Note: No longer need to update sticky position as current-date-display 
-      // is inside date-selector-wrapper and moves with it
 
-      // Handle scroll events - update on every scroll for smooth animation
       let scrollTimeout;
       dateSelector.addEventListener('scroll', () => {
-        // Update immediately for smooth scrolling
         handleDateScroll();
-        
-        // Also update after scroll ends for final positioning
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
           handleDateScroll();
         }, 100);
       }, { passive: true });
 
-      // Handle touch end for snap scrolling
       dateSelector.addEventListener('touchend', () => {
         setTimeout(() => {
-          // Find closest tab to center
           const dateTabs = Array.from(dateSelector.querySelectorAll('.date-tab'));
           const containerWidth = dateSelector.offsetWidth;
           const scrollLeft = dateSelector.scrollLeft;
@@ -648,55 +633,44 @@
             }
           });
 
-          // Snap to closest tab and update date immediately
           if (closestTab) {
             const selectedDate = closestTab.dataset.date;
-            // Update date immediately
             if (selectedDate && selectedDate !== currentActiveDate) {
               currentActiveDate = selectedDate;
               updateTimeline(selectedDate);
             }
             
-            const scrollPosition = closestTab.offsetLeft - (containerWidth / 2) + (closestTab.offsetWidth / 2);
-            dateSelector.scrollTo({
-              left: scrollPosition,
-              behavior: 'smooth'
-            });
+            const scrollPosition =
+              closestTab.offsetLeft - (containerWidth / 2) + (closestTab.offsetWidth / 2);
+            dateSelector.scrollTo({ left: scrollPosition, behavior: 'smooth' });
           }
           
-          // Update sizes after snap
           setTimeout(() => {
             handleDateScroll();
           }, 150);
         }, 100);
       }, { passive: true });
 
-      // Handle click on date tabs
       dateSelector.addEventListener('click', (e) => {
         const dateTab = e.target.closest('.date-tab');
         if (dateTab) {
           const selectedDate = dateTab.dataset.date;
-          // Update date immediately
           if (selectedDate && selectedDate !== currentActiveDate) {
             currentActiveDate = selectedDate;
             updateTimeline(selectedDate);
           }
           
           const containerWidth = dateSelector.offsetWidth;
-          const scrollPosition = dateTab.offsetLeft - (containerWidth / 2) + (dateTab.offsetWidth / 2);
-          dateSelector.scrollTo({
-            left: scrollPosition,
-            behavior: 'smooth'
-          });
+          const scrollPosition =
+            dateTab.offsetLeft - (containerWidth / 2) + (dateTab.offsetWidth / 2);
+          dateSelector.scrollTo({ left: scrollPosition, behavior: 'smooth' });
           
-          // Update sizes after scroll
           setTimeout(() => {
             handleDateScroll();
           }, 300);
         }
       });
 
-      // Update on scroll animation end (if browser supports it)
       if ('onscrollend' in dateSelector) {
         dateSelector.addEventListener('scrollend', handleDateScroll);
       }

@@ -2,9 +2,110 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Attractions - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
+
+  <!-- Detail overlay styles (you can move this into main.css if you prefer) -->
+  <style>
+    .activity-detail-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      display: none;
+      justify-content: center;
+      align-items: flex-start;
+      z-index: 500;
+    }
+    .activity-detail-overlay.is-visible {
+      display: flex;
+    }
+    .activity-detail-card {
+      background: #fdf9f9;
+      width: 100%;
+      max-width: 414px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .activity-detail-hero {
+      position: relative;
+      overflow: hidden;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+    }
+    .activity-detail-hero img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+    }
+    .activity-detail-hero-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .activity-detail-back {
+      width: 32px;
+      height: 32px;
+      border-radius: 16px;
+      border: none;
+      background: #ffffffdd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .activity-detail-hero-right {
+      display: flex;
+      gap: 8px;
+    }
+    .icon-button {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      border: none;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+    .icon-button.is-active {
+      background: #ff6b81;
+      color: #fff;
+    }
+    .activity-detail-hero-title-wrap {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+    }
+    .activity-detail-hero-title {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 20px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    }
+    .activity-detail-body {
+      padding: 16px;
+      overflow-y: auto;
+    }
+    .activity-detail-body p {
+      margin-bottom: 8px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .activity-detail-address {
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
   <div class="app-container">
@@ -64,7 +165,9 @@
 
     <!-- Content -->
     <div class="content">
-      <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-md);">Attractions</h1>
+      <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-md);">
+        Attractions
+      </h1>
 
       <!-- Search Bar -->
       <div class="search-bar">
@@ -73,51 +176,158 @@
       </div>
 
       <!-- Attractions List -->
-      <div class="list-item">
-        <img src="../images/things-to-do-image-26.png" alt="Calgary Tower" class="list-item__image">
+      <div class="list-item"
+           data-id="calgary-tower"
+           data-type="activity">
+        <img src="../images/CalgaryTower3.jpg"
+             alt="Calgary Tower"
+             class="list-item__image">
         <div class="list-item__content">
           <div class="list-item__title">Calgary Tower</div>
-          <div class="list-item__subtitle">Iconic observation tower in downtown Calgary</div>
+          <div class="list-item__subtitle">
+            Iconic observation tower in downtown Calgary
+          </div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon">
-          <span style="font-size: 20px; cursor: pointer;">+</span>
+          <img src="../images/heart-icon-36.png"
+               alt="Favorite"
+               class="list-item__icon">
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
         </div>
       </div>
 
-      <div class="list-item">
-        <img src="../images/things-to-do-image-26.png" alt="Prince's Island Park" class="list-item__image">
+      <div class="list-item"
+           data-id="princes-island-park"
+           data-type="activity">
+        <img src="../images/islandpark.webp"
+             alt="Prince's Island Park"
+             class="list-item__image">
         <div class="list-item__content">
           <div class="list-item__title">Prince's Island Park</div>
-          <div class="list-item__subtitle">Beautiful park in the heart of Calgary</div>
+          <div class="list-item__subtitle">
+            Beautiful park in the heart of Calgary
+          </div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon">
-          <span style="font-size: 20px; cursor: pointer;">+</span>
+          <img src="../images/heart-icon-36.png"
+               alt="Favorite"
+               class="list-item__icon">
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
         </div>
       </div>
 
-      <div class="list-item">
-        <img src="../images/things-to-do-image-26.png" alt="Peace Bridge" class="list-item__image">
+      <div class="list-item"
+           data-id="peace-bridge"
+           data-type="activity">
+        <img src="../images/things-to-do-image-26.png"
+             alt="Peace Bridge"
+             class="list-item__image">
         <div class="list-item__content">
           <div class="list-item__title">Peace Bridge</div>
-          <div class="list-item__subtitle">Famous pedestrian bridge across the Bow River</div>
+          <div class="list-item__subtitle">
+            Famous pedestrian bridge across the Bow River
+          </div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon">
-          <span style="font-size: 20px; cursor: pointer;">+</span>
+          <img src="../images/heart-icon-36.png"
+               alt="Favorite"
+               class="list-item__icon">
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
         </div>
       </div>
 
-      <div class="list-item">
-        <img src="../images/things-to-do-image-26.png" alt="Bow River" class="list-item__image">
+      <div class="list-item"
+           data-id="bow-river-pathway"
+           data-type="activity">
+        <img src="../images/bow-river.png"
+             alt="Bow River Pathway"
+             class="list-item__image">
         <div class="list-item__content">
-          <div class="list-item__title">Bow River</div>
-          <div class="list-item__subtitle">Scenic river running through Calgary</div>
+          <div class="list-item__title">Bow River Pathway</div>
+          <div class="list-item__subtitle">
+            Scenic pathway running along the Bow River
+          </div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon">
-          <span style="font-size: 20px; cursor: pointer;">+</span>
+          <img src="../images/heart-icon-36.png"
+               alt="Favorite"
+               class="list-item__icon">
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
+      </div>
+
+      <div class="list-item"
+           data-id="calgary-zoo"
+           data-type="activity">
+        <img src="../images/calgary-zoo.jpg"
+             alt="Calgary Zoo"
+             class="list-item__image">
+        <div class="list-item__content">
+          <div class="list-item__title">Calgary Zoo</div>
+          <div class="list-item__subtitle">
+            Wildlife, botanical gardens & immersive exhibits
+          </div>
+        </div>
+        <div class="list-item__actions">
+          <img src="../images/heart-icon-36.png"
+               alt="Favorite"
+               class="list-item__icon">
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
+      </div>
+
+      <div class="list-item"
+           data-id="stephen-avenue"
+           data-type="activity">
+        <img src="../images/stephen-avenue1.png"
+             alt="Stephen Avenue"
+             class="list-item__image">
+        <div class="list-item__content">
+          <div class="list-item__title">Stephen Avenue Walk</div>
+          <div class="list-item__subtitle">
+            Historic downtown street with shops, cafés & nightlife
+          </div>
+        </div>
+        <div class="list-item__actions">
+          <img src="../images/heart-icon-36.png"
+               alt="Favorite"
+               class="list-item__icon">
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Detail “screen” -->
+    <div id="activityDetailOverlay" class="activity-detail-overlay">
+      <div class="activity-detail-card">
+        <div class="activity-detail-hero">
+          <img id="activityDetailImage" src="" alt="Attraction image">
+
+          <div class="activity-detail-hero-top">
+            <button type="button" class="activity-detail-back" id="activityDetailBack">←</button>
+
+            <div class="activity-detail-hero-right">
+              <button type="button" class="icon-button" id="activityDetailFav" aria-label="Add to favourites">♡</button>
+              <button type="button" class="icon-button" id="activityDetailAdd" aria-label="Add to itinerary">+</button>
+            </div>
+          </div>
+
+          <div class="activity-detail-hero-title-wrap">
+            <span id="activityDetailTitleHero" class="activity-detail-hero-title">TITLE</span>
+          </div>
+        </div>
+
+        <div class="activity-detail-body">
+          <p id="activityDetailIntro"></p>
+          <p id="activityDetailAddress" class="activity-detail-address"></p>
+          <p id="activityDetailParagraph"></p>
+
+          <button type="button"
+                  id="activityDetailLearnMore"
+                  class="btn btn--primary btn--full"
+                  style="margin-top: 16px;">
+            Learn more ➜
+          </button>
         </div>
       </div>
     </div>
@@ -128,7 +338,7 @@
         <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
         <span class="bottom-nav__label">Itinerary</span>
       </a>
-      <a href="homepage.html" class="bottom-nav__item active">
+      <a href="homepage.html" class="bottom-nav__item">
         <img src="../images/home-42.svg" alt="Home" class="bottom-nav__icon">
         <span class="bottom-nav__label">Home</span>
       </a>
@@ -142,7 +352,188 @@
       </a>
     </div>
   </div>
-<script src="../js/app.js"></script>
+
+  <script src="../js/app.js"></script>
+
+  <!-- Detail overlay logic -->
+  <script>
+    // Rich text + URLs for each attraction (keyed by data-id)
+    const ATTRACTION_DETAILS = {
+      "peace-bridge": {
+        intro:
+        "The Peace Bridge is open year-round and offers beautiful views of the Bow River and downtown Calgary, especially at sunset.",
+        address:
+          "Address: 98 Memorial Dr NW, Calgary, AB T2N 5C1",
+        description:
+          "At the Peace Bridge, you’ll experience one of Calgary’s most recognizable landmarks. Designed by Spanish architect Santiago Calatrava and opened in 2012, this striking red pedestrian and cyclist bridge connects downtown to the north side of the Bow River. Whether you’re walking, biking, or just taking in the skyline, it’s a perfect spot for photos and slow evening strolls. The fully covered design means it’s comfortable in all seasons, making it a must-see stop on any Calgary visit.",
+        learnMoreUrl:
+          "https://www.visitcalgary.com/things-to-do/peace-bridge"
+      },
+      "calgary-tower": {
+        intro:
+          "The Calgary Tower is an iconic observation tower that offers 360° views of downtown, the Bow River, and on clear days, the Rocky Mountains.",
+        address:
+          "Address: 101 9 Ave SW, Calgary, AB T2P 1J9",
+        description:
+        "At the Calgary Tower, you ride 190 metres above the city to a glass-floored observation deck that lets you look straight down at the streets below. From the top, you can spot major landmarks, the Saddledome, the river valley, and the distant Rockies. Inside, you’ll find interpretive displays about the city’s history and skyline, as well as a revolving restaurant for guests who want a sit-down meal with a slowly changing view. It’s an easy, one-stop way to get your bearings and appreciate how compact and walkable downtown Calgary really is.",
+        learnMoreUrl:
+          "https://www.calgarytower.com/"
+      },
+      "calgary-zoo": {
+        intro:
+          "The Calgary Zoo combines wildlife habitats, botanical gardens, and immersive exhibits that are open in every season.",
+        address:
+          "Address: 210 St. George's Dr NE, Calgary, AB T2E 7V6",
+        description:
+        "At the Calgary Zoo, you can wander through zones dedicated to animals from around the world—from Canadian wildlife and African savannah species to playful penguins and curious primates. The pathways are easy to follow and well-signed, making it simple to pick your must-see areas even on a short visit. Along the way, you’ll find indoor pavilions, seasonal events, and quiet garden spaces if you need a break. It’s a great choice for families, animal lovers, and anyone looking to spend a half-day outdoors without leaving the city.",
+        learnMoreUrl:
+          "https://www.calgaryzoo.com/"
+      },
+      "princes-island-park": {
+        intro:
+          "Prince’s Island Park is a green oasis just off downtown, with riverside pathways, picnic lawns, and frequent festivals in warmer months.",
+        address:
+          "Address: 698 Eau Claire Ave SW, Calgary, AB T2P 5N4",
+        description:
+        "At Prince’s Island Park, you step off busy city streets and onto an island in the middle of the Bow River. The park features tree-lined walking paths, open fields for picnics or games, and several viewpoints where you can look back at the Calgary skyline. In summer, it often hosts outdoor concerts and festivals, while in winter the riverbanks and bridges become peaceful spots for a quiet walk. It’s an easy, low-effort stop that fits well between other downtown activities or meals along nearby Eau Claire and the river pathway.",
+        learnMoreUrl:
+          "https://www.visitcalgary.com/places/princes-island-park"
+      },
+      "stephen-avenue": {
+        intro:
+          "Stephen Avenue Walk is a historic downtown street filled with shops, cafés, patios, and street life during the day and into the evening.",
+        address:
+          "Address: Stephen Ave, Calgary, AB",
+        description:
+          "On Stephen Avenue Walk, you stroll past heritage sandstone buildings that now house boutiques, restaurants, pubs, and coffee shops. Parts of the street are pedestrian-only, so it’s a comfortable place to wander, people-watch, and stop for a drink or a quick meal. In warmer months, patios spill onto the sidewalk and street performers or pop-up events often appear along the blocks. It’s a natural link between other downtown landmarks like the Calgary Tower, Olympic Plaza, and nearby shopping centres.",
+        learnMoreUrl:
+          "https://www.visitcalgary.com/stephen-avenue-walk"
+      },
+      "bow-river-pathway": {
+        intro:
+          "The Bow River Pathway is a scenic multi-use trail that follows the river through Calgary, connecting parks, bridges, and viewpoints.",
+        address:
+          "Along Bow River, Calgary, AB",
+        description:
+        "Along the Bow River Pathway, you can walk, run, or cycle while staying close to the water and surrounded by greenery. The pathway links key spots like Prince’s Island Park, the Peace Bridge, and several riverfront parks, so you can choose a short stroll or a longer outing. Benches and lookout points appear regularly, giving you easy places to pause for photos or a snack. It’s a relaxed way to experience the city from a more local perspective, away from busy roads but still close to downtown.",
+        learnMoreUrl:
+          "https://www.visitcalgary.com/places/bow-river-pathway"
+      }
+    };
+
+    (function setupActivityDetailOverlay() {
+      const overlay       = document.getElementById("activityDetailOverlay");
+      if (!overlay) return;
+
+      const imgEl         = document.getElementById("activityDetailImage");
+      const titleHeroEl   = document.getElementById("activityDetailTitleHero");
+      const introEl       = document.getElementById("activityDetailIntro");
+      const addrEl        = document.getElementById("activityDetailAddress");
+      const descEl        = document.getElementById("activityDetailParagraph");
+      const learnBtn      = document.getElementById("activityDetailLearnMore");
+      const backBtn       = document.getElementById("activityDetailBack");
+      const favBtn        = document.getElementById("activityDetailFav");
+      const addBtn        = document.getElementById("activityDetailAdd");
+
+      let currentId  = null;
+      let currentUrl = null;
+
+      function openOverlayForCard(card) {
+        const id    = card.dataset.id;
+        const title = card.querySelector(".list-item__title")?.textContent.trim() || "";
+        const img   = card.querySelector(".list-item__image")?.src || "";
+        const details = ATTRACTION_DETAILS[id] || {};
+
+        currentId  = id;
+        currentUrl = details.learnMoreUrl || null;
+
+        imgEl.src                 = img;
+        imgEl.alt                 = title;
+        titleHeroEl.textContent   = title;
+        introEl.textContent       = details.intro || "";
+        addrEl.textContent        = details.address || "";
+        descEl.textContent        = details.description || "";
+
+        // favourite state based on shared store from app.js
+        if (typeof loadFavorites === "function") {
+          const favorites = loadFavorites();
+          const isFav = favorites.some(f => f.id === id);
+          favBtn.classList.toggle("is-active", isFav);
+          favBtn.textContent = isFav ? "♥" : "♡";
+        } else {
+          favBtn.classList.remove("is-active");
+          favBtn.textContent = "♡";
+        }
+
+        overlay.classList.add("is-visible");
+      }
+
+      // Open overlay when you tap a card (but not when you tap the heart or +)
+      document.querySelectorAll(".list-item").forEach(card => {
+        card.addEventListener("click", (e) => {
+          if (e.target.closest(".list-item__actions")) return;
+          openOverlayForCard(card);
+        });
+      });
+
+      // Back closes overlay
+      backBtn.addEventListener("click", () => {
+        overlay.classList.remove("is-visible");
+      });
+
+      // Learn more button
+      learnBtn.addEventListener("click", () => {
+        if (currentUrl) {
+          window.open(currentUrl, "_blank");
+        }
+      });
+
+      // Favourite toggle – uses same localStorage as hearts
+      favBtn.addEventListener("click", () => {
+        if (!currentId || typeof loadFavorites !== "function" || typeof saveFavorites !== "function") return;
+
+        const title   = titleHeroEl.textContent || "";
+        const subtitle = ""; // could be filled from details if needed
+
+        let favorites = loadFavorites();
+        const idx = favorites.findIndex(f => f.id === currentId);
+
+        if (idx >= 0) {
+          favorites.splice(idx, 1);
+          favBtn.classList.remove("is-active");
+          favBtn.textContent = "♡";
+        } else {
+          favorites.push({ id: currentId, title, subtitle, type: "activity" });
+          favBtn.classList.add("is-active");
+          favBtn.textContent = "♥";
+        }
+
+        saveFavorites(favorites);
+      });
+
+      // "+" button: same idea as + on list – pre-fill itinerary edit form
+      addBtn.addEventListener("click", () => {
+        if (!currentId) return;
+
+        const details = ATTRACTION_DETAILS[currentId] || {};
+        const title   = titleHeroEl.textContent || "";
+        const address = (details.address || "").replace(/^Address:\s*/i, "");
+
+        const today   = new Date();
+        const isoDate = today.toISOString().slice(0, 10); // yyyy-mm-dd
+
+        const pending = {
+          title: title,
+          date: isoDate,
+          startTime: "13:00",
+          endTime: "14:00",
+          location: address
+        };
+
+        sessionStorage.setItem("pendingItineraryData", JSON.stringify(pending));
+        window.location.href = "itinerary-edit.html";
+      });
+    })();
+  </script>
 </body>
 </html>
-
