@@ -295,6 +295,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   });
+  const activeTab = document.querySelector(".emergency-tabs .tab.active");
+  if (activeTab) {
+    const defaultType = activeTab.dataset.type;
+
+    items.forEach(item => {
+      item.style.display =
+        item.dataset.type === defaultType ? "flex" : "none";
+    });
+  }
 });
 </script>
 
