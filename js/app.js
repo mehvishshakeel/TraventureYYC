@@ -182,6 +182,53 @@ function closeCallModal() {
 }
 
 // Confirm call 
-document.getElementById("confirmCallBtn").addEventListener("click", () => {
-  window.location.href = `tel:${currentCallNumber}`;
+const confirmCallBtn = document.getElementById("confirmCallBtn");
+if (confirmCallBtn) {
+  confirmCallBtn.addEventListener("click", () => {
+    window.location.href = `tel:${currentCallNumber}`;
+  });
+}
+
+/* ---------------------------------------
+   5. OPEN LANGUAGE FEATURE MODAL
+   --------------------------------------- */
+
+// LANGUAGE DROPDOWN
+document.addEventListener("DOMContentLoaded", () => {
+  const dropdown = document.querySelector(".language-selector");
+  if (!dropdown) return;
+
+  const btn = dropdown.querySelector(".lang-btn");
+  const menu = dropdown.querySelector(".lang-menu");
+  const options = dropdown.querySelectorAll(".lang-option");
+
+  // Toggle menu
+  btn.addEventListener("click", () => {
+    menu.classList.toggle("show");
+  });
+
+  // Select language → show modal
+  options.forEach(option => {
+    option.addEventListener("click", () => {
+      openLangModal();
+      menu.classList.remove("show");
+    });
+  });
+
+  // Click outside = close dropdown
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".language-selector")) {
+      menu.classList.remove("show");
+    }
+  });
 });
+
+// MODAL
+function openLangModal() {
+  document.getElementById("langModal").style.display = "flex";
+}
+
+function closeLangModal() {
+  document.getElementById("langModal").style.display = "none";
+}
+
