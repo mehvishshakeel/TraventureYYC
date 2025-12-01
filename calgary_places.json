@@ -369,9 +369,43 @@
       "phone": "403-229-1700"
     },
     {
+      "name": "Consul (Honorary) of the Federal Republic of Germany",
+      "address": "Encor Place, 645 7 Ave SW #2300, Calgary, AB T2P 4G8",
+    },
+    {
+      "name":"Consulate General of the Philippines",
+      "address": "1001 1st St SE Suite 100, Calgary, AB T2G 5G3",
+      "phone": "403-455-9457"
+    },
+    {
+      "name": "Consulate of Mexico" ,
+      "address": "407 2 St SW #400, Calgary, AB T2P 2Y3",
+      "phone": "403-264-1259"
+    },
+    {
       "name": "Foothills Medical Centre",
       "address": "1403 29 St NW\nCalgary, AB T2N 2T9",
       "phone": "403-944-1110"
-    }
+    },    
+    {
+      "name": "Rockyview General Hospital",
+      "address": "7007 14 St SW, Calgary, AB T2V 1P9",
+      "phone": "403-943-3000" 
+    },  
+    {
+      "name": "Peter Lougheed Centre",
+      "address": "3500 26 Ave NE, Calgary, AB T1Y 6J4",
+      "phone": "403-943-4555" 
+    },    
+    {
+      "name": "South Health Campus",
+      "address": "4448 Front St SE, Calgary, AB T3M 1M4",
+      "phone": "403-956-1111" 
+    },
+    {
+      "name": "Alberta Children's Hospital",
+      "address": "28 Oki Dr, Calgary, AB T3B 6A8",
+      "phone": "403-955-7211" 
+    }       
   ]
 }
