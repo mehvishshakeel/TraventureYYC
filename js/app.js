@@ -164,36 +164,28 @@ function setupAddToItineraryButtons() {
   });
 }
 
+/* ---------------------------------------
+   4. OPEN CALL MODAL (EMERGENCY CONTACTS)
+   --------------------------------------- */
+let currentCallNumber = "";
 
-/* -------------------------
-   5. CURRENCY CONVERSION
-   ------------------------- */
+// Opens modal
+function openCallModal(title, number, description) {
+  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("modalDescription").textContent = description;
+  document.getElementById("modalNumberDisplay").textContent = number;
 
-function setupCurrencyConverter() {
-  const input = document.getElementById('currency-input');
-  const output = document.getElementById('currency-output');
-  const convertBtn = document.querySelector('.currency-convert-btn');
+  currentCallNumber = number;
 
-  if (!input || !output || !convertBtn) return; // not on this page
-
-  const RATE = 0.20; // 1 CNY = 0.20 CAD
-
-  function convert() {
-    const value = parseFloat(input.value);
-    if (isNaN(value) || value < 0) {
-      output.value = '';
-      return;
-    }
-    const result = value * RATE;
-    output.value = result.toFixed(2);
-  }
-
-  convertBtn.addEventListener('click', convert);
-
-  // Optional: hit Enter to convert
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      convert();
-    }
-  });
+  document.getElementById("callModal").style.display = "flex";
 }
+
+// Closes modal
+function closeCallModal() {
+  document.getElementById("callModal").style.display = "none";
+}
+
+// Confirm call 
+document.getElementById("confirmCallBtn").addEventListener("click", () => {
+  window.location.href = `tel:${currentCallNumber}`;
+});

@@ -30,7 +30,7 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-      <a href="itinerary.html" style="color: var(--color-text-black);">←</a>
+      <a href="#" id="backButton" style="color: var(--color-text-black);">←</a>
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
@@ -62,13 +62,13 @@
           </div>
         </div>
 
-        <img src="../images/calgary-zoo-image-10.png" alt="Calgary Zoo" style="width: 100%; border-radius: var(--radius-sm); margin-top: var(--spacing-md);">
+        <img src="../images/calgaryZOO.png" alt="Calgary Zoo" style="width: 100%; border-radius: var(--radius-sm); margin-top: var(--spacing-md);">
       </div>
     </div>
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-      <a href="itinerary.html" class="bottom-nav__item active">
+      <a href="#" id="bottomNavItinerary" class="bottom-nav__item active">
         <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
         <span class="bottom-nav__label">Itinerary</span>
       </a>
@@ -85,7 +85,264 @@
         <span class="bottom-nav__label">Settings</span>
       </a>
     </div>
-  </div>
+    </div>
+
+  <script>
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const dateStr = urlParams.get('date') || '2026-07-14';
+    const eventIndex = urlParams.get('index') !== null ? parseInt(urlParams.get('index')) : 0;
+
+    // Load itinerary data from sessionStorage
+    let itineraryData = {};
+    try {
+      const saved = sessionStorage.getItem('itineraryData');
+      if (saved) {
+        itineraryData = JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error('Error loading itinerary data:', e);
+    }
+
+    // Default data if no saved data
+    if (!itineraryData['2026-07-14']) {
+      itineraryData = {
+        '2026-07-14': {
+          date: 'Tuesday - July 14, 2026',
+          events: [
+            {
+              time: '10:00',
+              title: 'Calgary Zoo',
+              details: '10:00 - 13:00',
+              address: '210 St. George\'s Drive NE, Calgary, AB T2E 7V6'
+            },
+            {
+              time: '13:00',
+              title: 'Peace Bridge',
+              details: '13:00 - 14:00',
+              address: '98 Memorial Dr NW, Calgary, AB T2N 5C1'
+            },
+            {
+              time: '17:15',
+              title: 'Ten Foot Henry',
+              details: '17:15 - 19:00',
+              address: '1209 1 St SW, Calgary, AB T2R 0V3'
+            },
+            {
+              time: '19:00',
+              title: 'Avesta Shawarma',
+              details: '19:00 - 20:00',
+              address: '698 Eau Claire Ave SW, Calgary, AB T2P 5N4'
+            }
+          ]
+        }
+      };
+      sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+    }
+
+    // Load event data
+    let currentEvent = null;
+    function loadEventData() {
+      if (itineraryData[dateStr] && itineraryData[dateStr].events[eventIndex]) {
+        currentEvent = itineraryData[dateStr].events[eventIndex];
+        const data = itineraryData[dateStr];
+        
+        document.getElementById('eventTitle').textContent = currentEvent.title;
+        document.getElementById('eventDate').textContent = data.date;
+        document.getElementById('eventTime').textContent = currentEvent.details;
+        document.getElementById('eventAddress').textContent = currentEvent.address;
+        // Display notes or "No notes" if empty
+        const notesDisplay = currentEvent.note && currentEvent.note.trim() ? currentEvent.note : 'No notes';
+        document.getElementById('eventNote').textContent = notesDisplay;
+
+        // Set image based on title
+        const imageMap = {
+          'Calgary Zoo': '../images/calgaryZOO.png',
+          'Peace Bridge': '../images/The_Peace_Bridge_in_Calgary_an_HDR_photo.png',
+          'Ten Foot Henry': '../images/tenfoothenry.png',
+          'Avesta Shawarma': '../images/avesta.png',
+          'River Café': '../images/riverCafe.png',
+          'River Cafe': '../images/riverCafe.png',
+          'Studio Bell': '../images/StudioBell.png',
+          'Stephen Avenue Walk': '../images/stephen-avenue.png',
+          'Calgary Farmers Market': '../images/calgary_farmers_market.png',
+          'Fish Creek Provincial Park': '../images/fish_creek_provincial_park.png',
+          'Bow River Pathway': '../images/Bow River Pathway.png',
+          'Prince\'s Island Park': '../images/princes-island-park.png',
+          'Nose Hill Park': '../images/Nose Hill Park.png',
+          'Calgary Stampede': '../images/Calgary Stampede.png',
+          'Chuckwagon Races': '../images/Chuckwagon Races.png',
+          'Evening Concert': '../images/Evening Concert- Coca-Cola Stage.png',
+          'Shopping at Chinook Centre': '../images/Shopping at Chinook Centre.png',
+          'Heritage Park': '../images/Heritage Park.png',
+          'Olympic Plaza': '../images/Olympic Plaza.png',
+          'Calgary Tower': '../images/Calgary Tower.png',
+          'Glenbow Museum': '../images/Glenbow Museum.png'
+        };
+        const imageSrc = imageMap[currentEvent.title] || '../images/calgaryZOO.png';
+        document.getElementById('eventImage').src = imageSrc;
+        document.getElementById('eventImage').alt = currentEvent.title;
+      }
+    }
+
+    // Store deleted event info for undo
+    let deletedEventInfo = null;
+    let undoTimeout = null;
+
+    // Show undo notification
+    function showUndoNotification() {
+      const notification = document.getElementById('undoNotification');
+      notification.style.display = 'block';
+      setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateX(-50%) translateY(0)';
+      }, 10);
+    }
+
+    // Hide undo notification
+    function hideUndoNotification() {
+      const notification = document.getElementById('undoNotification');
+      notification.style.opacity = '0';
+      notification.style.transform = 'translateX(-50%) translateY(-100%)';
+      setTimeout(() => {
+        notification.style.display = 'none';
+        deletedEventInfo = null;
+      }, 300);
+    }
+
+    // Delete event function
+    function deleteEvent() {
+      if (!currentEvent) return;
+      
+      if (confirm(`Are you sure you want to delete "${currentEvent.title}"?`)) {
+        // Store event info for undo
+        deletedEventInfo = {
+          dateStr: dateStr,
+          eventIndex: eventIndex,
+          event: JSON.parse(JSON.stringify(currentEvent))
+        };
+
+        // Remove event from array
+        itineraryData[dateStr].events.splice(eventIndex, 1);
+
+        // Save to sessionStorage
+        sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+
+        // Save deleted event info to sessionStorage for undo (will be handled on itinerary page)
+        sessionStorage.setItem('pendingUndo', JSON.stringify(deletedEventInfo));
+        // Store the date so we can return to the correct date
+        sessionStorage.setItem('lastViewedDate', dateStr);
+
+        // Redirect back to itinerary page immediately
+        window.location.href = 'itinerary.html';
+
+        // Auto-hide notification after 5 seconds (if still on page)
+        if (undoTimeout) {
+          clearTimeout(undoTimeout);
+        }
+        undoTimeout = setTimeout(() => {
+          hideUndoNotification();
+          deletedEventInfo = null;
+        }, 5000);
+      }
+    }
+
+    // Undo delete function
+    function undoDelete() {
+      if (!deletedEventInfo) return;
+
+      const { dateStr, eventIndex, event } = deletedEventInfo;
+
+      // Ensure date entry exists
+      if (!itineraryData[dateStr]) {
+        const date = new Date(dateStr + 'T00:00:00');
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        itineraryData[dateStr] = {
+          date: `${dayNames[date.getDay()]} - ${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`,
+          events: []
+        };
+      }
+
+      // Insert event back at original position
+      itineraryData[dateStr].events.splice(eventIndex, 0, event);
+
+      // Re-sort events by time
+      itineraryData[dateStr].events.sort((a, b) => {
+        const timeA = parseTime(a.time);
+        const timeB = parseTime(b.time);
+        return timeA - timeB;
+      });
+
+      // Save to sessionStorage
+      sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+
+      // Hide notification
+      hideUndoNotification();
+
+      // Clear undo timeout
+      if (undoTimeout) {
+        clearTimeout(undoTimeout);
+        undoTimeout = null;
+      }
+
+      // Store the date so we can return to the correct date
+      sessionStorage.setItem('lastViewedDate', dateStr);
+
+      // Redirect back to itinerary page to see restored event
+      window.location.href = 'itinerary.html';
+    }
+
+    // Parse time string to minutes since midnight
+    function parseTime(timeStr) {
+      const [hours, minutes] = timeStr.split(':').map(Number);
+      return hours * 60 + minutes;
+    }
+
+    // Edit event function
+    function editEvent() {
+      if (!currentEvent) return;
+      const [startTime, endTime] = currentEvent.details.split(' - ');
+      window.location.href = `itinerary-edit.html?date=${dateStr}&index=${eventIndex}&title=${encodeURIComponent(currentEvent.title)}&startTime=${startTime}&endTime=${endTime}&address=${encodeURIComponent(currentEvent.address)}`;
+    }
+
+    // Function to navigate back to itinerary page with correct date
+    function navigateToItinerary() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentDate = urlParams.get('date') || '2026-07-14';
+      sessionStorage.setItem('lastViewedDate', currentDate);
+      window.location.href = 'itinerary.html';
+    }
+
+    // Setup navigation buttons
+    function setupNavigation() {
+      const backButton = document.getElementById('backButton');
+      const bottomNavItinerary = document.getElementById('bottomNavItinerary');
+      
+      if (backButton) {
+        backButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          navigateToItinerary();
+        });
+      }
+      
+      if (bottomNavItinerary) {
+        bottomNavItinerary.addEventListener('click', (e) => {
+          e.preventDefault();
+          navigateToItinerary();
+        });
+      }
+    }
+
+    // Event listeners
+    document.getElementById('editActionBtn').addEventListener('click', editEvent);
+    document.getElementById('deleteActionBtn').addEventListener('click', deleteEvent);
+    document.getElementById('undoButton').addEventListener('click', undoDelete);
+    setupNavigation();
+
+    // Load event data on page load
+    loadEventData();
+  </script>
 </body>
 </html>
 

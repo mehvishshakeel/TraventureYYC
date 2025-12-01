@@ -47,52 +47,211 @@
       <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-md);">Nearest Hospitals/Clinics</h1>
 
       <!-- Tabs -->
-      <div class="tabs">
-        <div class="tab active">Hospital</div>
-        <div class="tab">Clinic</div>
-        <div class="tab">Pharmacy</div>
+      <div class="tabs emergency-tabs">
+        <button class="tab active" data-type="hospital">Hospital</button>
+        <button class="tab" data-type="clinic">Clinic</button>
+        <button class="tab" data-type="pharmacy">Pharmacy</button>
       </div>
 
       <!-- Hospitals List -->
-      <div class="list-item">
+      <div class="list-item list-item--emergency" data-type="hospital">
         <div class="list-item__content">
           <div class="list-item__title">Foothills Medical Centre</div>
+          <div class="list-item__subtitle">1403 29 St NW, Calgary, AB T2N 2T9</div>
           <div class="list-item__subtitle">1 km away</div>
         </div>
-        <a href="map.html" style="font-size: 24px; cursor: pointer;">📍</a>
+        <div class="emergency-actions">
+          <a href="tel:4031234567">
+            <img src="../images/Call_Icon.png" class="embassy-action-icon">
+          </a>
+          <a href="map.html?place=Foothills Medical Centre">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>      
       </div>
 
-      <div class="list-item">
+      <div class="list-item list-item--emergency" data-type="hospital">
         <div class="list-item__content">
           <div class="list-item__title">Rockyview General Hospital</div>
           <div class="list-item__subtitle">2 km away</div>
         </div>
-        <a href="map.html" style="font-size: 24px; cursor: pointer;">📍</a>
+        <div class="emergency-actions">
+          <a href="tel:4031234567">
+            <img src="../images/Call_Icon.png" class="embassy-action-icon">
+          </a>
+          <a href="map.html?place=Rockyview General Hospital">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>
       </div>
 
-      <div class="list-item">
+      <div class="list-item list-item--emergency" data-type="hospital">
         <div class="list-item__content">
           <div class="list-item__title">Peter Lougheed Centre</div>
           <div class="list-item__subtitle">3 km away</div>
         </div>
-        <a href="map.html" style="font-size: 24px; cursor: pointer;">📍</a>
+        <div class="emergency-actions">
+          <a href="tel:4031234567">
+            <img src="../images/Call_Icon.png" class="embassy-action-icon">
+          </a>
+          <a href="map.html?place=Peter Lougheed Centre">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>   
       </div>
 
-      <div class="list-item">
+      <div class="list-item list-item--emergency" data-type="hospital">
         <div class="list-item__content">
           <div class="list-item__title">South Health Campus</div>
           <div class="list-item__subtitle">5 km away</div>
         </div>
-        <a href="map.html" style="font-size: 24px; cursor: pointer;">📍</a>
+        <div class="emergency-actions">
+          <a href="tel:4031234567">
+            <img src="../images/Call_Icon.png" class="embassy-action-icon">
+          </a>
+          <a href="map.html?place=South Health Campus">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>   
       </div>
 
-      <div class="list-item">
+      <div class="list-item list-item--emergency" data-type="hospital">
         <div class="list-item__content">
           <div class="list-item__title">Alberta Children's Hospital</div>
           <div class="list-item__subtitle">4 km away</div>
         </div>
-        <a href="map.html" style="font-size: 24px; cursor: pointer;">📍</a>
+        <div class="emergency-actions">
+          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
+            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
+          </a>
+          <a href="map.html?place=Alberta Children's Hospital">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>   
       </div>
+
+      <!-- CLinic List -->
+      <div class="list-item list-item--emergency" data-type="clinic">
+        <div class="list-item__content">
+          <div class="list-item__title">Monterey Medical Clinic</div>
+          <div class="list-item__subtitle">4 km away</div>
+        </div>
+        <div class="emergency-actions">
+          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
+            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
+          </a>
+          <a href="map.html?place=Foothills Medical Centre">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>   
+      </div>
+
+      <div class="list-item list-item--emergency" data-type="clinic">
+        <div class="list-item__content">
+          <div class="list-item__title">Now Medical Clinic & Walk in</div>
+          <div class="list-item__subtitle">4 km away</div>
+        </div>
+        <div class="emergency-actions">
+          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
+            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
+          </a>
+          <a href="map.html">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>   
+      </div>   
+      
+      <div class="list-item list-item--emergency" data-type="clinic">
+        <div class="list-item__content">
+          <div class="list-item__title">Abbeydale Medical Clinic</div>
+          <div class="list-item__subtitle">4 km away</div>
+        </div>
+        <div class="emergency-actions">
+          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
+            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
+          </a>
+          <a href="map.html">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>   
+      </div> 
+
+      <div class="list-item list-item--emergency" data-type="clinic">
+        <div class="list-item__content">
+          <div class="list-item__title">Saddletowne Medical Clinic</div>
+          <div class="list-item__subtitle">4 km away</div>
+        </div>
+        <div class="emergency-actions">
+          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
+            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
+          </a>
+          <a href="map.html">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>   
+      </div>         
+
+      <!-- Pharmacy List -->
+      <div class="list-item list-item--emergency" data-type="pharmacy">
+        <div class="list-item__content">
+          <div class="list-item__title">Rexall</div>
+          <div class="list-item__subtitle">4 km away</div>
+        </div>
+        <div class="emergency-actions">
+          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
+            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
+          </a>
+          <a href="map.html">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>   
+      </div>    
+
+      <div class="list-item list-item--emergency" data-type="pharmacy">
+        <div class="list-item__content">
+          <div class="list-item__title">Pharmasave Martindale</div>
+          <div class="list-item__subtitle">4 km away</div>
+        </div>
+        <div class="emergency-actions">
+          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
+            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
+          </a>
+          <a href="map.html">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>   
+      </div>    
+
+      <div class="list-item list-item--emergency" data-type="pharmacy">
+        <div class="list-item__content">
+          <div class="list-item__title">Medicare Plus Pharmacy</div>
+          <div class="list-item__subtitle">4 km away</div>
+        </div>
+        <div class="emergency-actions">
+          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
+            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
+          </a>
+          <a href="map.html">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>   
+      </div>    
+
+      <div class="list-item list-item--emergency" data-type="pharmacy">
+        <div class="list-item__content">
+          <div class="list-item__title">I.D.A. - Madigan Pharmacy
+</div>
+          <div class="list-item__subtitle">4 km away</div>
+        </div>
+        <div class="emergency-actions">
+          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
+            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
+          </a>
+          <a href="map.html">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>   
+      </div>    
     </div>
 
     <!-- Bottom Navigation -->
@@ -116,5 +275,38 @@
     </div>
   </div>
 </body>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const tabs = document.querySelectorAll(".emergency-tabs .tab");
+  const items = document.querySelectorAll(".list-item[data-type]");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+
+      // highlight active tab
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      const type = tab.dataset.type;
+
+      // show / hide matching items
+      items.forEach(item => {
+        item.style.display = item.dataset.type === type ? "flex" : "none";
+      });
+    });
+  });
+  const activeTab = document.querySelector(".emergency-tabs .tab.active");
+  if (activeTab) {
+    const defaultType = activeTab.dataset.type;
+
+    items.forEach(item => {
+      item.style.display =
+        item.dataset.type === defaultType ? "flex" : "none";
+    });
+  }
+});
+</script>
+
 </html>
 

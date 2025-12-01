@@ -93,7 +93,7 @@
 }
 
 .section-title {
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--color-text-black);
   margin-bottom: var(--spacing-md);
@@ -115,20 +115,22 @@
   z-index: 200;
   background-color: var(--color-background);
   margin: 0;
-  padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm) var(--spacing-md);
-  overflow: hidden;
+  margin-top: calc(var(--spacing-xs) * -1);
+  padding: 0;
+  padding-bottom: var(--spacing-sm); /* Add padding for date display */
+  overflow: visible; /* Changed to visible so date display can show */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   width: 100%;
 }
 
 .date-selector {
   display: flex;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm);
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scroll-padding: 0 50%;
-  padding: var(--spacing-md) calc(50% - 70px);
+  padding: var(--spacing-sm) calc(50% - 30px); /* Adjusted padding for smaller chips */
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
@@ -142,7 +144,7 @@
 .date-tab {
   scroll-snap-align: center;
   scroll-snap-stop: always;
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-sm) var(--spacing-md);
   background-color: var(--color-background);
   border: 2px solid var(--color-primary-light);
   border-radius: var(--radius-md);
@@ -153,8 +155,8 @@
               padding 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               min-width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  min-width: 60px;
-  max-width: 75px;
+  min-width: 38px;
+  max-width: 46px;
   width: auto;
   text-align: center;
   flex-shrink: 0;
@@ -170,19 +172,19 @@
   background-color: var(--color-primary);
   color: var(--color-text-white);
   border-color: var(--color-primary);
-  transform: scale(1.3) !important;
+  transform: scale(1.2) !important;
   opacity: 1 !important;
   font-weight: 600;
   box-shadow: 0 6px 16px rgba(180, 113, 107, 0.4);
   z-index: 5;
-  min-width: 95px !important;
-  max-width: 110px !important;
-  padding: var(--spacing-md) var(--spacing-xl) !important;
+  min-width: 80px !important;
+  max-width: 92px !important;
+  padding: var(--spacing-sm) var(--spacing-lg) !important;
 }
 
 .date-tab__day {
   display: block;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   margin-bottom: 2px;
   transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -191,20 +193,20 @@
 
 .date-tab__month {
   display: block;
-  font-size: 10px;
+  font-size: 9px;
   opacity: 0.8;
   transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   line-height: 1.2;
 }
 
 .date-tab.active .date-tab__day {
-  font-size: 22px;
+  font-size: 18px;
   margin-bottom: 4px;
   font-weight: 700;
 }
 
 .date-tab.active .date-tab__month {
-  font-size: 14px;
+  font-size: 12px;
   opacity: 0.9;
 }
 
@@ -326,23 +328,86 @@
   margin-top: var(--spacing-xs);
 }
 
+.timeline-event__image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: var(--spacing-sm);
+  display: block;
+}
+
+
 /* Current Date Display */
 .current-date-display {
-  position: -webkit-sticky; /* Safari support */
-  position: sticky;
-  top: 85px; /* Below date selector (updated by JS dynamically) */
+  position: relative; /* Changed from sticky to relative - moves with wrapper */
   z-index: 199;
   text-align: center;
   margin: 0;
+  margin-top: var(--spacing-md); /* Spacing from date selector */
   padding: var(--spacing-sm) var(--spacing-md);
   min-height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--color-background);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   width: 100%;
-  transition: top 0.2s ease;
+}
+
+/* Undo Notification */
+.undo-notification {
+  position: absolute;
+  top: calc(var(--status-bar-height) + 60px + var(--spacing-sm)); /* Below status bar + top bar, with small spacing */
+  left: var(--spacing-md);
+  right: var(--spacing-md);
+  width: calc(100% - var(--spacing-md) * 2);
+  max-width: calc(var(--mobile-width) - var(--spacing-md) * 2);
+  transform: translateY(-120%); /* Start off-screen above */
+  z-index: 1000;
+  background-color: #323232;
+  color: white;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: none; /* Hidden by default */
+}
+
+.undo-notification.show {
+  display: block;
+  transform: translateY(0); /* Slide down into view */
+  opacity: 1;
+}
+
+.undo-notification__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.undo-notification__message {
+  font-size: 16px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.undo-notification__button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.undo-notification__button:hover,
+.undo-notification__button:active {
+  background-color: var(--color-primary-light);
 }
 
 .current-date-display h2 {
@@ -420,6 +485,173 @@
   font-size: 18px;
   font-weight: 600;
 }
+
+.emergency-top {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.alarm-circle {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 4px solid #d9d9d9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.emergency-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  padding: 30px 20px 60px;
+  justify-items: center;
+}
+
+.other-services-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.emergency-card {
+  background: #F3F7FF;
+  width: 160px;
+  height: 160px;
+  border-radius: 20px;
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0px 6px 12px rgba(0,0,0,0.12);
+  text-decoration: none;
+  color: #4b2e2e;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: 'Fredoka', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-emoji {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+
+.alarm-emoji {
+  font-size: 100px;
+}
+.call-911-text {
+  font-size: 28px;
+  font-weight: 700;
+  color: #693232;
+  margin-top: 10px;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.emergency-layout {
+  padding-bottom: 90px;
+}
+
+.section-title {
+  text-align: center;
+}
+
+.list-item--emergency {
+  border: 2px solid #E0E6F1; 
+  border-radius: 16px;
+  box-shadow: 0px 6px 12px rgba(0,0,0,0.12);
+}
+
+/*Emergency Contacts - Non-Emergency page*/
+.call-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.call-modal {
+  background: #f7f7f7;
+  padding: 24px;
+  width: 85%;
+  max-width: 420px;
+  border-radius: 24px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+  text-align: left;
+}
+
+.call-modal h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.call-modal p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.modal-number-box {
+  width: 100%;
+  padding: 14px;
+  background: #e0e0e0;
+  border-radius: 16px;
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-call-btn {
+  width: 100%;
+  padding: 14px;
+  background: #007AFF;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.modal-cancel-btn {
+  width: 100%;
+  padding: 14px;
+  background: #d4d4d4;
+  border: none;
+  border-radius: 16px;
+  font-size: 18px;
+}
+
+/*Emergency Contacts - Embassy & Consulate Page*/
+.emergency-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+}
+
+.embassy-action-icon {
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  background-color: white;
+  border: 2px solid #333;
+  border-radius: 10px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
 
 /* Currency Conversion */
 .currency-converter {
@@ -530,4 +762,15 @@
     display: none;
   }
 }
+
+/* Box shadow behind active bottom-nav icon */
+.bottom-nav__item.active .bottom-nav__icon {
+  background: white;                 /* keeps it clean */
+  padding: 1px;                      /* creates the box shape */
+  border-radius: 3px;               /* soften the box (adjust if needed) */
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.25); /* box-shaped shadow */
+}
+
+
+
 

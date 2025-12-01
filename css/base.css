@@ -136,16 +136,92 @@
 
 /* Itinerary page specific - scrollable content with sticky dates */
 .itinerary-page .content {
-  padding: 0;
-  padding-bottom: 0;
+  padding: 0 !important;
+  padding-top: 0 !important;
+  padding-right: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 0 !important;
+  margin-top: calc(var(--spacing-xs) * -1);
   overflow-y: auto; /* Content area is scrollable */
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   flex: 1 1 auto;
   min-height: 0;
-  display: block; /* Change to block for sticky to work */
+  display: block !important; /* Change to block for sticky to work */
+  flex-direction: unset !important;
   position: relative;
   margin-bottom: 0;
+}
+
+/* Padding overlay container - spans full height of content */
+.content-padding-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none; /* Allow clicks to pass through */
+  z-index: 100; /* Above content but below sticky elements */
+  box-sizing: border-box;
+}
+
+/* Individual edge overlays that sit on top of content */
+.padding-overlay-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-top: 100px; /* Position below top-bar (100px from top) */
+  /* Height will be dynamically set to cover space between top-bar and date-selector-wrapper */
+  height: 161px; /* Initial height, will be updated by JS */
+  background-color: var(--color-background);
+  z-index: 101;
+}
+
+.padding-overlay-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--spacing-md);
+  background-color: var(--color-background);
+  z-index: 101;
+}
+
+.padding-overlay-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 100px; /* Match top overlay position */
+  /* Height will be dynamically set to match the top overlay */
+  height: 161px; /* Initial height, will be updated by JS */
+  width: var(--spacing-md);
+  background-color: var(--color-background);
+  z-index: 101;
+}
+
+.padding-overlay-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 100px; /* Match top overlay position */
+  /* Height will be dynamically set to match the top overlay */
+  height: 161px; /* Initial height, will be updated by JS */
+  width: var(--spacing-md);
+  background-color: var(--color-background);
+  z-index: 101;
+}
+
+/* Ensure all content elements stay below the overlay */
+.itinerary-page .content > *:not(.content-padding-overlay) {
+  position: relative;
+  z-index: 0;
+}
+
+/* Ensure timeline container is below overlay */
+.itinerary-page .content .timeline-container {
+  z-index: 0;
+  position: relative;
 }
 
 /* Bottom Navigation - iPhone 16 */

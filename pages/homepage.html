@@ -50,15 +50,12 @@
       </div>
     </div>
 
-    <!-- Emergency Button -->
-    <a href="emergency.html" class="emergency-button">!</a>
-
     <!-- Content -->
     <div class="content">
       <!-- Profile Section -->
       <div class="profile-section">
         <img src="../images/profile-picture-14.png" alt="Profile" class="profile-picture">
-        <div class="profile-greeting">Hello, Tony N</div>
+        <div class="profile-greeting" id="profileGreeting">Hello</div>
       </div>
 
       <!-- Itinerary Card (Featured) -->
@@ -74,7 +71,7 @@
 
       <!-- Homepage Grid -->
       <div class="homepage-grid">
-        <a href="food.html" class="homepage-card">
+        <a href="food-homepage.html" class="homepage-card">
           <img src="../images/foods-image-18.png" alt="Food Spots" class="homepage-card__image">
           <div class="homepage-card__content">
             <div class="homepage-card__title">Food Spots</div>
@@ -141,6 +138,46 @@
       </a>
     </div>
   </div>
+
+  <script>
+    // Load current user from sessionStorage and display name
+    window.addEventListener('DOMContentLoaded', function() {
+      try {
+        const userData = sessionStorage.getItem('currentUser');
+        const greetingElement = document.getElementById('profileGreeting');
+        
+        if (userData) {
+          const user = JSON.parse(userData);
+          if (greetingElement) {
+            // Check if user is guest
+            if (user.email === 'guest@guest.com' || user.username === 'guest' || user.name === 'Guest User') {
+              greetingElement.textContent = 'Hello';
+            } else if (user.name) {
+              // Extract first name if full name is provided
+              const firstName = user.name.split(' ')[0];
+              greetingElement.textContent = `Hello, ${firstName}`;
+            } else if (user.username) {
+              // Fallback to username if name is not available
+              greetingElement.textContent = `Hello, ${user.username}`;
+            } else {
+              greetingElement.textContent = 'Hello';
+            }
+          }
+        } else {
+          // If no user is logged in, show just "Hello"
+          if (greetingElement) {
+            greetingElement.textContent = 'Hello';
+          }
+        }
+      } catch (e) {
+        console.error('Error loading user data:', e);
+        const greetingElement = document.getElementById('profileGreeting');
+        if (greetingElement) {
+          greetingElement.textContent = 'Hello';
+        }
+      }
+    });
+  </script>
 </body>
 </html>
 

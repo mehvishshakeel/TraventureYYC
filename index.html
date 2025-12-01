@@ -12,21 +12,21 @@
     <div class="status-bar">
       <div class="status-bar__left">
         <div class="status-bar__time">9:41</div>
-      </div>
+</div>
       <div class="status-bar__right">
         <div class="status-bar__signal">
           <img src="images/mobile-signal-60.svg" alt="Signal">
-        </div>
+</div>
         <div class="status-bar__wifi">
           <img src="images/wifi-59.svg" alt="WiFi">
-        </div>
+</div>
         <div class="status-bar__battery">
           <img src="images/rectangle-56.svg" alt="Battery">
           <img src="images/combined-shape-57.svg" alt="Battery">
           <img src="images/rectangle-58.svg" alt="Battery">
-        </div>
-      </div>
-    </div>
+</div>
+</div>
+</div>
 
     <!-- Initial Page Content -->
     <div class="auth-page">
@@ -34,21 +34,32 @@
         <div class="auth-header">
           <div class="auth-header__logo">
             Traventure<span class="auth-header__logo-accent">YYC</span>
-          </div>
+</div>
           <h1 class="auth-header__title">Welcome to Calgary</h1>
           <p class="auth-header__subtitle">Your adventure starts here</p>
-        </div>
+</div>
 
         <div class="content">
           <a href="pages/signin.html" class="btn btn--primary btn--full mb-md">
             Sign Up / Sign In
           </a>
-          <a href="pages/homepage.html" class="btn btn--secondary btn--full">
+          <a href="pages/homepage.html" class="btn btn--secondary btn--full" id="guestButton">
             Continue as a Guest
           </a>
-        </div>
-      </div>
-    </div>
+</div>
+</div>
+</div>
   </div>
+
+  <script>
+    // Set guest user when clicking "Continue as a Guest"
+    document.getElementById('guestButton').addEventListener('click', function(e) {
+      sessionStorage.setItem('currentUser', JSON.stringify({
+        email: 'guest@guest.com',
+        username: 'guest',
+        name: 'Guest User'
+      }));
+    });
+  </script>
 </body>
 </html>

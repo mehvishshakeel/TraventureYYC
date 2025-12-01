@@ -30,6 +30,7 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
+      <a href="../index.html" style="color: var(--color-text-black);">←</a>
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
@@ -45,14 +46,13 @@
     <div class="auth-page">
       <div class="auth-card">
         <div class="auth-header">
-          <div class="auth-header__logo">
-            Traventure<span class="auth-header__logo-accent">YYC</span>
-          </div>
           <h1 class="auth-header__title">Welcome Back!</h1>
         </div>
 
         <div class="content">
-          <form>
+          <form id="signinForm">
+            <div id="errorMessage" class="error-message" style="display: none; background-color: #fee; color: #c33; padding: var(--spacing-sm); border-radius: var(--radius-sm); margin-bottom: var(--spacing-md); font-size: 14px;"></div>
+            
             <div class="form-group">
               <label class="form-label" for="email">Email Address</label>
               <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
@@ -77,14 +77,14 @@
           </div>
 
           <div class="social-login">
-            <div class="social-button" style="background-color: #4285F4;">
-              <span style="color: white; font-weight: bold;">G</span>
+            <div class="social-button" style="background-color: rgba(254, 254, 249, 1) !important; border: none; border-radius: 16px; overflow: hidden;">
+              <img src="../images/google.png" alt="Google" style="width: 100%; height: 100%; object-fit: contain; display: block;">
             </div>
-            <div class="social-button" style="background-color: #000;">
-              <span style="color: white;">🍎</span>
+            <div class="social-button" style="background-color: rgba(254, 254, 249, 1) !important; border: none; border-radius: 16px; overflow: hidden;">
+              <img src="../images/apple.png" alt="Apple" style="width: 100%; height: 100%; object-fit: contain; display: block;">
             </div>
-            <div class="social-button" style="background-color: #1877F2;">
-              <span style="color: white; font-weight: bold;">f</span>
+            <div class="social-button" style="background-color: rgba(254, 254, 249, 1) !important; border: none; border-radius: 16px; overflow: hidden;">
+              <img src="../images/facebook.png" alt="Facebook" style="width: 100%; height: 100%; object-fit: contain; display: block;">
             </div>
           </div>
 
@@ -99,10 +99,63 @@
   </div>
 
   <script>
-    document.querySelector('form').addEventListener('submit', function(e) {
+    // Hardcoded user accounts for demo
+    const hardcodedAccounts = {
+      'demo1@traventure.com': { password: 'demo123', username: 'demo1', name: 'Demo User 1' },
+      'demo2@traventure.com': { password: 'demo123', username: 'demo2', name: 'Demo User 2' },
+      'alice@traventure.com': { password: 'alice123', username: 'alice', name: 'Alice Johnson' },
+      'bob@traventure.com': { password: 'bob123', username: 'bob', name: 'Bob Smith' },
+      'guest@guest.com': { password: 'guest123', username: 'guest', name: 'Guest User' }
+    };
+
+    function showError(message) {
+      const errorDiv = document.getElementById('errorMessage');
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+      // Hide error after 5 seconds
+      setTimeout(() => {
+        errorDiv.style.display = 'none';
+      }, 5000);
+    }
+
+    function hideError() {
+      document.getElementById('errorMessage').style.display = 'none';
+    }
+
+    document.getElementById('signinForm').addEventListener('submit', function(e) {
       e.preventDefault();
+      hideError();
+      
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+      
+      // Check if account exists
+      if (!hardcodedAccounts[email]) {
+        showError('Invalid email address. Please check your email and try again.');
+        return;
+      }
+      
+      // Check if password matches
+      if (hardcodedAccounts[email].password !== password) {
+        showError('Incorrect password. Please try again.');
+        return;
+      }
+      
+      // Store user info in sessionStorage
+      const user = hardcodedAccounts[email];
+      sessionStorage.setItem('currentUser', JSON.stringify({
+        email: email,
+        username: user.username,
+        name: user.name
+      }));
+      
+      // Redirect to homepage
       window.location.href = 'homepage.html';
     });
+
+    // Clear error when user starts typing
+    document.getElementById('email').addEventListener('input', hideError);
+    document.getElementById('password').addEventListener('input', hideError);
   </script>
 </body>
 </html>
