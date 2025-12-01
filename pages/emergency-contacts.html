@@ -6,6 +6,20 @@
   <title>Emergency Contacts - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
 </head>
+
+<div id="callModal" class="call-modal-overlay" style="display: none;">
+  <div class="call-modal">
+    <h2 id="modalTitle"></h2>
+    <p id="modalDescription"></p>
+
+    <div class="modal-number-box" id="modalNumberDisplay"></div>
+
+    <button class="modal-call-btn" id="confirmCallBtn">Call</button>
+    <button class="modal-cancel-btn" onclick="closeCallModal()">Cancel</button>
+  </div>
+</div>
+<script src="../js/app.js"></script>
+
 <body>
   <div class="app-container">
     <!-- Status Bar -->
@@ -46,44 +60,49 @@
     <div class="content">
       <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-md);">Emergency Contacts</h1>
 
-      <div class="list-item">
-        <div class="list-item__content">
-          <div class="list-item__title">Emergency Services</div>
-          <div class="list-item__subtitle">911</div>
-        </div>
-        <button class="btn btn--danger" onclick="window.location.href='tel:911'">Call</button>
-      </div>
-
-      <div class="list-item">
+      <div class="list-item list-item--emergency">
         <div class="list-item__content">
           <div class="list-item__title">Police (Non-Emergency)</div>
-          <div class="list-item__subtitle">403-266-1234</div>
+          <div class="list-item__subtitle">(403) 266-1234</div>
         </div>
-        <button class="btn btn--primary" onclick="window.location.href='tel:4032661234'">Call</button>
+        <button class="btn btn--primary" 
+        onclick="openCallModal(
+          'Police (Non-Emergency)',
+          '(403) 266-1234',
+          'Public safety matters and crimes not in progress (e.g. theft, fraud, break-ins, non-injury accidents, etc.)'
+        )">
+        Call
+      </button>
       </div>
 
-      <div class="list-item">
-        <div class="list-item__content">
-          <div class="list-item__title">Fire Department</div>
-          <div class="list-item__subtitle">911</div>
-        </div>
-        <button class="btn btn--danger" onclick="window.location.href='tel:911'">Call</button>
-      </div>
-
-      <div class="list-item">
-        <div class="list-item__content">
-          <div class="list-item__title">Ambulance</div>
-          <div class="list-item__subtitle">911</div>
-        </div>
-        <button class="btn btn--danger" onclick="window.location.href='tel:911'">Call</button>
-      </div>
-
-      <div class="list-item">
+      <div class="list-item list-item--emergency">
         <div class="list-item__content">
           <div class="list-item__title">City Services</div>
           <div class="list-item__subtitle">311</div>
         </div>
-        <button class="btn btn--primary" onclick="window.location.href='tel:311'">Call</button>
+        <button class="btn btn--primary" 
+        onclick="openCallModal(
+          'City Services',
+          '311',
+          'Contact 311 for City of Calgary services — non-emergency municipal issues, bylaw questions, garbage collection, pothole reporting, street maintenance, and other civic services.'
+        )">
+        Call
+      </button>
+      </div>
+
+      <div class="list-item list-item--emergency">
+        <div class="list-item__content">
+          <div class="list-item__title">Visitor Information Center</div>
+          <div class="list-item__subtitle">1-800-661-1678</div>
+        </div>
+        <button class="btn btn--primary" 
+        onclick="openCallModal(
+          'Visitor Information Center',
+          '1-800-661-1678',
+          'Tourism Calgary Visitor Information Centre — call for maps, city guides, attraction info, events, and general help for visitors to Calgary.'
+        )">
+        Call
+      </button>
       </div>
     </div>
 
