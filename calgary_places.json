@@ -1,0 +1,367 @@
+{
+  "places": [
+    {
+      "id": "peters_drive_in",
+      "name": "Peter's Drive-In",
+      "rating": "4.6 (13k)",
+      "category": "fastfood",
+      "estimated_time": "5–6 min away",
+      "address": "219 16 Avenue NE\nCalgary, AB T2E 1J9",
+      "phone": "(403) 277-0001"
+    },
+    {
+      "id": "five_guys_macleod_trail",
+      "name": "Five Guys Macleod Trail",
+      "rating": "4.5 (7.0k)",
+      "category": "fastfood",
+      "estimated_time": "12–13 min away",
+      "address": "7337 Macleod Trail SE\nCalgary, AB T2H 0L8",
+      "phone": "(403) 252-0002"
+    },
+    {
+      "id": "aw_17th_ave",
+      "name": "A&W 17th Ave",
+      "rating": "4.2 (12k)",
+      "category": "fastfood",
+      "estimated_time": "6–7 min away",
+      "address": "507 17 Avenue SW\nCalgary, AB T2S 0A9",
+      "phone": "(403) 452-0003"
+    },
+    {
+      "id": "mcdonalds_brentwood",
+      "name": "McDonald's Brentwood",
+      "rating": "3.9 (5.6k)",
+      "category": "fastfood",
+      "estimated_time": "10–11 min away",
+      "address": "4122 Brentwood Road NW\nCalgary, AB T2L 1K8",
+      "phone": "(403) 282-0004"
+    },
+    {
+      "id": "popeyes_forest_lawn",
+      "name": "Popeyes Forest Lawn",
+      "rating": "4.1 (18k)",
+      "category": "fastfood",
+      "estimated_time": "5–6 min away",
+      "address": "3909 17 Avenue SE\nCalgary, AB T2A 0S5",
+      "phone": "(587) 356-0005"
+    },
+    {
+      "id": "harveys_country_hills",
+      "name": "Harvey's Country Hills",
+      "rating": "4.0 (11k)",
+      "category": "fastfood",
+      "estimated_time": "3–4 min away",
+      "address": "388 Country Hills Blvd NE\nCalgary, AB T3K 5J6",
+      "phone": "(403) 226-0006"
+    },
+    {
+      "id": "kfc_crowfoot",
+      "name": "KFC Crowfoot",
+      "rating": "3.8 (2.2k)",
+      "category": "fastfood",
+      "estimated_time": "13–14 min away",
+      "address": "20 Crowfoot Crescent NW\nCalgary, AB T3G 3T2",
+      "phone": "(403) 239-0007"
+    },
+    {
+      "id": "taco_bell_sunridge",
+      "name": "Taco Bell Sunridge",
+      "rating": "3.7 (10.0k)",
+      "category": "fastfood",
+      "estimated_time": "11–12 min away",
+      "address": "3310 32 Street NE\nCalgary, AB T1Y 6B9",
+      "phone": "(403) 250-0008"
+    },
+    {
+      "id": "wendys_bowness",
+      "name": "Wendy's Bowness",
+      "rating": "4.0 (16k)",
+      "category": "fastfood",
+      "estimated_time": "3–4 min away",
+      "address": "6408 Bowness Road NW\nCalgary, AB T3B 0E7",
+      "phone": "(403) 247-0009"
+    },
+    {
+      "id": "chipotle_4th_street",
+      "name": "Chipotle 4th Street",
+      "rating": "4.4 (499)",
+      "category": "fastfood",
+      "estimated_time": "7–8 min away",
+      "address": "1800 4 Street SW\nCalgary, AB T2S 2S5",
+      "phone": "(403) 262-0010"
+    },
+
+    {
+      "id": "the_himalaya_restaurant",
+      "name": "The Himalaya Restaurant",
+      "rating": "4.7 (18k)",
+      "category": "indian",
+      "estimated_time": "9–10 min away",
+      "address": "3725 56 Avenue NW\nCalgary, AB T3A 0E2",
+      "phone": "(403) 247-0011"
+    },
+    {
+      "id": "bindas_eatery_calgary",
+      "name": "Bindas Eatery Calgary",
+      "rating": "4.6 (3.2k)",
+      "category": "indian",
+      "estimated_time": "5–6 min away",
+      "address": "110 7 Avenue SW\nCalgary, AB T2P 3E6",
+      "phone": "(403) 290-0012"
+    },
+    {
+      "id": "masala_bhavan_restaurant",
+      "name": "Masala Bhavan Restaurant",
+      "rating": "4.5 (3.7k)",
+      "category": "indian",
+      "estimated_time": "4–5 min away",
+      "address": "920 36 Street NE\nCalgary, AB T2A 6L8",
+      "phone": "(403) 272-0013"
+    },
+    {
+      "id": "tamarind_east_indian_kitchen",
+      "name": "Tamarind East Indian Kitchen",
+      "rating": "4.4 (17k)",
+      "category": "indian",
+      "estimated_time": "12–13 min away",
+      "address": "5004 1 Street SE\nCalgary, AB T2G 2L3",
+      "phone": "(403) 261-0014"
+    },
+    {
+      "id": "bombay_chowpatty",
+      "name": "Bombay Chowpatty",
+      "rating": "4.3 (15k)",
+      "category": "indian",
+      "estimated_time": "3–4 min away",
+      "address": "4808 Westwinds Drive NE\nCalgary, AB T3J 3Z5",
+      "phone": "(403) 590-0015"
+    },
+    {
+      "id": "indian_flavours_kitchen",
+      "name": "Indian Flavours Kitchen",
+      "rating": "4.1 (20k)",
+      "category": "indian",
+      "estimated_time": "11–12 min away",
+      "address": "3019 14 Street SW\nCalgary, AB T2T 3V6",
+      "phone": "(403) 244-0016"
+    },
+    {
+      "id": "calcutta_cricket_club",
+      "name": "Calcutta Cricket Club",
+      "rating": "4.6 (4.8k)",
+      "category": "indian",
+      "estimated_time": "11–12 min away",
+      "address": "340 17 Avenue SW\nCalgary, AB T2S 0A8",
+      "phone": "(403) 719-0017"
+    },
+    {
+      "id": "moti_mahal",
+      "name": "Moti Mahal",
+      "rating": "4.2 (9.6k)",
+      "category": "indian",
+      "estimated_time": "9–10 min away",
+      "address": "1805 14 Street SW\nCalgary, AB T2T 3W7",
+      "phone": "(403) 228-0018"
+    },
+    {
+      "id": "royal_india_curry_house",
+      "name": "Royal India Curry House",
+      "rating": "4.4 (6.2k)",
+      "category": "indian",
+      "estimated_time": "10–11 min away",
+      "address": "335 5 Avenue SW\nCalgary, AB T2P 0L1",
+      "phone": "(403) 263-0019"
+    },
+    {
+      "id": "zaiqa_restaurant",
+      "name": "Zaiqa Restaurant",
+      "rating": "4.3 (20k)",
+      "category": "indian",
+      "estimated_time": "11–12 min away",
+      "address": "3919 17 Avenue SE\nCalgary, AB T2A 0S7",
+      "phone": "(403) 235-0020"
+    },
+
+    {
+      "id": "fairmont_palliser",
+      "name": "Fairmont Palliser",
+      "rating": "4.7 (18k)",
+      "category": "halal",
+      "estimated_time": "15–16 min away",
+      "address": "133 9 Avenue SW\nCalgary, AB T2P 2M3",
+      "phone": "(403) 262-0021"
+    },
+    {
+      "id": "halal_arts",
+      "name": "halal Arts",
+      "rating": "4.4 (6.6k)",
+      "category": "halal",
+      "estimated_time": "14–15 min away",
+      "address": "119 12 Avenue SW\nCalgary, AB T2R 0G8",
+      "phone": "(403) 266-0022"
+    },
+    {
+      "id": "hyatt_regency_calgary",
+      "name": "Hyatt Regency Calgary",
+      "rating": "4.5 (19k)",
+      "category": "halal",
+      "estimated_time": "14–15 min away",
+      "address": "700 Centre Street SE\nCalgary, AB T2G 5P6",
+      "phone": "(403) 717-0023"
+    },
+    {
+      "id": "sheraton_suites_eau_claire",
+      "name": "Sheraton Suites Calgary Eau Claire",
+      "rating": "4.6 (3.6k)",
+      "category": "halal",
+      "estimated_time": "15–16 min away",
+      "address": "255 Barclay Parade SW\nCalgary, AB T2P 5C2",
+      "phone": "(403) 266-0024"
+    },
+    {
+      "id": "delta_halals_marriott",
+      "name": "Delta halals by Marriott Calgary South",
+      "rating": "4.3 (20k)",
+      "category": "halal",
+      "estimated_time": "8–9 min away",
+      "address": "135 Southland Drive SE\nCalgary, AB T2J 5X5",
+      "phone": "(403) 278-0025"
+    },
+    {
+      "id": "the_westin_calgary",
+      "name": "The Westin Calgary",
+      "rating": "4.4 (3.9k)",
+      "category": "halal",
+      "estimated_time": "7–8 min away",
+      "address": "320 4 Avenue SW\nCalgary, AB T2P 2S6",
+      "phone": "(403) 266-0026"
+    },
+    {
+      "id": "residence_inn_beltline",
+      "name": "Residence Inn by Marriott Beltline",
+      "rating": "4.5 (13k)",
+      "category": "halal",
+      "estimated_time": "15–16 min away",
+      "address": "610 10 Avenue SW\nCalgary, AB T2R 1M3",
+      "phone": "(403) 232-0027"
+    },
+    {
+      "id": "sandman_signature_downtown",
+      "name": "Sandman Signature Calgary Downtown",
+      "rating": "4.1 (14k)",
+      "category": "halal",
+      "estimated_time": "4–5 min away",
+      "address": "888 7 Avenue SW\nCalgary, AB T2P 3J3",
+      "phone": "(403) 237-0028"
+    },
+    {
+      "id": "the_dorian_autograph",
+      "name": "The Dorian Autograph Collection",
+      "rating": "4.6 (15k)",
+      "category": "halal",
+      "estimated_time": "3–4 min away",
+      "address": "525 5 Avenue SW\nCalgary, AB T2P 3R7",
+      "phone": "(403) 410-0029"
+    },
+    {
+      "id": "alt_halal_east_village",
+      "name": "Alt halal Calgary East Village",
+      "rating": "4.6 (934)",
+      "category": "halal",
+      "estimated_time": "9–10 min away",
+      "address": "635 Confluence Way SE\nCalgary, AB T2G 0G1",
+      "phone": "(403) 441-0030"
+    },
+
+    {
+      "id": "village_ice_cream",
+      "name": "Village Ice Cream",
+      "rating": "4.8 (18k)",
+      "category": "dessert",
+      "estimated_time": "7–8 min away",
+      "address": "431 10 Avenue SE\nCalgary, AB T2G 0W3",
+      "phone": "(403) 261-0031"
+    },
+    {
+      "id": "made_by_marcus",
+      "name": "Made By Marcus",
+      "rating": "4.9 (15k)",
+      "category": "dessert",
+      "estimated_time": "11–12 min away",
+      "address": "1013 17 Avenue SW\nCalgary, AB T2T 0A7",
+      "phone": "(403) 452-0032"
+    },
+    {
+      "id": "yann_haute_patisserie",
+      "name": "Yann Haute Patisserie",
+      "rating": "4.7 (4.6k)",
+      "category": "dessert",
+      "estimated_time": "12–13 min away",
+      "address": "329 23 Avenue SW\nCalgary, AB T2S 0J3",
+      "phone": "(403) 244-0033"
+    },
+    {
+      "id": "ollia_macarons_tea",
+      "name": "Ollia Macarons & Tea",
+      "rating": "4.6 (11k)",
+      "category": "dessert",
+      "estimated_time": "9–10 min away",
+      "address": "810C 16 Avenue SW\nCalgary, AB T2R 0S9",
+      "phone": "(403) 457-0034"
+    },
+    {
+      "id": "cinnaholic_calgary",
+      "name": "Cinnaholic Calgary",
+      "rating": "4.5 (12k)",
+      "category": "dessert",
+      "estimated_time": "10–11 min away",
+      "address": "130 2 Avenue SE\nCalgary, AB T2G 0B3",
+      "phone": "(403) 475-0035"
+    },
+    {
+      "id": "la_diperie",
+      "name": "La Diperie",
+      "rating": "4.4 (4.4k)",
+      "category": "dessert",
+      "estimated_time": "4–5 min away",
+      "address": "1226 9 Avenue SE\nCalgary, AB T2G 0T1",
+      "phone": "(403) 265-0036"
+    },
+    {
+      "id": "presotea_bubble_tea",
+      "name": "Presotea Bubble Tea",
+      "rating": "4.3 (15k)",
+      "category": "dessert",
+      "estimated_time": "12–13 min away",
+      "address": "999 36 Street NE\nCalgary, AB T2A 7X6",
+      "phone": "(403) 569-0037"
+    },
+    {
+      "id": "tsujiri_calgary",
+      "name": "Tsujiri Calgary",
+      "rating": "4.6 (2.1k)",
+      "category": "dessert",
+      "estimated_time": "13–14 min away",
+      "address": "302 10 Street NW\nCalgary, AB T2N 1V8",
+      "phone": "(403) 475-0038"
+    },
+    {
+      "id": "amato_gelato_kensington",
+      "name": "Amato Gelato Kensington",
+      "rating": "4.7 (17k)",
+      "category": "dessert",
+      "estimated_time": "13–14 min away",
+      "address": "2104 Kensington Road NW\nCalgary, AB T2N 3R7",
+      "phone": "(403) 270-0039"
+    },
+    {
+      "id": "butter_block_co",
+      "name": "Butter Block & Co",
+      "rating": "4.8 (18k)",
+      "category": "dessert",
+      "estimated_time": "4–5 min away",
+      "address": "130 10 Street NW\nCalgary, AB T2N 1V3",
+      "phone": "(403) 457-0040"
+    }
+  ]
+}

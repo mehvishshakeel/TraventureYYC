@@ -1,0 +1,621 @@
+{
+  "reviewsByPlace": {
+    "Peter's Drive-In": [
+      {
+        "customer_name": "Aisha K.",
+        "review": "Burgers were super fresh and the milkshake was so thick and creamy. Worth the lineup.",
+        "date": "2024-06-12",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Daniel M.",
+        "review": "Classic Calgary spot. Fries were a bit salty but the portions are huge.",
+        "date": "2024-08-03",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Sophia L.",
+        "review": "Stopped here after a long drive. Quick service and the burgers hit the spot.",
+        "date": "2025-01-19",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Five Guys Macleod Trail": [
+      {
+        "customer_name": "Jason P.",
+        "review": "Love that you can customize everything. Burgers were juicy and the fries are enough for two.",
+        "date": "2024-05-27",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Hassan R.",
+        "review": "A bit pricey but the taste and quality are solid. Staff were friendly.",
+        "date": "2024-09-09",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Emily W.",
+        "review": "Peanuts while you wait is always a plus. Place was clean and service was fast.",
+        "date": "2025-02-02",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "A&W 17th Ave": [
+      {
+        "customer_name": "Nick J.",
+        "review": "Teen Burger is still my go-to. Fresh buns and the root beer was ice cold.",
+        "date": "2024-03-18",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Laura S.",
+        "review": "Good spot for a quick bite on 17th. Onion rings were crispy and not too oily.",
+        "date": "2024-10-01",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "McDonald's Brentwood": [
+      {
+        "customer_name": "Kevin T.",
+        "review": "Busy location near the university but drive-thru was pretty efficient.",
+        "date": "2024-01-29",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Rachel F.",
+        "review": "Fries were hot and crispy. Order was accurate which I appreciate.",
+        "date": "2024-09-21",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Luis M.",
+        "review": "Good late-night option. Dining area could be a bit cleaner though.",
+        "date": "2025-03-03",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Popeyes Forest Lawn": [
+      {
+        "customer_name": "Fatima Z.",
+        "review": "Spicy chicken sandwich was amazing and still crunchy after the drive home.",
+        "date": "2024-07-10",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Jordan C.",
+        "review": "Line was long but moved fast. Cajun fries were so good.",
+        "date": "2024-11-02",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Harvey's Country Hills": [
+      {
+        "customer_name": "Chris D.",
+        "review": "Love that you can pick your toppings. Burger tasted really fresh.",
+        "date": "2024-04-05",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Mariam H.",
+        "review": "Staff were super patient with my order changes. Frings are a must-try.",
+        "date": "2024-10-15",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "KFC Crowfoot": [
+      {
+        "customer_name": "Owen G.",
+        "review": "Chicken was hot and crispy. Mashed potatoes were decent too.",
+        "date": "2024-02-20",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Jasmine Y.",
+        "review": "Order took a bit longer than expected but the food was fresh.",
+        "date": "2024-08-28",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Taco Bell Sunridge": [
+      {
+        "customer_name": "Tyler B.",
+        "review": "Classic Taco Bell cravings satisfied. Crunchwrap was made properly.",
+        "date": "2024-06-03",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Priya S.",
+        "review": "Good for cheap late-night snacks. Staff were nice.",
+        "date": "2024-11-18",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Wendy's Bowness": [
+      {
+        "customer_name": "Mark L.",
+        "review": "Baconator was massive and the Frosty was perfect for dessert.",
+        "date": "2024-05-11",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Hannah P.",
+        "review": "Drive-thru was quick and the food was hot. No complaints.",
+        "date": "2024-09-30",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Chipotle 4th Street": [
+      {
+        "customer_name": "Sahil N.",
+        "review": "Portions are huge. Burrito bowl was fresh and well-seasoned.",
+        "date": "2024-03-09",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Grace W.",
+        "review": "Love the options for toppings. Line moves quickly even when busy.",
+        "date": "2024-10-22",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "The Himalaya Restaurant": [
+      {
+        "customer_name": "Imran A.",
+        "review": "Butter chicken was rich and flavourful. Naan was soft and fresh.",
+        "date": "2024-01-16",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Sarah K.",
+        "review": "Great family-style spot. Portions are generous and service is warm.",
+        "date": "2024-09-04",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Bindas Eatery Calgary": [
+      {
+        "customer_name": "Neha J.",
+        "review": "Butter chicken poutine is such a fun mashup. Really tasty.",
+        "date": "2024-05-02",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Alex H.",
+        "review": "Street food vibes with a modern twist. Loved the samosa chaat.",
+        "date": "2024-11-11",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Masala Bhavan Restaurant": [
+      {
+        "customer_name": "Rajesh P.",
+        "review": "Curries had deep flavour and just the right spice level.",
+        "date": "2024-03-27",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Melissa D.",
+        "review": "Gulab jamun was a perfect finish. Friendly staff.",
+        "date": "2024-08-20",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Tamarind East Indian Kitchen": [
+      {
+        "customer_name": "Tom R.",
+        "review": "Tamarind butter chicken was incredible. Would definitely come back.",
+        "date": "2024-04-14",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Linda O.",
+        "review": "Nice ambiance and attentive service. Garlic naan was so good.",
+        "date": "2024-10-07",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Bombay Chowpatty": [
+      {
+        "customer_name": "Ankit S.",
+        "review": "Felt like Mumbai street food. Pav bhaji was spot on.",
+        "date": "2024-02-08",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Jenny L.",
+        "review": "Great vegetarian options. Masala chai was comforting.",
+        "date": "2024-09-13",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Indian Flavours Kitchen": [
+      {
+        "customer_name": "Mohammed I.",
+        "review": "Tandoori chicken was smoky and tender. Good value for what you get.",
+        "date": "2024-06-18",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Eva C.",
+        "review": "Nice cosy place. Loved the paneer butter masala.",
+        "date": "2024-11-24",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Calcutta Cricket Club": [
+      {
+        "customer_name": "Zara H.",
+        "review": "Beautiful decor and really unique menu. Kathi rolls were amazing.",
+        "date": "2024-05-30",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Ryan G.",
+        "review": "Cocktails and small plates were on point. Great date-night spot.",
+        "date": "2024-09-08",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Moti Mahal": [
+      {
+        "customer_name": "Priyanka S.",
+        "review": "Classic comfort Indian food. Chicken korma was rich and creamy.",
+        "date": "2024-03-04",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "David L.",
+        "review": "Service was fast and naan was fresh. Would come again.",
+        "date": "2024-10-26",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Royal India Curry House": [
+      {
+        "customer_name": "Karen B.",
+        "review": "Good lunch spot downtown. Butter chicken combo was filling.",
+        "date": "2024-01-23",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Vikram N.",
+        "review": "Nice spice level and decent portions. Friendly staff.",
+        "date": "2024-08-17",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Zaiqa Restaurant": [
+      {
+        "customer_name": "Ahmed K.",
+        "review": "Karahi was full of flavour and came sizzling hot.",
+        "date": "2024-02-14",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Sonia J.",
+        "review": "Good place for sharing plates with friends. Naan was fresh.",
+        "date": "2024-11-05",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Fairmont Palliser": [
+      {
+        "customer_name": "Natalie P.",
+        "review": "Elegant setting and beautifully plated dishes. Loved the salmon.",
+        "date": "2024-04-22",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "James C.",
+        "review": "Great for special occasions. Service was very professional.",
+        "date": "2024-12-01",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "halal Arts": [
+      {
+        "customer_name": "Layla R.",
+        "review": "Falafel platter was fresh and nicely seasoned. Good portion size.",
+        "date": "2024-03-31",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Peter S.",
+        "review": "Nice spot for a casual dinner. Loved the grilled chicken skewers.",
+        "date": "2024-09-19",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Hyatt Regency Calgary": [
+      {
+        "customer_name": "Olivia D.",
+        "review": "Breakfast and dinner here were both solid. Tomato bisque was delicious.",
+        "date": "2024-05-07",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Michael F.",
+        "review": "Convenient if you're staying at the hotel. Good quality ingredients.",
+        "date": "2024-10-29",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Sheraton Suites Calgary Eau Claire": [
+      {
+        "customer_name": "Emma G.",
+        "review": "Steak frites were cooked perfectly. Nice view from the dining area.",
+        "date": "2024-02-26",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Lucas H.",
+        "review": "Soup and salad combo was surprisingly filling. Good service.",
+        "date": "2024-08-09",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Delta halals by Marriott Calgary South": [
+      {
+        "customer_name": "Huda A.",
+        "review": "Lemon herb salmon was flavourful and not overcooked.",
+        "date": "2024-06-01",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Chris W.",
+        "review": "Nice hotel restaurant, good variety on the menu.",
+        "date": "2024-11-14",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "The Westin Calgary": [
+      {
+        "customer_name": "Isabelle R.",
+        "review": "Striploin was tender and nicely seasoned. Dessert was great too.",
+        "date": "2024-03-12",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Daniel K.",
+        "review": "Good option if you're staying downtown. Service was attentive.",
+        "date": "2024-09-02",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Residence Inn by Marriott Beltline": [
+      {
+        "customer_name": "Sergio L.",
+        "review": "Grilled chicken salad was fresh and light. Perfect for lunch.",
+        "date": "2024-04-28",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Emily N.",
+        "review": "Pasta primavera was creamy without being too heavy.",
+        "date": "2024-10-20",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Sandman Signature Calgary Downtown": [
+      {
+        "customer_name": "Jacob P.",
+        "review": "Casual vibe with decent pub-style food. Cheeseburger was solid.",
+        "date": "2024-01-31",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Chloe S.",
+        "review": "Tomato basil soup and salad hit the spot on a cold day.",
+        "date": "2024-08-05",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "The Dorian Autograph Collection": [
+      {
+        "customer_name": "Amina H.",
+        "review": "Braised short ribs were incredible. Beautifully designed space.",
+        "date": "2024-05-19",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Ben T.",
+        "review": "Great for a special night out. Presentation and flavours were top notch.",
+        "date": "2024-11-27",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Alt halal Calgary East Village": [
+      {
+        "customer_name": "Noor F.",
+        "review": "Grilled chicken bowl was filling and fresh. Nice modern feel.",
+        "date": "2024-06-21",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Tommy L.",
+        "review": "Good option if you're staying in East Village. Soup of the day was tasty.",
+        "date": "2024-10-10",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Village Ice Cream": [
+      {
+        "customer_name": "Katie J.",
+        "review": "Salted caramel is a must-get. Lineups are worth it.",
+        "date": "2024-07-03",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Andre P.",
+        "review": "Great flavours and super creamy texture. Cute little spot.",
+        "date": "2024-09-25",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Made By Marcus": [
+      {
+        "customer_name": "Julia C.",
+        "review": "Creative flavours that change often. Soft serve was amazing.",
+        "date": "2024-05-09",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Ethan W.",
+        "review": "One of my favourite dessert spots in Calgary. Always something new.",
+        "date": "2024-11-01",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Yann Haute Patisserie": [
+      {
+        "customer_name": "Claire L.",
+        "review": "Macarons were delicate and flavourful. Feels like a little piece of Paris.",
+        "date": "2024-03-22",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Victor S.",
+        "review": "Pastries are beautiful and delicious. Lemon tart was my favourite.",
+        "date": "2024-10-04",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Ollia Macarons & Tea": [
+      {
+        "customer_name": "Sophie R.",
+        "review": "Perfect spot for a small treat. Macarons were crisp outside, soft inside.",
+        "date": "2024-02-18",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Henry D.",
+        "review": "Great tea and coffee options. The gift boxes make nice presents.",
+        "date": "2024-08-30",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Cinnaholic Calgary": [
+      {
+        "customer_name": "Megan K.",
+        "review": "Custom cinnamon rolls are dangerous in the best way. So many topping choices.",
+        "date": "2024-04-09",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Josh E.",
+        "review": "Everything is super sweet but perfect when you’re craving dessert.",
+        "date": "2024-09-16",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "La Diperie": [
+      {
+        "customer_name": "Nina V.",
+        "review": "Dipped cones with toppings were so fun. Kids loved it.",
+        "date": "2024-06-06",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Adam F.",
+        "review": "Great variety of sauces and toppings. Can get busy in the evening.",
+        "date": "2024-10-12",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Presotea Bubble Tea": [
+      {
+        "customer_name": "Lily Z.",
+        "review": "Pearl texture was perfect and drinks weren't overly sweet.",
+        "date": "2024-05-15",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Kevin R.",
+        "review": "Lots of flavours to choose from. Matcha latte was really good.",
+        "date": "2024-11-23",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Tsujiri Calgary": [
+      {
+        "customer_name": "Haruka M.",
+        "review": "Matcha soft serve tasted very authentic. Loved the parfait.",
+        "date": "2024-03-01",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Brian T.",
+        "review": "Great spot if you like matcha-based drinks and desserts.",
+        "date": "2024-09-06",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Amato Gelato Kensington": [
+      {
+        "customer_name": "Carla S.",
+        "review": "So many gelato flavours. Pistachio and hazelnut were amazing.",
+        "date": "2024-07-20",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Joel P.",
+        "review": "Nice stroll in Kensington with a cone. Staff offered samples too.",
+        "date": "2024-10-19",
+        "photo": "../images/foods-image-18.png"
+      }
+    ],
+
+    "Butter Block & Co": [
+      {
+        "customer_name": "Dina Q.",
+        "review": "Best croissants in the city. Almond and chocolate are both fantastic.",
+        "date": "2024-02-11",
+        "photo": "../images/foods-image-18.png"
+      },
+      {
+        "customer_name": "Marco V.",
+        "review": "Everything is super flaky and buttery. Coffee pairs perfectly.",
+        "date": "2024-08-23",
+        "photo": "../images/foods-image-18.png"
+      }
+    ]
+  }
+}

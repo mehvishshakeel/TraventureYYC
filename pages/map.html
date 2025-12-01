@@ -5,6 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Map - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
+
+  <style>
+    /* Make sure the map container has a nice fixed height */
+    .map-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto var(--spacing-md);
+      border-radius: 12px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+    }
+
+    /* Map image should scale nicely without breaking layout */
+    #map-image {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    /* Map controls look clickable */
+    .map-controls {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 0 auto var(--spacing-md);
+    }
+
+    .map-control {
+      padding: 6px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--color-primary-light);
+      background-color: var(--color-background);
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .map-control.active {
+      background-color: var(--color-primary);
+      color: var(--color-text-white);
+      border-color: var(--color-primary);
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
   <div class="app-container">
@@ -30,7 +74,7 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-      <a href="javascript:history.back()" style="color: var(--color-text-black);">←</a>
+      <a href="food-homepage.html" style="color: var(--color-text-black);">←</a>
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
@@ -46,31 +90,38 @@
     <div class="content">
       <!-- Map Container -->
       <div class="map-container">
-        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #e0e0e0, #f5f5f5); display: flex; align-items: center; justify-content: center; color: #999;">
-          <div style="text-align: center;">
-            <div style="font-size: 48px; margin-bottom: var(--spacing-sm);">📍</div>
-            <div>Map View</div>
-            <div style="font-size: 12px; margin-top: var(--spacing-xs);">(Map integration required)</div>
-          </div>
-        </div>
+        <iframe
+          id="map-frame"
+          width="100%"
+          height="100%"
+          style="border:0; border-radius: 12px;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
       </div>
+      
 
       <!-- Map Controls -->
       <div class="map-controls">
-        <div class="map-control active">Drive</div>
-        <div class="map-control">Transit</div>
-        <div class="map-control">Walk</div>
+        <div class="map-control active" data-mode="drive">Drive</div>
+        <div class="map-control" data-mode="transit">Transit</div>
+        <div class="map-control" data-mode="walk">Walk</div>
       </div>
 
       <!-- Location Details -->
       <div class="card">
-        <h3 style="font-size: 20px; font-weight: 600; margin-bottom: var(--spacing-sm);">Avesta Shawarma</h3>
-        <p style="color: var(--color-text-dark); margin-bottom: var(--spacing-xs);">
-          123 Main Street NW<br>
-          Calgary, AB T2P 1H4
+        <h3 id="place-title"
+            style="font-size: 20px; font-weight: 600; margin-bottom: var(--spacing-sm);">
+          Loading...
+        </h3>
+        <p id="place-address"
+           style="color: var(--color-text-dark); margin-bottom: var(--spacing-xs);">
+          Calgary, AB
         </p>
-        <p style="color: var(--color-text-dark); margin-bottom: var(--spacing-md);">
-          Phone: (403) 123-4567
+        <p id="place-phone"
+           style="color: var(--color-text-dark); margin-bottom: var(--spacing-md);">
+          Phone: N/A
         </p>
         <button class="btn btn--primary btn--full">START</button>
       </div>
@@ -96,6 +147,110 @@
       </a>
     </div>
   </div>
+
+  <!-- JS: load place details + embedded route + START button -->
+  <script>
+    // --- hard-coded origin ---
+    const ORIGIN_ADDRESS = "30 Brentwood Common NW, Calgary, AB T2L 2L8";
+  
+    // --- read place name from URL (?place=Peter's Drive-In) ---
+    const params = new URLSearchParams(window.location.search);
+    const placeName = params.get("place") || "Calgary, AB";
+  
+    const titleEl   = document.getElementById("place-title");
+    const addressEl = document.getElementById("place-address");
+    const phoneEl   = document.getElementById("place-phone");
+    const mapFrame  = document.getElementById("map-frame");
+    const controls  = document.querySelectorAll(".map-control");
+    const startBtn  = document.querySelector(".btn--primary");
+  
+    let currentMode = "driving"; // "driving" | "transit" | "walking"
+    let destinationFull = placeName + ", Calgary, AB"; // will refine after JSON
+  
+    // --- 1) load text details from JSON (name, address, phone) ---
+    fetch("../calgary_places.json")
+      .then(response => response.json())
+      .then(data => {
+        const places = data.places || [];
+        const place  = places.find(p => p.name === placeName);
+  
+        if (!place) {
+          titleEl.textContent   = placeName;
+          addressEl.innerHTML   = "Calgary<br>AB";
+          phoneEl.textContent   = "Phone: N/A";
+        } else {
+          titleEl.textContent = place.name;
+          if (place.address) {
+            // convert "\n" to <br> for display
+            addressEl.innerHTML = place.address.replace(/\n/g, "<br>");
+            // use a comma version as the full destination address
+            destinationFull = place.address.replace(/\n/g, ", ");
+          } else {
+            addressEl.innerHTML = "Calgary<br>AB";
+          }
+          phoneEl.textContent = "Phone: " + (place.phone || "N/A");
+        }
+  
+        // once we know the place, set up the embedded map
+        updateEmbeddedMap();
+      })
+      .catch(err => {
+        console.error("Error loading place info:", err);
+        titleEl.textContent   = placeName;
+        addressEl.innerHTML   = "Calgary<br>AB";
+        phoneEl.textContent   = "Phone: N/A";
+        updateEmbeddedMap(); // still show a generic route
+      });
+  
+    // --- 2) build an EMBED URL that shows directions & respects mode ---
+    function updateEmbeddedMap() {
+      // dirflg: d = driving, r = transit, w = walking
+      let flag = "d";
+      if (currentMode === "transit") flag = "r";
+      if (currentMode === "walking") flag = "w";
+  
+      const url =
+        "https://www.google.com/maps?saddr=" +
+        encodeURIComponent(ORIGIN_ADDRESS) +
+        "&daddr=" +
+        encodeURIComponent(destinationFull) +
+        "&dirflg=" + flag +
+        "&output=embed";
+  
+      mapFrame.src = url;
+    }
+  
+    // --- 3) hook up Drive / Transit / Walk chips (update map too) ---
+    controls.forEach(ctrl => {
+      ctrl.addEventListener("click", () => {
+        // visual active state
+        controls.forEach(c => c.classList.remove("active"));
+        ctrl.classList.add("active");
+  
+        const modeAttr = ctrl.dataset.mode; // "drive", "transit", "walk"
+        if (modeAttr === "drive")   currentMode = "driving";
+        if (modeAttr === "transit") currentMode = "transit";
+        if (modeAttr === "walk")    currentMode = "walking";
+  
+        // 🔥 reload the iframe with the new mode
+        updateEmbeddedMap();
+      });
+    });
+  
+    // --- 4) START button: open full Google Maps directions with origin + mode ---
+    if (startBtn) {
+      startBtn.addEventListener("click", () => {
+        const directionsUrl =
+          "https://www.google.com/maps/dir/?api=1" +
+          "&origin=" + encodeURIComponent(ORIGIN_ADDRESS) +
+          "&destination=" + encodeURIComponent(destinationFull) +
+          "&travelmode=" + encodeURIComponent(currentMode);
+  
+        window.open(directionsUrl, "_blank");
+      });
+    }
+  </script>
+  
+  
 </body>
 </html>
-

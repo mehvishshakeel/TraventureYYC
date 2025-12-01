@@ -1,0 +1,1123 @@
+{
+  "dishesByPlace": {
+    "Peter's Drive-In": [
+      {
+        "name": "Classic Burger",
+        "cost": "CA $7.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Cheeseburger",
+        "cost": "CA $8.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Double Burger",
+        "cost": "CA $10.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Fries & Gravy",
+        "cost": "CA $5.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Chocolate Milkshake",
+        "cost": "CA $6.25",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Five Guys Macleod Trail": [
+      {
+        "name": "Little Cheeseburger",
+        "cost": "CA $9.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Bacon Cheeseburger",
+        "cost": "CA $12.75",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Cajun Fries",
+        "cost": "CA $5.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Veggie Sandwich",
+        "cost": "CA $7.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Vanilla Milkshake",
+        "cost": "CA $6.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "A&W 17th Ave": [
+      {
+        "name": "Teen Burger",
+        "cost": "CA $7.99",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Mozza Burger",
+        "cost": "CA $8.49",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Onion Rings",
+        "cost": "CA $4.99",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Poutine",
+        "cost": "CA $6.49",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Root Beer Float",
+        "cost": "CA $4.25",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "McDonald's Brentwood": [
+      {
+        "name": "Big Mac",
+        "cost": "CA $7.49",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "McChicken",
+        "cost": "CA $6.99",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "10 pc Chicken McNuggets",
+        "cost": "CA $8.99",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "World Famous Fries",
+        "cost": "CA $3.99",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "McFlurry",
+        "cost": "CA $4.79",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Popeyes Forest Lawn": [
+      {
+        "name": "Spicy Chicken Sandwich",
+        "cost": "CA $7.99",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "3 pc Chicken Combo",
+        "cost": "CA $11.49",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Cajun Fries",
+        "cost": "CA $4.49",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Red Beans & Rice",
+        "cost": "CA $4.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Cinnamon Apple Pie",
+        "cost": "CA $2.99",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Harvey's Country Hills": [
+      {
+        "name": "Original Burger",
+        "cost": "CA $7.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Angus Burger",
+        "cost": "CA $8.75",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Veggie Burger",
+        "cost": "CA $7.99",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Frings (Fries & Rings)",
+        "cost": "CA $4.99",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Milkshake",
+        "cost": "CA $4.99",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "KFC Crowfoot": [
+      {
+        "name": "3 pc Original Recipe Chicken",
+        "cost": "CA $10.49",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Popcorn Chicken",
+        "cost": "CA $6.49",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Zinger Sandwich",
+        "cost": "CA $7.99",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Mashed Potatoes & Gravy",
+        "cost": "CA $3.99",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Coleslaw",
+        "cost": "CA $2.99",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Taco Bell Sunridge": [
+      {
+        "name": "Crunchy Taco",
+        "cost": "CA $2.49",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Beef Burrito",
+        "cost": "CA $5.99",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Crunchwrap Supreme",
+        "cost": "CA $7.49",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Nachos Supreme",
+        "cost": "CA $6.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Cinnamon Twists",
+        "cost": "CA $2.49",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Wendy's Bowness": [
+      {
+        "name": "Dave's Single",
+        "cost": "CA $7.49",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Spicy Chicken Sandwich",
+        "cost": "CA $8.49",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Baconator",
+        "cost": "CA $10.99",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Frosty",
+        "cost": "CA $3.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "French Fries",
+        "cost": "CA $3.49",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Chipotle 4th Street": [
+      {
+        "name": "Chicken Burrito",
+        "cost": "CA $11.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Steak Bowl",
+        "cost": "CA $12.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Veggie Burrito Bowl",
+        "cost": "CA $10.75",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Chips & Guacamole",
+        "cost": "CA $5.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Chips & Salsa",
+        "cost": "CA $3.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "The Himalaya Restaurant": [
+      {
+        "name": "Butter Chicken",
+        "cost": "CA $17.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Lamb Rogan Josh",
+        "cost": "CA $19.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Chana Masala",
+        "cost": "CA $15.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Garlic Naan",
+        "cost": "CA $4.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Vegetable Biryani",
+        "cost": "CA $16.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Bindas Eatery Calgary": [
+      {
+        "name": "Paneer Tikka Wrap",
+        "cost": "CA $14.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Butter Chicken Poutine",
+        "cost": "CA $16.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Samosa Chaat",
+        "cost": "CA $11.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Masala Fries",
+        "cost": "CA $7.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Mango Lassi",
+        "cost": "CA $5.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Masala Bhavan Restaurant": [
+      {
+        "name": "Chicken Tikka Masala",
+        "cost": "CA $18.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Lamb Vindaloo",
+        "cost": "CA $19.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Dal Makhani",
+        "cost": "CA $15.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Plain Naan",
+        "cost": "CA $3.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Gulab Jamun",
+        "cost": "CA $6.25",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Tamarind East Indian Kitchen": [
+      {
+        "name": "Tamarind Butter Chicken",
+        "cost": "CA $18.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Goat Curry",
+        "cost": "CA $20.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Saag Paneer",
+        "cost": "CA $17.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Garlic Cilantro Naan",
+        "cost": "CA $4.75",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Chicken Biryani",
+        "cost": "CA $19.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Bombay Chowpatty": [
+      {
+        "name": "Pav Bhaji",
+        "cost": "CA $13.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Vada Pav",
+        "cost": "CA $9.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Bhel Puri",
+        "cost": "CA $10.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Sev Puri",
+        "cost": "CA $10.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Masala Chai",
+        "cost": "CA $3.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Indian Flavours Kitchen": [
+      {
+        "name": "Tandoori Chicken",
+        "cost": "CA $19.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Paneer Butter Masala",
+        "cost": "CA $17.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Aloo Gobi",
+        "cost": "CA $15.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Garlic Naan",
+        "cost": "CA $4.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Rasmalai",
+        "cost": "CA $6.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Calcutta Cricket Club": [
+      {
+        "name": "Kathi Roll",
+        "cost": "CA $16.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Prawn Malai Curry",
+        "cost": "CA $21.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Shahi Paneer",
+        "cost": "CA $18.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Papri Chaat",
+        "cost": "CA $11.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Coconut Rice",
+        "cost": "CA $5.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Moti Mahal": [
+      {
+        "name": "Chicken Korma",
+        "cost": "CA $18.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Beef Curry",
+        "cost": "CA $19.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Palak Paneer",
+        "cost": "CA $17.45",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Garlic Naan",
+        "cost": "CA $4.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Kulfi Ice Cream",
+        "cost": "CA $6.50",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Royal India Curry House": [
+      {
+        "name": "Lamb Korma",
+        "cost": "CA $20.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Butter Chicken",
+        "cost": "CA $18.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Mixed Vegetable Curry",
+        "cost": "CA $16.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Garlic Naan",
+        "cost": "CA $4.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Chicken Biryani",
+        "cost": "CA $19.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Zaiqa Restaurant": [
+      {
+        "name": "Chicken Karahi",
+        "cost": "CA $19.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Mutton Karahi",
+        "cost": "CA $21.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Seekh Kebab",
+        "cost": "CA $16.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Tandoori Naan",
+        "cost": "CA $3.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Kheer",
+        "cost": "CA $6.25",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Fairmont Palliser": [
+      {
+        "name": "Grilled Salmon",
+        "cost": "CA $29.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Roasted Chicken Supreme",
+        "cost": "CA $27.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Seasonal Soup",
+        "cost": "CA $11.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Garden Salad",
+        "cost": "CA $12.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Chocolate Torte",
+        "cost": "CA $10.50",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "halal Arts": [
+      {
+        "name": "Grilled Chicken Skewers",
+        "cost": "CA $22.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Falafel Platter",
+        "cost": "CA $18.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Lentil Soup",
+        "cost": "CA $9.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Greek Salad",
+        "cost": "CA $13.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Baklava",
+        "cost": "CA $7.25",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Hyatt Regency Calgary": [
+      {
+        "name": "Herb Roasted Chicken",
+        "cost": "CA $28.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Pan-Seared Salmon",
+        "cost": "CA $30.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Tomato Bisque",
+        "cost": "CA $10.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Quinoa Salad",
+        "cost": "CA $15.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Crème Brûlée",
+        "cost": "CA $11.50",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Sheraton Suites Calgary Eau Claire": [
+      {
+        "name": "Steak Frites",
+        "cost": "CA $32.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Roasted Chicken Breast",
+        "cost": "CA $27.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Daily Soup",
+        "cost": "CA $9.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Caesar Salad",
+        "cost": "CA $14.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Cheesecake",
+        "cost": "CA $10.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Delta halals by Marriott Calgary South": [
+      {
+        "name": "Roast Beef Dinner",
+        "cost": "CA $29.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Lemon Herb Salmon",
+        "cost": "CA $30.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Chicken Caesar Wrap",
+        "cost": "CA $18.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "House Salad",
+        "cost": "CA $12.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Fruit Tart",
+        "cost": "CA $9.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "The Westin Calgary": [
+      {
+        "name": "Grilled Striploin",
+        "cost": "CA $34.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Roasted Chicken Thigh",
+        "cost": "CA $26.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Mushroom Soup",
+        "cost": "CA $11.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Spinach Salad",
+        "cost": "CA $14.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Chocolate Lava Cake",
+        "cost": "CA $11.25",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Residence Inn by Marriott Beltline": [
+      {
+        "name": "Grilled Chicken Salad",
+        "cost": "CA $19.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Pasta Primavera",
+        "cost": "CA $21.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Tomato Soup",
+        "cost": "CA $9.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "House Fries",
+        "cost": "CA $6.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Ice Cream Trio",
+        "cost": "CA $8.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Sandman Signature Calgary Downtown": [
+      {
+        "name": "Cheeseburger & Fries",
+        "cost": "CA $19.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Chicken Tenders",
+        "cost": "CA $18.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Caesar Salad",
+        "cost": "CA $13.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Tomato Basil Soup",
+        "cost": "CA $8.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Brownie Sundae",
+        "cost": "CA $9.50",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "The Dorian Autograph Collection": [
+      {
+        "name": "Braised Short Ribs",
+        "cost": "CA $36.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Roast Chicken",
+        "cost": "CA $28.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Seasonal Soup",
+        "cost": "CA $12.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Beet Salad",
+        "cost": "CA $15.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Lemon Tart",
+        "cost": "CA $11.00",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Alt halal Calgary East Village": [
+      {
+        "name": "Grilled Chicken Bowl",
+        "cost": "CA $20.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Vegetable Stir Fry",
+        "cost": "CA $18.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Soup of the Day",
+        "cost": "CA $9.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Side Salad",
+        "cost": "CA $7.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Cheesecake Slice",
+        "cost": "CA $9.25",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Village Ice Cream": [
+      {
+        "name": "Salted Caramel Ice Cream",
+        "cost": "CA $5.75",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Vanilla Bean Ice Cream",
+        "cost": "CA $5.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Chocolate Ice Cream",
+        "cost": "CA $5.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Ice Cream Sundae",
+        "cost": "CA $7.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Ice Cream Pint",
+        "cost": "CA $10.50",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Made By Marcus": [
+      {
+        "name": "Soft Serve Cone",
+        "cost": "CA $5.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Ice Cream Sundae",
+        "cost": "CA $8.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Ice Cream Pint",
+        "cost": "CA $11.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Ice Cream Sandwich",
+        "cost": "CA $6.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Seasonal Special Flavor",
+        "cost": "CA $6.75",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Yann Haute Patisserie": [
+      {
+        "name": "Assorted Macarons Box",
+        "cost": "CA $16.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Chocolate Mousse Cake",
+        "cost": "CA $8.75",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Lemon Tart",
+        "cost": "CA $7.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Croissant",
+        "cost": "CA $4.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Éclair",
+        "cost": "CA $6.25",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Ollia Macarons & Tea": [
+      {
+        "name": "Macaron Box (6 pcs)",
+        "cost": "CA $15.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Macaron Box (12 pcs)",
+        "cost": "CA $28.00",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Hot Tea",
+        "cost": "CA $4.75",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Iced Latte",
+        "cost": "CA $5.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Specialty Dessert",
+        "cost": "CA $7.25",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Cinnaholic Calgary": [
+      {
+        "name": "Build-Your-Own Cinnamon Roll",
+        "cost": "CA $7.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Classic Cinnamon Roll",
+        "cost": "CA $6.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Brownie Bite",
+        "cost": "CA $3.75",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Cookie Dough Scoop",
+        "cost": "CA $4.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Iced Coffee",
+        "cost": "CA $4.50",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "La Diperie": [
+      {
+        "name": "Dipped Soft Serve Cone",
+        "cost": "CA $6.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Loaded Sundae",
+        "cost": "CA $8.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Milkshake",
+        "cost": "CA $6.75",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Vegan Ice Cream",
+        "cost": "CA $7.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Ice Cream Sandwich",
+        "cost": "CA $6.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Presotea Bubble Tea": [
+      {
+        "name": "Classic Milk Tea with Pearls",
+        "cost": "CA $6.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Jasmine Green Milk Tea",
+        "cost": "CA $6.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Fruit Tea",
+        "cost": "CA $6.75",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Matcha Latte",
+        "cost": "CA $6.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Cheese Foam Tea",
+        "cost": "CA $7.25",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Tsujiri Calgary": [
+      {
+        "name": "Matcha Soft Serve",
+        "cost": "CA $6.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Matcha Parfait",
+        "cost": "CA $9.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Hojicha Latte",
+        "cost": "CA $6.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Matcha Latte",
+        "cost": "CA $6.75",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Yuzu Float",
+        "cost": "CA $7.25",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Amato Gelato Kensington": [
+      {
+        "name": "Single Gelato Scoop",
+        "cost": "CA $5.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Double Gelato Scoop",
+        "cost": "CA $7.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Gelato Milkshake",
+        "cost": "CA $8.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Affogato",
+        "cost": "CA $7.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Gelato Pint",
+        "cost": "CA $11.95",
+        "description": "Description placeholder"
+      }
+    ],
+
+    "Butter Block & Co": [
+      {
+        "name": "Almond Croissant",
+        "cost": "CA $5.75",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Pain au Chocolat",
+        "cost": "CA $5.50",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Seasonal Danish",
+        "cost": "CA $5.95",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Cinnamon Bun",
+        "cost": "CA $6.25",
+        "description": "Description placeholder"
+      },
+      {
+        "name": "Drip Coffee",
+        "cost": "CA $3.25",
+        "description": "Description placeholder"
+      }
+    ]
+  }
+}
