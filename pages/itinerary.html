@@ -278,19 +278,41 @@
     // Global itinerary object used on this page
     let itineraryData = {};
 
-    // Load from sessionStorage if available, otherwise use default
+    // Load itinerary data - always start with defaults, then merge any stored changes
     function loadItineraryData() {
+      // Always start with a deep copy of default data to ensure all days are present
+      itineraryData = JSON.parse(JSON.stringify(DEFAULT_ITINERARY_DATA));
+      
       try {
         const stored = sessionStorage.getItem('itineraryData');
         if (stored) {
-          itineraryData = JSON.parse(stored);
-        } else {
-          itineraryData = DEFAULT_ITINERARY_DATA;
+          const storedData = JSON.parse(stored);
+          // Only override dates that have events in stored data
+          // Keep defaults for dates that are missing or empty in stored data
+          Object.keys(storedData).forEach(dateStr => {
+            if (storedData[dateStr] && storedData[dateStr].events && storedData[dateStr].events.length > 0) {
+              // Only override if stored data has events
+              itineraryData[dateStr] = storedData[dateStr];
+            }
+          });
         }
       } catch (e) {
         console.warn('Could not read itineraryData from sessionStorage, using defaults', e);
-        itineraryData = DEFAULT_ITINERARY_DATA;
+        // itineraryData already has defaults
       }
+      
+      // Ensure all default dates are present with their events
+      Object.keys(DEFAULT_ITINERARY_DATA).forEach(dateStr => {
+        if (!itineraryData[dateStr] || !itineraryData[dateStr].events || itineraryData[dateStr].events.length === 0) {
+          // If date is missing or empty, use default (unless default is also empty like July 19)
+          if (DEFAULT_ITINERARY_DATA[dateStr].events && DEFAULT_ITINERARY_DATA[dateStr].events.length > 0) {
+            itineraryData[dateStr] = JSON.parse(JSON.stringify(DEFAULT_ITINERARY_DATA[dateStr]));
+          } else if (!itineraryData[dateStr]) {
+            // Keep empty dates as empty, but ensure the date structure exists
+            itineraryData[dateStr] = JSON.parse(JSON.stringify(DEFAULT_ITINERARY_DATA[dateStr]));
+          }
+        }
+      });
     }
 
     /* ------------------------------
