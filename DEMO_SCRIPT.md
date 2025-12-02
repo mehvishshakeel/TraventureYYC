@@ -31,6 +31,11 @@ The following hardcoded accounts are available for testing:
 - **Password:** `bob123`
 - **Display Name:** Bob Smith
 
+#### Account 5: Tony
+- **Email:** `tony@traventure.com`
+- **Password:** `tony123`
+- **Display Name:** Tony
+
 #### Guest Account
 - **Email:** `guest@guest.com`
 - **Password:** `guest123`
@@ -101,6 +106,7 @@ The following hardcoded accounts are available for testing:
   - **Logged in as "Demo User 1":** Shows "Hello, Demo"
   - **Logged in as "Alice Johnson":** Shows "Hello, Alice"
   - **Logged in as "Bob Smith":** Shows "Hello, Bob"
+  - **Logged in as "Tony":** Shows "Hello, Tony"
   - **Logged in as Guest:** Shows "Hello, Guest"
 
 - The name is extracted from the user's display name (first word only)

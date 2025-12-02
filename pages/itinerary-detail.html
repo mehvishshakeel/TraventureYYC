@@ -34,7 +34,7 @@
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
       <div class="top-bar__actions">
-        <a href="itinerary-edit.html" style="color: var(--color-primary); font-size: 18px;">✏️</a>
+        <div></div>
       </div>
     </div>
 
@@ -42,26 +42,31 @@
     <div class="content">
       <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
-          <h1 style="font-size: 24px; font-weight: 700;">Calgary Zoo</h1>
-          <a href="itinerary-edit.html" style="color: var(--color-primary); font-size: 20px;">✏️</a>
+          <h1 id="eventTitle" style="font-size: 24px; font-weight: 700;">Loading...</h1>
+          <div></div>
         </div>
 
         <div style="margin-bottom: var(--spacing-md);">
           <div style="font-size: 16px; color: var(--color-text-dark); margin-bottom: var(--spacing-sm);">
-            <strong>Date:</strong> Monday, 14 July, 2026
+            <strong>Date:</strong> <span id="eventDate">Loading...</span>
           </div>
           <div style="font-size: 16px; color: var(--color-text-dark); margin-bottom: var(--spacing-sm);">
-            <strong>Time:</strong> 10:00 - 13:00
+            <strong>Time:</strong> <span id="eventTime">Loading...</span>
           </div>
           <div style="font-size: 16px; color: var(--color-text-dark); margin-bottom: var(--spacing-sm);">
-            <strong>Location:</strong> 210 St. George's Drive NE, Calgary, AB T2E 7V6
+            <strong>Location:</strong> <span id="eventAddress">Loading...</span>
           </div>
           <div style="font-size: 16px; color: var(--color-text-dark);">
-            <strong>Note:</strong> Bring hat
+            <strong>Note:</strong> <span id="eventNote">Loading...</span>
           </div>
         </div>
 
-        <img src="../images/calgaryZOO.png" alt="Calgary Zoo" style="width: 100%; border-radius: var(--radius-sm); margin-top: var(--spacing-md);">
+        <img id="eventImage" src="" alt="" style="width: 100%; border-radius: var(--radius-sm); margin-top: var(--spacing-md);">
+        
+        <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-lg);">
+          <button id="editActionBtn" class="btn btn--primary" style="flex: 1;">Edit</button>
+          <button id="deleteActionBtn" class="btn btn--secondary" style="flex: 1;">Delete</button>
+        </div>
       </div>
     </div>
 
@@ -86,102 +91,317 @@
     </div>
     </div>
 
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="delete-modal-overlay" style="display: none; opacity: 0;">
+      <div class="delete-modal">
+        <div class="delete-modal__icon">🗑️</div>
+        <h2 class="delete-modal__title">Delete Event</h2>
+        <p class="delete-modal__message">Are you sure you want to delete <strong id="deleteModalEventName"></strong>?</p>
+        <p class="delete-modal__submessage">This action cannot be undone, but you can use the undo notification to restore it.</p>
+        <div class="delete-modal__actions">
+          <button id="deleteModalCancel" class="btn btn--secondary">Cancel</button>
+          <button id="deleteModalConfirm" class="btn btn--primary">Delete</button>
+        </div>
+      </div>
+    </div>
+
   <script>
+    // Default itinerary data (same as itinerary.html)
+    const DEFAULT_ITINERARY_DATA = {
+      '2026-07-11': {
+        date: 'Saturday - July 11, 2026',
+        events: [
+          {
+            time: '10:00',
+            title: 'Calgary Zoo',
+            details: '10:00 - 13:00',
+            address: "210 St. George's Drive NE, Calgary, AB T2E 7V6"
+          },
+          {
+            time: '14:00',
+            title: 'Glenbow Museum',
+            details: '14:00 - 16:00',
+            address: '130 9 Ave SE, Calgary, AB T2G 0P3'
+          }
+        ]
+      },
+      '2026-07-12': {
+        date: 'Sunday - July 12, 2026',
+        events: [
+          {
+            time: '09:00',
+            title: 'Heritage Park',
+            details: '09:00 - 12:00',
+            address: '1900 Heritage Dr SW, Calgary, AB T2V 2X3'
+          },
+          {
+            time: '14:00',
+            title: 'Olympic Plaza',
+            details: '14:00 - 15:00',
+            address: '228 8 Ave SE, Calgary, AB T2G 0K6'
+          },
+          {
+            time: '17:00',
+            title: 'Calgary Tower',
+            details: '17:00 - 19:00',
+            address: '101 9 Ave SW, Calgary, AB T2P 1J9'
+          }
+        ]
+      },
+      '2026-07-13': {
+        date: 'Monday - July 13, 2026',
+        events: [
+          {
+            time: '11:00',
+            title: "Prince's Island Park",
+            details: '11:00 - 13:00',
+            address: '698 Eau Claire Ave SW, Calgary, AB T2P 5N4'
+          },
+          {
+            time: '15:00',
+            title: 'Bow River Pathway',
+            details: '15:00 - 17:00',
+            address: 'Along Bow River, Calgary, AB'
+          }
+        ]
+      },
+      '2026-07-14': {
+        date: 'Tuesday - July 14, 2026',
+        events: [
+          {
+            time: '10:00',
+            title: 'Calgary Zoo',
+            details: '10:00 - 13:00',
+            address: "210 St. George's Drive NE, Calgary, AB T2E 7V6"
+          },
+          {
+            time: '15:00',
+            title: 'Peace Bridge',
+            details: '15:00 - 16:00',
+            address: '98 Memorial Dr NW, Calgary, AB T2N 5C1'
+          },
+          {
+            time: '17:15',
+            title: 'Ten Foot Henry',
+            details: '17:15 - 19:00',
+            address: '1209 1 St SW, Calgary, AB T2R 0V3'
+          },
+          {
+            time: '19:00',
+            title: 'Avesta Shawarma',
+            details: '19:00 - 20:00',
+            address: '698 Eau Claire Ave SW, Calgary, AB T2P 5N4'
+          }
+        ]
+      },
+      '2026-07-15': {
+        date: 'Wednesday - July 15, 2026',
+        events: [
+          {
+            time: '09:00',
+            title: 'Studio Bell',
+            details: '09:00 - 11:00',
+            address: '850 4 St SE, Calgary, AB T2G 0L8'
+          },
+          {
+            time: '12:00',
+            title: 'Stephen Avenue Walk',
+            details: '12:00 - 14:00',
+            address: 'Stephen Ave, Calgary, AB'
+          },
+          {
+            time: '16:00',
+            title: 'Calgary Farmers Market',
+            details: '16:00 - 18:00',
+            address: '510 77 Ave SE, Calgary, AB T2H 1C3'
+          }
+        ]
+      },
+      '2026-07-16': {
+        date: 'Thursday - July 16, 2026',
+        events: [
+          {
+            time: '10:00',
+            title: 'Fish Creek Provincial Park',
+            details: '10:00 - 13:00',
+            address: '15979 Bow Bottom Trail SE, Calgary, AB T2J 7A4'
+          },
+          {
+            time: '15:00',
+            title: 'Nose Hill Park',
+            details: '15:00 - 17:00',
+            address: '5620 14 St NW, Calgary, AB T2K 1J7'
+          }
+        ]
+      },
+      '2026-07-17': {
+        date: 'Friday - July 17, 2026',
+        events: [
+          {
+            time: '11:00',
+            title: 'Calgary Stampede',
+            details: '11:00 - 18:00',
+            address: '1410 Olympic Way SE, Calgary, AB T2G 2W1'
+          },
+          {
+            time: '19:00',
+            title: 'Chuckwagon Races',
+            details: '19:00 - 21:00',
+            address: 'Stampede Park, Calgary, AB'
+          }
+        ]
+      },
+      '2026-07-18': {
+        date: 'Saturday - July 18, 2026',
+        events: [
+          {
+            time: '10:00',
+            title: 'Calgary Stampede',
+            details: '10:00 - 17:00',
+            address: '1410 Olympic Way SE, Calgary, AB T2G 2W1'
+          },
+          {
+            time: '18:00',
+            title: 'Evening Concert',
+            details: '18:00 - 21:00',
+            address: 'Coca-Cola Stage, Stampede Park'
+          }
+        ]
+      },
+      '2026-07-19': {
+        date: 'Sunday - July 19, 2026',
+        events: []
+      },
+      '2026-07-20': {
+        date: 'Monday - July 20, 2026',
+        events: [
+          {
+            time: '14:00',
+            title: 'Shopping at Chinook Centre',
+            details: '14:00 - 17:00',
+            address: '6455 Macleod Trail SW, Calgary, AB T2H 0K8'
+          }
+        ]
+      }
+    };
+
     // Get URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const dateStr = urlParams.get('date') || '2026-07-14';
     const eventIndex = urlParams.get('index') !== null ? parseInt(urlParams.get('index')) : 0;
 
-    // Load itinerary data from sessionStorage
-    let itineraryData = {};
+    // Load itinerary data - merge defaults with sessionStorage
+    let itineraryData = JSON.parse(JSON.stringify(DEFAULT_ITINERARY_DATA));
     try {
       const saved = sessionStorage.getItem('itineraryData');
       if (saved) {
-        itineraryData = JSON.parse(saved);
+        const storedData = JSON.parse(saved);
+        // Merge: stored data takes priority, but defaults fill in missing days
+        Object.keys(storedData).forEach(dateStr => {
+          if (storedData[dateStr] && storedData[dateStr].events && storedData[dateStr].events.length > 0) {
+            itineraryData[dateStr] = storedData[dateStr];
+          }
+        });
+        // Ensure all default dates are present
+        Object.keys(DEFAULT_ITINERARY_DATA).forEach(dateStr => {
+          if (!itineraryData[dateStr] || !itineraryData[dateStr].events || itineraryData[dateStr].events.length === 0) {
+            if (DEFAULT_ITINERARY_DATA[dateStr].events && DEFAULT_ITINERARY_DATA[dateStr].events.length > 0) {
+              itineraryData[dateStr] = JSON.parse(JSON.stringify(DEFAULT_ITINERARY_DATA[dateStr]));
+            }
+          }
+        });
       }
     } catch (e) {
       console.error('Error loading itinerary data:', e);
-    }
-
-    // Default data if no saved data
-    if (!itineraryData['2026-07-14']) {
-      itineraryData = {
-        '2026-07-14': {
-          date: 'Tuesday - July 14, 2026',
-          events: [
-            {
-              time: '10:00',
-              title: 'Calgary Zoo',
-              details: '10:00 - 13:00',
-              address: '210 St. George\'s Drive NE, Calgary, AB T2E 7V6'
-            },
-            {
-              time: '13:00',
-              title: 'Peace Bridge',
-              details: '13:00 - 14:00',
-              address: '98 Memorial Dr NW, Calgary, AB T2N 5C1'
-            },
-            {
-              time: '17:15',
-              title: 'Ten Foot Henry',
-              details: '17:15 - 19:00',
-              address: '1209 1 St SW, Calgary, AB T2R 0V3'
-            },
-            {
-              time: '19:00',
-              title: 'Avesta Shawarma',
-              details: '19:00 - 20:00',
-              address: '698 Eau Claire Ave SW, Calgary, AB T2P 5N4'
-            }
-          ]
-        }
-      };
-      sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+      itineraryData = JSON.parse(JSON.stringify(DEFAULT_ITINERARY_DATA));
     }
 
     // Load event data
     let currentEvent = null;
     function loadEventData() {
-      if (itineraryData[dateStr] && itineraryData[dateStr].events[eventIndex]) {
-        currentEvent = itineraryData[dateStr].events[eventIndex];
-        const data = itineraryData[dateStr];
-        
-        document.getElementById('eventTitle').textContent = currentEvent.title;
-        document.getElementById('eventDate').textContent = data.date;
-        document.getElementById('eventTime').textContent = currentEvent.details;
-        document.getElementById('eventAddress').textContent = currentEvent.address;
-        // Display notes or "No notes" if empty
-        const notesDisplay = currentEvent.note && currentEvent.note.trim() ? currentEvent.note : 'No notes';
-        document.getElementById('eventNote').textContent = notesDisplay;
-
-        // Set image based on title
-        const imageMap = {
-          'Calgary Zoo': '../images/calgaryZOO.png',
-          'Peace Bridge': '../images/The_Peace_Bridge_in_Calgary_an_HDR_photo.png',
-          'Ten Foot Henry': '../images/tenfoothenry.png',
-          'Avesta Shawarma': '../images/avesta.png',
-          'River Café': '../images/riverCafe.png',
-          'River Cafe': '../images/riverCafe.png',
-          'Studio Bell': '../images/StudioBell.png',
-          'Stephen Avenue Walk': '../images/stephen-avenue.png',
-          'Calgary Farmers Market': '../images/calgary_farmers_market.png',
-          'Fish Creek Provincial Park': '../images/fish_creek_provincial_park.png',
-          'Bow River Pathway': '../images/Bow River Pathway.png',
-          'Prince\'s Island Park': '../images/princes-island-park.png',
-          'Nose Hill Park': '../images/Nose Hill Park.png',
-          'Calgary Stampede': '../images/Calgary Stampede.png',
-          'Chuckwagon Races': '../images/Chuckwagon Races.png',
-          'Evening Concert': '../images/Evening Concert- Coca-Cola Stage.png',
-          'Shopping at Chinook Centre': '../images/Shopping at Chinook Centre.png',
-          'Heritage Park': '../images/Heritage Park.png',
-          'Olympic Plaza': '../images/Olympic Plaza.png',
-          'Calgary Tower': '../images/Calgary Tower.png',
-          'Glenbow Museum': '../images/Glenbow Museum.png'
-        };
-        const imageSrc = imageMap[currentEvent.title] || '../images/calgaryZOO.png';
-        document.getElementById('eventImage').src = imageSrc;
-        document.getElementById('eventImage').alt = currentEvent.title;
+      // Ensure we have data for the requested date
+      if (!itineraryData[dateStr]) {
+        console.error(`No data found for date: ${dateStr}`);
+        return;
       }
+      
+      if (!itineraryData[dateStr].events || !itineraryData[dateStr].events[eventIndex]) {
+        console.error(`No event found at index ${eventIndex} for date: ${dateStr}`);
+        return;
+      }
+      
+      currentEvent = itineraryData[dateStr].events[eventIndex];
+      const data = itineraryData[dateStr];
+      
+      // Update page elements
+      const titleEl = document.getElementById('eventTitle');
+      const dateEl = document.getElementById('eventDate');
+      const timeEl = document.getElementById('eventTime');
+      const addressEl = document.getElementById('eventAddress');
+      const noteEl = document.getElementById('eventNote');
+      const imageEl = document.getElementById('eventImage');
+      
+      if (titleEl) titleEl.textContent = currentEvent.title;
+      if (dateEl) dateEl.textContent = data.date;
+      if (timeEl) timeEl.textContent = currentEvent.details;
+      if (addressEl) addressEl.textContent = currentEvent.address;
+      
+      // Display notes or "No notes" if empty
+      const notesDisplay = currentEvent.note && currentEvent.note.trim() ? currentEvent.note : 'No notes';
+      if (noteEl) noteEl.textContent = notesDisplay;
+
+      // Set image based on title (case-insensitive matching)
+      const normalizedTitle = currentEvent.title.trim().toLowerCase();
+      let imageSrc = '../images/calgaryZOO.png'; // default
+      
+      if (normalizedTitle === 'calgary zoo') {
+        imageSrc = '../images/calgaryZOO.png';
+      } else if (normalizedTitle === 'peace bridge') {
+        imageSrc = '../images/The_Peace_Bridge_in_Calgary_an_HDR_photo.png';
+      } else if (normalizedTitle === 'ten foot henry') {
+        imageSrc = '../images/tenfoothenry.png';
+      } else if (normalizedTitle === 'avesta shawarma') {
+        imageSrc = '../images/avesta.png';
+      } else if ((normalizedTitle.includes('river') && normalizedTitle.includes('cafe')) || (normalizedTitle.includes('river') && normalizedTitle.includes('café'))) {
+        imageSrc = '../images/riverCafe.png';
+      } else if (normalizedTitle === 'studio bell') {
+        imageSrc = '../images/StudioBell.png';
+      } else if (normalizedTitle === 'stephen avenue walk') {
+        imageSrc = '../images/stephen-avenue.png';
+      } else if (normalizedTitle === 'calgary farmers market') {
+        imageSrc = '../images/calgary_farmers_market.png';
+      } else if (normalizedTitle === 'fish creek provincial park') {
+        imageSrc = '../images/fish_creek_provincial_park.png';
+      } else if (normalizedTitle === 'bow river pathway') {
+        imageSrc = '../images/Bow River Pathway.png';
+      } else if (normalizedTitle === "prince's island park" || normalizedTitle === "princes island park") {
+        imageSrc = '../images/princes-island-park.png';
+      } else if (normalizedTitle === 'nose hill park') {
+        imageSrc = '../images/Nose Hill Park.png';
+      } else if (normalizedTitle === 'calgary stampede') {
+        imageSrc = '../images/Calgary Stampede.png';
+      } else if (normalizedTitle === 'chuckwagon races') {
+        imageSrc = '../images/Chuckwagon Races.png';
+      } else if (normalizedTitle === 'evening concert') {
+        imageSrc = '../images/Evening Concert- Coca-Cola Stage.png';
+      } else if (normalizedTitle === 'shopping at chinook centre') {
+        imageSrc = '../images/Shopping at Chinook Centre.png';
+      } else if (normalizedTitle === 'heritage park') {
+        imageSrc = '../images/Heritage Park.png';
+      } else if (normalizedTitle === 'olympic plaza') {
+        imageSrc = '../images/Olympic Plaza.png';
+      } else if (normalizedTitle === 'calgary tower') {
+        imageSrc = '../images/Calgary Tower.png';
+      } else if (normalizedTitle === 'glenbow museum') {
+        imageSrc = '../images/Glenbow Museum.png';
+      }
+      if (imageEl) {
+        imageEl.src = imageSrc;
+        imageEl.alt = currentEvent.title;
+      }
+      
+      // Update page title
+      document.title = `${currentEvent.title} - TraventureYYC`;
     }
 
     // Store deleted event info for undo
@@ -209,41 +429,74 @@
       }, 300);
     }
 
-    // Delete event function
-    function deleteEvent() {
+    // Show delete confirmation modal
+    function showDeleteModal() {
       if (!currentEvent) return;
       
-      if (confirm(`Are you sure you want to delete "${currentEvent.title}"?`)) {
-        // Store event info for undo
-        deletedEventInfo = {
-          dateStr: dateStr,
-          eventIndex: eventIndex,
-          event: JSON.parse(JSON.stringify(currentEvent))
-        };
-
-        // Remove event from array
-        itineraryData[dateStr].events.splice(eventIndex, 1);
-
-        // Save to sessionStorage
-        sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
-
-        // Save deleted event info to sessionStorage for undo (will be handled on itinerary page)
-        sessionStorage.setItem('pendingUndo', JSON.stringify(deletedEventInfo));
-        // Store the date so we can return to the correct date
-        sessionStorage.setItem('lastViewedDate', dateStr);
-
-        // Redirect back to itinerary page immediately
-        window.location.href = 'itinerary.html';
-
-        // Auto-hide notification after 5 seconds (if still on page)
-        if (undoTimeout) {
-          clearTimeout(undoTimeout);
-        }
-        undoTimeout = setTimeout(() => {
-          hideUndoNotification();
-          deletedEventInfo = null;
-        }, 5000);
+      const modal = document.getElementById('deleteModal');
+      const modalContent = modal ? modal.querySelector('.delete-modal') : null;
+      const eventNameEl = document.getElementById('deleteModalEventName');
+      
+      if (modal && modalContent && eventNameEl) {
+        eventNameEl.textContent = currentEvent.title;
+        modal.style.display = 'flex';
+        
+        // Trigger reflow to ensure display change is applied
+        void modal.offsetWidth;
+        
+        // Add fade-in animation
+        setTimeout(() => {
+          modal.style.opacity = '1';
+        }, 10);
       }
+    }
+
+    // Hide delete confirmation modal
+    function hideDeleteModal() {
+      const modal = document.getElementById('deleteModal');
+      if (modal) {
+        modal.style.opacity = '0';
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 200);
+      }
+    }
+
+    // Actually perform the delete
+    function confirmDelete() {
+      if (!currentEvent) return;
+      
+      // Store event info for undo
+      deletedEventInfo = {
+        dateStr: dateStr,
+        eventIndex: eventIndex,
+        event: JSON.parse(JSON.stringify(currentEvent))
+      };
+
+      // Remove event from array
+      itineraryData[dateStr].events.splice(eventIndex, 1);
+
+      // Save to sessionStorage
+      sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+
+      // Save deleted event info to sessionStorage for undo (will be handled on itinerary page)
+      sessionStorage.setItem('pendingUndo', JSON.stringify(deletedEventInfo));
+      // Store the date so we can return to the correct date
+      sessionStorage.setItem('lastViewedDate', dateStr);
+
+      // Hide modal before redirecting
+      hideDeleteModal();
+
+      // Redirect back to itinerary page immediately
+      setTimeout(() => {
+        window.location.href = 'itinerary.html';
+      }, 250);
+    }
+
+    // Delete event function - shows modal instead of confirm
+    function deleteEvent() {
+      if (!currentEvent) return;
+      showDeleteModal();
     }
 
     // Undo delete function
@@ -302,7 +555,8 @@
     function editEvent() {
       if (!currentEvent) return;
       const [startTime, endTime] = currentEvent.details.split(' - ');
-      window.location.href = `itinerary-edit.html?date=${dateStr}&index=${eventIndex}&title=${encodeURIComponent(currentEvent.title)}&startTime=${startTime}&endTime=${endTime}&address=${encodeURIComponent(currentEvent.address)}`;
+      const note = currentEvent.note || '';
+      window.location.href = `itinerary-edit.html?date=${dateStr}&index=${eventIndex}&title=${encodeURIComponent(currentEvent.title)}&startTime=${startTime}&endTime=${endTime}&address=${encodeURIComponent(currentEvent.address)}&note=${encodeURIComponent(note)}`;
     }
 
     // Function to navigate back to itinerary page with correct date
@@ -333,14 +587,47 @@
       }
     }
 
-    // Event listeners
-    document.getElementById('editActionBtn').addEventListener('click', editEvent);
-    document.getElementById('deleteActionBtn').addEventListener('click', deleteEvent);
-    document.getElementById('undoButton').addEventListener('click', undoDelete);
-    setupNavigation();
+    // Setup on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      setupNavigation();
+      
+      // Load event data
+      loadEventData();
+      
+      // Set up event listeners
+      const editBtn = document.getElementById('editActionBtn');
+      const deleteBtn = document.getElementById('deleteActionBtn');
+      
+      if (editBtn) {
+        editBtn.addEventListener('click', editEvent);
+      }
+      
+      if (deleteBtn) {
+        deleteBtn.addEventListener('click', deleteEvent);
+      }
 
-    // Load event data on page load
-    loadEventData();
+      // Modal buttons
+      const deleteModalCancel = document.getElementById('deleteModalCancel');
+      const deleteModalConfirm = document.getElementById('deleteModalConfirm');
+      const deleteModal = document.getElementById('deleteModal');
+      
+      if (deleteModalCancel) {
+        deleteModalCancel.addEventListener('click', hideDeleteModal);
+      }
+      
+      if (deleteModalConfirm) {
+        deleteModalConfirm.addEventListener('click', confirmDelete);
+      }
+
+      // Close modal when clicking outside
+      if (deleteModal) {
+        deleteModal.addEventListener('click', (e) => {
+          if (e.target === deleteModal) {
+            hideDeleteModal();
+          }
+        });
+      }
+    });
   </script>
 </body>
 </html>
