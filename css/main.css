@@ -224,16 +224,21 @@
 
 /* Custom scrollbar for content area */
 .itinerary-page .content::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 
 .itinerary-page .content::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--color-card-bg);
+  border-radius: 3px;
 }
 
 .itinerary-page .content::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary-light);
-  border-radius: 2px;
+  background-color: var(--color-primary);
+  border-radius: 3px;
+}
+
+.itinerary-page .content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-text-accent);
 }
 
 .timeline-container.fade-out {
@@ -356,14 +361,13 @@
 
 /* Undo Notification */
 .undo-notification {
-  position: absolute;
-  top: calc(var(--status-bar-height) + 60px + var(--spacing-sm)); /* Below status bar + top bar, with small spacing */
-  left: var(--spacing-md);
-  right: var(--spacing-md);
-  width: calc(100% - var(--spacing-md) * 2);
-  max-width: calc(var(--mobile-width) - var(--spacing-md) * 2);
-  transform: translateY(-120%); /* Start off-screen above */
-  z-index: 1000;
+  position: fixed;
+  top: calc(var(--status-bar-height) + 60px + var(--spacing-md)); /* Below status bar + top bar */
+  left: 50%;
+  transform: translateX(-50%) translateY(-120%); /* Center horizontally, start off-screen above */
+  width: calc(var(--mobile-width) - var(--spacing-md) * 2);
+  max-width: calc(100vw - var(--spacing-md) * 2);
+  z-index: 3000; /* Above everything else */
   background-color: #323232;
   color: white;
   padding: var(--spacing-md);
@@ -372,12 +376,28 @@
   opacity: 0;
   transition: opacity 0.3s ease, transform 0.3s ease;
   display: none; /* Hidden by default */
+  box-sizing: border-box;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+}
+
+/* Ensure notification stays within app container on mobile */
+@media (max-width: 393px) {
+  .undo-notification {
+    width: calc(100vw - var(--spacing-md) * 2);
+  }
 }
 
 .undo-notification.show {
   display: block;
-  transform: translateY(0); /* Slide down into view */
+  transform: translateX(-50%) translateY(0); /* Center horizontally, slide down into view */
   opacity: 1;
+}
+
+.undo-notification.fade-out {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-120%);
 }
 
 .undo-notification__content {

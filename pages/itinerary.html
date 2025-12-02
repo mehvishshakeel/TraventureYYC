@@ -38,6 +38,14 @@
       </div>
     </div>
 
+    <!-- Undo Notification -->
+    <div id="undoNotification" class="undo-notification">
+      <div class="undo-notification__content">
+        <span class="undo-notification__message">Event deleted.</span>
+        <button id="undoButton" class="undo-notification__button">Undo</button>
+      </div>
+    </div>
+
     <!-- Content -->
     <div class="content itinerary-page">
       <!-- Padding Overlay - creates colored frame on top of content -->
@@ -165,9 +173,9 @@
             address: "210 St. George's Drive NE, Calgary, AB T2E 7V6"
           },
           {
-            time: '13:00',
+            time: '15:00',
             title: 'Peace Bridge',
-            details: '13:00 - 14:00',
+            details: '15:00 - 16:00',
             address: '98 Memorial Dr NW, Calgary, AB T2N 5C1'
           },
           {
@@ -278,19 +286,41 @@
     // Global itinerary object used on this page
     let itineraryData = {};
 
-    // Load from sessionStorage if available, otherwise use default
+    // Load itinerary data - always start with defaults, then merge any stored changes
     function loadItineraryData() {
+      // Always start with a deep copy of default data to ensure all days are present
+      itineraryData = JSON.parse(JSON.stringify(DEFAULT_ITINERARY_DATA));
+      
       try {
         const stored = sessionStorage.getItem('itineraryData');
         if (stored) {
-          itineraryData = JSON.parse(stored);
-        } else {
-          itineraryData = DEFAULT_ITINERARY_DATA;
+          const storedData = JSON.parse(stored);
+          // Only override dates that have events in stored data
+          // Keep defaults for dates that are missing or empty in stored data
+          Object.keys(storedData).forEach(dateStr => {
+            if (storedData[dateStr] && storedData[dateStr].events && storedData[dateStr].events.length > 0) {
+              // Only override if stored data has events
+              itineraryData[dateStr] = storedData[dateStr];
+            }
+          });
         }
       } catch (e) {
         console.warn('Could not read itineraryData from sessionStorage, using defaults', e);
-        itineraryData = DEFAULT_ITINERARY_DATA;
+        // itineraryData already has defaults
       }
+      
+      // Ensure all default dates are present with their events
+      Object.keys(DEFAULT_ITINERARY_DATA).forEach(dateStr => {
+        if (!itineraryData[dateStr] || !itineraryData[dateStr].events || itineraryData[dateStr].events.length === 0) {
+          // If date is missing or empty, use default (unless default is also empty like July 19)
+          if (DEFAULT_ITINERARY_DATA[dateStr].events && DEFAULT_ITINERARY_DATA[dateStr].events.length > 0) {
+            itineraryData[dateStr] = JSON.parse(JSON.stringify(DEFAULT_ITINERARY_DATA[dateStr]));
+          } else if (!itineraryData[dateStr]) {
+            // Keep empty dates as empty, but ensure the date structure exists
+            itineraryData[dateStr] = JSON.parse(JSON.stringify(DEFAULT_ITINERARY_DATA[dateStr]));
+          }
+        }
+      });
     }
 
     /* ------------------------------
@@ -375,46 +405,55 @@
 
         timeline.innerHTML = data.events.map((event, index) => {
           let imageHtml = '';
+          
+          // Normalize title for case-insensitive matching (trim, lowercase, normalize spaces)
+          const normalizedTitle = event.title.trim().toLowerCase().replace(/\s+/g, ' ');
+          
+          // Helper function to check for River Cafe variations
+          const isRiverCafe = (title) => {
+            const normalized = title.trim().toLowerCase();
+            return (normalized.includes('river') && (normalized.includes('cafe') || normalized.includes('café')));
+          };
 
-          if (event.title === 'Calgary Zoo') {
+          if (normalizedTitle === 'calgary zoo') {
             imageHtml = `<img class="timeline-event__image" src="../images/calgaryZOO.png" alt="Calgary Zoo">`;
-          } else if (event.title === 'Peace Bridge') {
+          } else if (normalizedTitle === 'peace bridge') {
             imageHtml = `<img class="timeline-event__image" src="../images/The_Peace_Bridge_in_Calgary_an_HDR_photo.png" alt="Peace Bridge">`;
-          } else if (event.title === 'Ten Foot Henry') {
+          } else if (normalizedTitle === 'ten foot henry') {
             imageHtml = `<img class="timeline-event__image" src="../images/tenfoothenry.png" alt="Ten Foot Henry">`;
-          } else if (event.title === 'Avesta Shawarma') {
+          } else if (normalizedTitle === 'avesta shawarma') {
             imageHtml = `<img class="timeline-event__image" src="../images/avesta.png" alt="Avesta Shawarma">`;
-          } else if (event.title === 'River Café' || event.title === 'River Cafe') {
+          } else if (isRiverCafe(event.title)) {
             imageHtml = `<img class="timeline-event__image" src="../images/riverCafe.png" alt="River Café">`;
-          } else if (event.title === 'Studio Bell') {
+          } else if (normalizedTitle === 'studio bell') {
             imageHtml = `<img class="timeline-event__image" src="../images/StudioBell.png" alt="Studio Bell">`;
-          } else if (event.title === 'Stephen Avenue Walk') {
+          } else if (normalizedTitle === 'stephen avenue walk') {
             imageHtml = `<img class="timeline-event__image" src="../images/stephen-avenue.png" alt="Stephen Avenue Walk">`;
-          } else if (event.title === 'Calgary Farmers Market') {
+          } else if (normalizedTitle === 'calgary farmers market') {
             imageHtml = `<img class="timeline-event__image" src="../images/calgary_farmers_market.png" alt="Calgary Farmers Market">`;
-          } else if (event.title === 'Fish Creek Provincial Park') {
+          } else if (normalizedTitle === 'fish creek provincial park') {
             imageHtml = `<img class="timeline-event__image" src="../images/fish_creek_provincial_park.png" alt="Fish Creek Provincial Park">`;
-          } else if (event.title === 'Bow River Pathway') {
+          } else if (normalizedTitle === 'bow river pathway') {
             imageHtml = `<img class="timeline-event__image" src="../images/Bow River Pathway.png" alt="Bow River Pathway">`;
-          } else if (event.title === "Prince's Island Park") {
+          } else if (normalizedTitle === "prince's island park" || normalizedTitle === "princes island park") {
             imageHtml = `<img class="timeline-event__image" src="../images/princes-island-park.png" alt="Prince's Island Park">`;
-          } else if (event.title === 'Nose Hill Park') {
+          } else if (normalizedTitle === 'nose hill park') {
             imageHtml = `<img class="timeline-event__image" src="../images/Nose Hill Park.png" alt="Nose Hill Park">`;
-          } else if (event.title === 'Calgary Stampede') {
+          } else if (normalizedTitle === 'calgary stampede') {
             imageHtml = `<img class="timeline-event__image" src="../images/Calgary Stampede.png" alt="Calgary Stampede">`;
-          } else if (event.title === 'Chuckwagon Races') {
+          } else if (normalizedTitle === 'chuckwagon races') {
             imageHtml = `<img class="timeline-event__image" src="../images/Chuckwagon Races.png" alt="Chuckwagon Races">`;
-          } else if (event.title === 'Evening Concert') {
+          } else if (normalizedTitle === 'evening concert') {
             imageHtml = `<img class="timeline-event__image" src="../images/Evening Concert- Coca-Cola Stage.png" alt="Evening Concert">`;
-          } else if (event.title === 'Shopping at Chinook Centre') {
+          } else if (normalizedTitle === 'shopping at chinook centre') {
             imageHtml = `<img class="timeline-event__image" src="../images/Shopping at Chinook Centre.png" alt="Shopping at Chinook Centre">`;
-          } else if (event.title === 'Heritage Park') {
+          } else if (normalizedTitle === 'heritage park') {
             imageHtml = `<img class="timeline-event__image" src="../images/Heritage Park.png" alt="Heritage Park">`;
-          } else if (event.title === 'Olympic Plaza') {
+          } else if (normalizedTitle === 'olympic plaza') {
             imageHtml = `<img class="timeline-event__image" src="../images/Olympic Plaza.png" alt="Olympic Plaza">`;
-          } else if (event.title === 'Calgary Tower') {
+          } else if (normalizedTitle === 'calgary tower') {
             imageHtml = `<img class="timeline-event__image" src="../images/Calgary Tower.png" alt="Calgary Tower">`;
-          } else if (event.title === 'Glenbow Museum') {
+          } else if (normalizedTitle === 'glenbow museum') {
             imageHtml = `<img class="timeline-event__image" src="../images/Glenbow Museum.png" alt="Glenbow Museum">`;
           }
 
@@ -674,6 +713,170 @@
       if ('onscrollend' in dateSelector) {
         dateSelector.addEventListener('scrollend', handleDateScroll);
       }
+
+      // Undo Notification functionality
+      let undoTimeout = null;
+      
+      // Check for pending undo operation
+      function checkPendingUndo() {
+        try {
+          const pendingUndoStr = sessionStorage.getItem('pendingUndo');
+          if (pendingUndoStr) {
+            const pendingUndo = JSON.parse(pendingUndoStr);
+            showUndoNotification(pendingUndo);
+          }
+        } catch (e) {
+          console.warn('Error reading pendingUndo from sessionStorage', e);
+        }
+      }
+
+      // Show undo notification
+      function showUndoNotification(pendingUndoData) {
+        const notification = document.getElementById('undoNotification');
+        if (!notification) return;
+        
+        notification.dataset.pendingUndo = JSON.stringify(pendingUndoData);
+        notification.style.display = 'block';
+        
+        // Trigger reflow for animation
+        void notification.offsetWidth;
+        
+        // Add show class for fade-in animation
+        setTimeout(() => {
+          notification.classList.add('show');
+        }, 10);
+
+        // Auto-hide after 5 seconds if not clicked
+        if (undoTimeout) {
+          clearTimeout(undoTimeout);
+        }
+        undoTimeout = setTimeout(() => {
+          hideUndoNotification();
+        }, 5000);
+      }
+
+      // Hide undo notification
+      function hideUndoNotification() {
+        const notification = document.getElementById('undoNotification');
+        if (!notification) return;
+        
+        // Add fade-out class for smooth animation
+        notification.classList.remove('show');
+        notification.classList.add('fade-out');
+        
+        setTimeout(() => {
+          notification.style.display = 'none';
+          notification.classList.remove('fade-out');
+          sessionStorage.removeItem('pendingUndo');
+          if (undoTimeout) {
+            clearTimeout(undoTimeout);
+            undoTimeout = null;
+          }
+        }, 300); // Wait for fade-out animation
+      }
+
+      // Undo delete function
+      function undoDelete() {
+        const notification = document.getElementById('undoNotification');
+        if (!notification) return;
+        
+        // Clear the auto-hide timeout
+        if (undoTimeout) {
+          clearTimeout(undoTimeout);
+          undoTimeout = null;
+        }
+        
+        try {
+          const pendingUndoStr = notification.dataset.pendingUndo;
+          if (!pendingUndoStr) {
+            // Try sessionStorage as fallback
+            const stored = sessionStorage.getItem('pendingUndo');
+            if (!stored) return;
+            undoDeleteWithData(JSON.parse(stored));
+            return;
+          }
+          
+          const pendingUndo = JSON.parse(pendingUndoStr);
+          undoDeleteWithData(pendingUndo);
+        } catch (e) {
+          console.error('Error undoing delete', e);
+        }
+      }
+
+      function undoDeleteWithData(pendingUndo) {
+        const { dateStr, eventIndex, event } = pendingUndo;
+        
+        // Load current itinerary data
+        loadItineraryData();
+        
+        // Ensure date entry exists
+        if (!itineraryData[dateStr]) {
+          const date = new Date(dateStr + 'T00:00:00');
+          const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+          const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+          itineraryData[dateStr] = {
+            date: `${dayNames[date.getDay()]} - ${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`,
+            events: []
+          };
+        }
+
+        // Insert event back at original position
+        itineraryData[dateStr].events.splice(eventIndex, 0, event);
+
+        // Re-sort events by time
+        itineraryData[dateStr].events.sort((a, b) => {
+          const parseTime = (timeStr) => {
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            return hours * 60 + minutes;
+          };
+          return parseTime(a.time) - parseTime(b.time);
+        });
+
+        // Save to sessionStorage
+        sessionStorage.setItem('itineraryData', JSON.stringify(itineraryData));
+
+        // Hide notification immediately (don't wait for fade)
+        const notification = document.getElementById('undoNotification');
+        if (notification) {
+          notification.classList.remove('show');
+          notification.classList.add('fade-out');
+          notification.style.display = 'none';
+          sessionStorage.removeItem('pendingUndo');
+        }
+
+        // Update timeline and navigate to the date
+        currentActiveDate = dateStr;
+        updateTimeline(dateStr);
+        
+        // Navigate to the correct date tab
+        setTimeout(() => {
+          const dateTabs = Array.from(dateSelector.querySelectorAll('.date-tab'));
+          const targetTab = dateTabs.find(tab => tab.dataset.date === dateStr);
+          if (targetTab) {
+            const containerWidth = dateSelector.offsetWidth;
+            const scrollPosition = targetTab.offsetLeft - (containerWidth / 2) + (targetTab.offsetWidth / 2);
+            dateSelector.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+            
+            setTimeout(() => {
+              handleDateScroll();
+            }, 300);
+          }
+        }, 100);
+      }
+
+      // Set up undo button listener
+      const undoButton = document.getElementById('undoButton');
+      if (undoButton) {
+        undoButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          undoDelete();
+        });
+      }
+
+      // Check for pending undo on page load
+      setTimeout(() => {
+        checkPendingUndo();
+      }, 500); // Wait a bit for page to fully load
     });
   </script>
 </body>
