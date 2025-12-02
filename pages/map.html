@@ -74,7 +74,7 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-      <a href="food-homepage.html" style="color: var(--color-text-black); font-size: x-large;">←</a>
+      <a id="back-btn" style="color: var(--color-text-black); font-size: x-large;">←</a>
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
@@ -177,7 +177,8 @@
     // --- read place name from URL (?place=Peter's Drive-In) ---
     const params = new URLSearchParams(window.location.search);
     const placeName = params.get("place") || "Calgary, AB";
-  
+    const returnPage = params.get("return") || "homepage";
+
     const titleEl   = document.getElementById("place-title");
     const addressEl = document.getElementById("place-address");
     const phoneEl   = document.getElementById("place-phone");
@@ -270,6 +271,18 @@
         window.open(directionsUrl, "_blank");
       });
     }
+
+  // Back button 
+  const backBtn = document.getElementById("back-btn");
+  if (backBtn) {
+    const pageMap = {
+      "hospital": "emergency-hospitals.html",
+      "embassy": "emergency-embassy.html",
+      "food": "food-homepage.html"
+    };
+
+  backBtn.href = pageMap[returnPage] || "homepage.html";
+}
   </script>
   
   

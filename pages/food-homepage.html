@@ -620,7 +620,7 @@ function openPlacePopup(place) {
   popupRatingEl.textContent = place.rating || "No rating";
   popupPhoneEl.textContent  = place.phone || "No phone";
 
-  const mapUrl = `map.html?place=${encodeURIComponent(place.name || "")}`;
+  const mapUrl = `map.html?place=${encodeURIComponent(place.name || "")}&return=food`;
 
   // Map button in header
   popupMapBtn.href = mapUrl;
@@ -763,7 +763,7 @@ function openPlacePopup(place) {
       listContainer.innerHTML = "";
 
       places.forEach(place => {
-        const mapUrl = `map.html?place=${encodeURIComponent(place.name)}`;
+        const mapUrl = `map.html?place=${encodeURIComponent(place.name)}&return=food`;
 
         const item = document.createElement("div");
         item.className = "list-item";
