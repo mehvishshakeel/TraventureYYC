@@ -535,7 +535,17 @@
         });
       });
 
-      backBtn.addEventListener("click", () => overlay.classList.remove("is-visible"));
+      backBtn.addEventListener("click", () => {
+        const fromFav = sessionStorage.getItem("cameFromFavorites");
+
+        if (fromFav === "yes") {
+          sessionStorage.removeItem("cameFromFavorites");
+          window.location.href = "favorites.html";
+        } else {
+          overlay.classList.remove("is-visible");
+        }
+      });
+
 
       learnBtn.addEventListener("click", () => {
         if (currentUrl) window.open(currentUrl, "_blank");
@@ -589,5 +599,21 @@
 
     })();
     </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const openId = urlParams.get("id");
+      if (!openId) return;
+
+      // Find card with that id
+      const card = document.querySelector(`.list-item[data-id="${openId}"]`);
+      if (!card) return;
+
+      // Simulate clicking the card to open overlay
+      card.click();
+    });
+    </script>
+
 </body>
 </html>

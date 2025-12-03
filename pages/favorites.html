@@ -187,7 +187,6 @@
           </div>
           <div class="list-item__actions">
             <button class="event-fav-btn icon-button is-active">♥</button>
-            <span style="font-size:20px; cursor:pointer;">📍</span>
             <span style="font-size:20px; cursor:pointer;">+</span>
           </div>
         `;
@@ -200,8 +199,10 @@
 
         // open event details
         div.onclick = function () {
+          sessionStorage.setItem("cameFromFavorites", "yes");
           window.location.href = "events.html?id=" + f.id;
         };
+
 
         container.appendChild(div);
       });
