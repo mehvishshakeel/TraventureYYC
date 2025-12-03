@@ -6,6 +6,21 @@
   <title>Hospitals - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
 </head>
+<style>
+.open-pill {
+  display: inline-block;
+  background-color: #d9f5e5;
+  color: #1a8f3c;    
+  font-weight: 600;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-bottom: 4px;
+}
+.hours-line {
+  color: #555;
+}
+</style>
 <body>
   <div class="app-container">
     <!-- Status Bar -->
@@ -30,6 +45,7 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
+      <a href="emergency.html" style="color: var(--color-text-black); font-size: x-large;">←</a>      
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
@@ -73,205 +89,177 @@
         <button class="tab" data-type="pharmacy">Pharmacy</button>
       </div>
 
-      <!-- Hospitals List -->
+      <!-- Hospitals -->
+      <div class="list-item list-item--emergency" data-type="hospital">
+        <div class="list-item__content">
+          <div class="list-item__title">Alberta Children's Hospital</div>
+          <div class="list-item__subtitle">28 Oki Dr</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>24 hours</div>
+          <div class="list-item__subtitle">3.1 km away</div>
+        </div>
+        <div class="emergency-actions">
+          <a href="tel:4031234567"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=Alberta Children's Hospital&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
+        </div>   
+      </div>
+
       <div class="list-item list-item--emergency" data-type="hospital">
         <div class="list-item__content">
           <div class="list-item__title">Foothills Medical Centre</div>
-          <div class="list-item__subtitle">1403 29 St NW, Calgary, AB T2N 2T9</div>
-          <div class="list-item__subtitle">1 km away</div>
+          <div class="list-item__subtitle">1403 29 St NW</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>24 hours</div>
+          <div class="list-item__subtitle">4.2 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567">
-            <img src="../images/Call_Icon.png" class="embassy-action-icon">
-          </a>
-          <a href="map.html?place=Foothills Medical Centre">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
+          <a href="tel:4039441110"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=Foothills Medical Centre&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
         </div>      
       </div>
 
       <div class="list-item list-item--emergency" data-type="hospital">
         <div class="list-item__content">
           <div class="list-item__title">Rockyview General Hospital</div>
-          <div class="list-item__subtitle">2 km away</div>
+          <div class="list-item__subtitle">7007 14 St SW</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>24 hours</div>
+          <div class="list-item__subtitle">13.2 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567">
-            <img src="../images/Call_Icon.png" class="embassy-action-icon">
-          </a>
-          <a href="map.html?place=Rockyview General Hospital">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
+          <a href="tel:4039433000"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=Rockyview General Hospital&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
         </div>
       </div>
 
       <div class="list-item list-item--emergency" data-type="hospital">
         <div class="list-item__content">
           <div class="list-item__title">Peter Lougheed Centre</div>
-          <div class="list-item__subtitle">3 km away</div>
+          <div class="list-item__subtitle">3500 26 Ave NE</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>24 hours</div>
+          <div class="list-item__subtitle">14.3 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567">
-            <img src="../images/Call_Icon.png" class="embassy-action-icon">
-          </a>
-          <a href="map.html?place=Peter Lougheed Centre">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
+          <a href="tel:4031234567"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=Peter Lougheed Centre&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
         </div>   
       </div>
 
       <div class="list-item list-item--emergency" data-type="hospital">
         <div class="list-item__content">
           <div class="list-item__title">South Health Campus</div>
-          <div class="list-item__subtitle">5 km away</div>
+          <div class="list-item__subtitle">4448 Front St SE</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>24 hours</div>
+          <div class="list-item__subtitle">33.4 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567">
-            <img src="../images/Call_Icon.png" class="embassy-action-icon">
-          </a>
-          <a href="map.html?place=South Health Campus">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
+          <a href="tel:4031234567"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=South Health Campus&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
         </div>   
       </div>
 
-      <div class="list-item list-item--emergency" data-type="hospital">
-        <div class="list-item__content">
-          <div class="list-item__title">Alberta Children's Hospital</div>
-          <div class="list-item__subtitle">4 km away</div>
-        </div>
-        <div class="emergency-actions">
-          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
-            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
-          </a>
-          <a href="map.html?place=Alberta Children's Hospital">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
-        </div>   
-      </div>
-
-      <!-- CLinic List -->
+      <!-- Clinics -->
       <div class="list-item list-item--emergency" data-type="clinic">
         <div class="list-item__content">
-          <div class="list-item__title">Monterey Medical Clinic</div>
+          <div class="list-item__title">University City Clinic</div>
+          <div class="list-item__subtitle">3630 Brentwood Rd NW #327</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>Closes at 8:00 PM</div>
           <div class="list-item__subtitle">4 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
-            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
-          </a>
-          <a href="map.html?place=Foothills Medical Centre">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
+          <a href="tel:4031234567"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=University City Clinic&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
         </div>   
+      </div>
+
+      <div class="list-item list-item--emergency" data-type="clinic">
+        <div class="list-item__content">
+          <div class="list-item__title">Varsity Medical & Wellness</div>
+          <div class="list-item__subtitle">8 Varsity Estates Cir NW Suite 230</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>Closes at 8:00 PM</div>
+          <div class="list-item__subtitle">4.2 km away</div>
+        </div>
+        <div class="emergency-actions">
+          <a href="tel:4031234567"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=Varsity Medical & Wellness&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
+        </div>
       </div>
 
       <div class="list-item list-item--emergency" data-type="clinic">
         <div class="list-item__content">
           <div class="list-item__title">Now Medical Clinic & Walk in</div>
-          <div class="list-item__subtitle">4 km away</div>
+          <div class="list-item__subtitle">2520 23 St NE #19</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>Closes at 8:00 PM</div>
+          <div class="list-item__subtitle">13.2 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
-            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
-          </a>
-          <a href="map.html">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
-        </div>   
-      </div>   
-      
-      <div class="list-item list-item--emergency" data-type="clinic">
-        <div class="list-item__content">
-          <div class="list-item__title">Abbeydale Medical Clinic</div>
-          <div class="list-item__subtitle">4 km away</div>
+          <a href="tel:4031234567"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=Now Medical Clinic & Walk in&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
         </div>
-        <div class="emergency-actions">
-          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
-            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
-          </a>
-          <a href="map.html">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
-        </div>   
-      </div> 
+      </div>
 
       <div class="list-item list-item--emergency" data-type="clinic">
         <div class="list-item__content">
-          <div class="list-item__title">Saddletowne Medical Clinic</div>
-          <div class="list-item__subtitle">4 km away</div>
+          <div class="list-item__title">Monterey Medical Clinic</div>
+          <div class="list-item__subtitle">2220 68 St NE Unit 750</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>Closes at 8:00 PM</div>
+          <div class="list-item__subtitle">19.8 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
-            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
-          </a>
-          <a href="map.html">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
-        </div>   
-      </div>         
+          <a href="tel:4039434555"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=Monterey Medical Clinic&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
+        </div>
+      </div>
 
-      <!-- Pharmacy List -->
+      <!-- Pharmacies -->
       <div class="list-item list-item--emergency" data-type="pharmacy">
         <div class="list-item__content">
           <div class="list-item__title">Rexall</div>
-          <div class="list-item__subtitle">4 km away</div>
+          <div class="list-item__subtitle">1403 29 St NW</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>Closes at 10:00 PM</div>
+          <div class="list-item__subtitle">4.2 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
-            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
-          </a>
-          <a href="map.html">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
-        </div>   
-      </div>    
+          <a href="tel:4031234567"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=Rexall&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
+        </div>
+      </div>
 
       <div class="list-item list-item--emergency" data-type="pharmacy">
         <div class="list-item__content">
           <div class="list-item__title">Pharmasave Martindale</div>
-          <div class="list-item__subtitle">4 km away</div>
+          <div class="list-item__subtitle">79 Martindale Blvd NE</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>Closes at 10:00 PM</div>
+          <div class="list-item__subtitle">16.4 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
-            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
-          </a>
-          <a href="map.html">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
-        </div>   
-      </div>    
+          <a href="tel:4031234567"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=Pharmasave Martindale&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
+        </div>
+      </div>
 
       <div class="list-item list-item--emergency" data-type="pharmacy">
         <div class="list-item__content">
           <div class="list-item__title">Medicare Plus Pharmacy</div>
-          <div class="list-item__subtitle">4 km away</div>
+          <div class="list-item__subtitle">6208 Rundlehorn Dr NE</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>Closes at 10:00 PM</div>
+          <div class="list-item__subtitle">18.6 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
-            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
-          </a>
-          <a href="map.html">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
-        </div>   
-      </div>    
+          <a href="tel:4031234567"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=Medicare Plus Pharmacy&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
+        </div>  
+      </div>
 
       <div class="list-item list-item--emergency" data-type="pharmacy">
         <div class="list-item__content">
-          <div class="list-item__title">I.D.A. - Madigan Pharmacy
-</div>
-          <div class="list-item__subtitle">4 km away</div>
+          <div class="list-item__title">I.D.A. - Madigan Pharmacy</div>
+          <div class="list-item__subtitle">6060 Memorial Dr #68</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span>Closes at 10:00 PM</div>
+          <div class="list-item__subtitle">19.8 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567"> <!--TODO: Add in real phone numbers-->
-            <img src="../images/Call_Icon.png" class="embassy-action-icon"> 
-          </a>
-          <a href="map.html">
-            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
-          </a>
-        </div>   
-      </div>    
+          <a href="tel:4031234567"><img src="../images/Call_Icon.png" class="embassy-action-icon"></a>
+          <a href="map.html?place=I.D.A. Madigan Pharmacy&return=hospital"><img src="../images/Directions_Icon.png" class="embassy-action-icon"></a>
+        </div>
+      </div>
     </div>
 
     <!-- Bottom Navigation -->
