@@ -2,27 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Favorites - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
+
+  <style>
+    /* Reuse your call-modal overlay base */
+    .call-modal-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.35);
+      z-index: 999;
+    }
+
+    .call-modal {
+      background: #fff;
+      padding: 24px;
+      width: 80%;
+      max-width: 320px;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .modal-btn-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+
+    .modal-confirm-btn {
+      padding: 10px 16px;
+      background: #ff6b81;
+      color: #fff;
+      border-radius: 8px;
+      border: none;
+      width: 48%;
+      cursor: pointer;
+    }
+
+    .modal-cancel-btn {
+      padding: 10px 16px;
+      background: #e6e6e6;
+      border-radius: 8px;
+      border: none;
+      width: 48%;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <div class="app-container">
+
     <!-- Status Bar -->
     <div class="status-bar">
-      <div class="status-bar__left">
-        <div class="status-bar__time">9:41</div>
-      </div>
+      <div class="status-bar__left"><div class="status-bar__time">9:41</div></div>
       <div class="status-bar__right">
-        <div class="status-bar__signal">
-          <img src="../images/mobile-signal-60.svg" alt="Signal">
-        </div>
-        <div class="status-bar__wifi">
-          <img src="../images/wifi-59.svg" alt="WiFi">
-        </div>
+        <div class="status-bar__signal"><img src="../images/mobile-signal-60.svg"></div>
+        <div class="status-bar__wifi"><img src="../images/wifi-59.svg"></div>
         <div class="status-bar__battery">
-          <img src="../images/combined-shape-57.svg" alt="Battery">
-          <img src="../images/rectangle-58.svg" alt="Battery">
+          <img src="../images/combined-shape-57.svg">
+          <img src="../images/rectangle-58.svg">
         </div>
       </div>
     </div>
@@ -35,34 +78,50 @@
       </div>
       <div class="top-bar__actions">
         <a href="signup.html" style="color: var(--color-primary); font-size: 14px; margin-right: var(--spacing-sm);">Sign up</a>
-        <div class="language-selector">
-          <button class="lang-btn">
-            <span class="lang-text">ENG</span>
-            <img src="../images/english-51.png" alt="English" class="flag-icon">
-          </button>
-          <div class="lang-menu">
-            <div class="lang-option" data-lang="en">English</div>
-            <div class="lang-option" data-lang="fr">Français</div>
-            <div class="lang-option" data-lang="es">Español</div>
-            <div class="lang-option" data-lang="ch">中文</div>
-            <div class="lang-option" data-lang="jp">日本語</div>
-          </div>
+      </div>
+    </div>
+
+    <!-- Unsave Confirmation Modal -->
+    <div id="unsaveModal" class="call-modal-overlay">
+      <div class="call-modal">
+        <h2>Remove Favorite?</h2>
+        <p>Unsave this event?</p>
+        <div class="modal-btn-row">
+          <button id="unsaveYesBtn" class="modal-confirm-btn">Yes</button>
+          <button id="unsaveNoBtn" class="modal-cancel-btn">Cancel</button>
         </div>
       </div>
     </div>
 
-    <div id="langModal" class="call-modal-overlay" style="display:none;">
-      <div class="call-modal">
-        <h2>Language Feature</h2>
-        <p>This feature is currently in development.</p>
+    <script>
+      let pendingRemoveId = null;
 
-        <button class="modal-cancel-btn" onclick="closeLangModal()">Close</button>
-      </div>
-    </div>
+      function showUnsaveModal(id) {
+        pendingRemoveId = id;
+        document.getElementById("unsaveModal").style.display = "flex";
+      }
 
-    <script src="../js/app.js"></script>
+      document.getElementById("unsaveYesBtn").onclick = function () {
+        let favs = loadFavorites().filter(f => f.id !== pendingRemoveId);
+        saveFavorites(favs);
+        document.getElementById("unsaveModal").style.display = "none";
+        loadFavoritesList();
+      };
 
-    <!-- Content -->
+      document.getElementById("unsaveNoBtn").onclick = function () {
+        document.getElementById("unsaveModal").style.display = "none";
+      };
+    </script>
+
+    <script>
+      function loadFavorites() {
+        return JSON.parse(localStorage.getItem("favorites") || "[]");
+      }
+      function saveFavorites(list) {
+        localStorage.setItem("favorites", JSON.stringify(list));
+      }
+    </script>
+
     <div class="content">
       <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-md);">Favorites</h1>
 
@@ -73,164 +132,104 @@
         <div class="tab" onclick="switchTab('activities')">Activities</div>
       </div>
 
-      <!-- Events Tab Content -->
-      <div id="eventsTab" class="tab-content">
-        <div class="list-item">
-          <img src="../images/events-image-30.png" alt="Canada Day" class="list-item__image">
-          <div class="list-item__content">
-            <div class="list-item__title">Canada Day in Calgary</div>
-            <div class="list-item__subtitle">July 1st</div>
-          </div>
-          <div class="list-item__actions">
-            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
-            <span style="font-size: 20px; cursor: pointer;">📍</span>
-            <span style="font-size: 20px; cursor: pointer;">+</span>
-          </div>
-        </div>
-
-        <div class="list-item">
-          <img src="../images/events-image-30.png" alt="Calgary Stampede" class="list-item__image">
-          <div class="list-item__content">
-            <div class="list-item__title">Calgary Stampede</div>
-            <div class="list-item__subtitle">July 7 - July 17</div>
-          </div>
-          <div class="list-item__actions">
-            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
-            <span style="font-size: 20px; cursor: pointer;">📍</span>
-            <span style="font-size: 20px; cursor: pointer;">+</span>
-          </div>
-        </div>
-
-        <div class="list-item">
-          <img src="../images/events-image-30.png" alt="Wild PC vs Vancouver" class="list-item__image">
-          <div class="list-item__content">
-            <div class="list-item__title">Wild PC vs Vancouver</div>
-            <div class="list-item__subtitle">July 8</div>
-          </div>
-          <div class="list-item__actions">
-            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
-            <span style="font-size: 20px; cursor: pointer;">📍</span>
-            <span style="font-size: 20px; cursor: pointer;">+</span>
-          </div>
-        </div>
+      <!-- EVENTS TAB -->
+      <div id="eventsTab">
+        <div id="favoriteEventsContainer"></div>
       </div>
 
-      <!-- Restaurants Tab Content -->
-      <div id="restaurantsTab" class="tab-content" style="display: none;">
-        <div class="list-item">
-          <img src="../images/foods-image-18.png" alt="Wendy's" class="list-item__image">
-          <div class="list-item__content">
-            <div class="list-item__title">Wendy's</div>
-            <div class="list-item__subtitle">
-              <div class="rating">
-                <span class="rating__value">4.5</span>
-                <span class="rating__count">(2k)</span>
-              </div>
-              <div>10-20 min away</div>
-            </div>
-          </div>
-          <div class="list-item__actions">
-            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
-            <span style="font-size: 20px; cursor: pointer;">📍</span>
-            <span style="font-size: 20px; cursor: pointer;">+</span>
-          </div>
-        </div>
-
-        <div class="list-item">
-          <img src="../images/foods-image-18.png" alt="Ayana Shawarma" class="list-item__image">
-          <div class="list-item__content">
-            <div class="list-item__title">Ayana Shawarma</div>
-            <div class="list-item__subtitle">
-              <div class="rating">
-                <span class="rating__value">4.3</span>
-                <span class="rating__count">(1k)</span>
-              </div>
-              <div>10-20 min away</div>
-            </div>
-          </div>
-          <div class="list-item__actions">
-            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
-            <span style="font-size: 20px; cursor: pointer;">📍</span>
-            <span style="font-size: 20px; cursor: pointer;">+</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Activities Tab Content -->
-      <div id="activitiesTab" class="tab-content" style="display: none;">
-        <div class="list-item">
-          <img src="../images/things-to-do-image-26.png" alt="Calgary Tower" class="list-item__image">
-          <div class="list-item__content">
-            <div class="list-item__title">Calgary Tower</div>
-            <div class="list-item__subtitle">Iconic observation tower</div>
-          </div>
-          <div class="list-item__actions">
-            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
-            <span style="font-size: 20px; cursor: pointer;">📍</span>
-            <span style="font-size: 20px; cursor: pointer;">+</span>
-          </div>
-        </div>
-
-        <div class="list-item">
-          <img src="../images/things-to-do-image-26.png" alt="Prince's Island Park" class="list-item__image">
-          <div class="list-item__content">
-            <div class="list-item__title">Prince's Island Park</div>
-            <div class="list-item__subtitle">Beautiful park in the heart of Calgary</div>
-          </div>
-          <div class="list-item__actions">
-            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
-            <span style="font-size: 20px; cursor: pointer;">📍</span>
-            <span style="font-size: 20px; cursor: pointer;">+</span>
-          </div>
-        </div>
-      </div>
+      <div id="restaurantsTab" class="tab-content" style="display:none;"></div>
+      <div id="activitiesTab" class="tab-content" style="display:none;"></div>
     </div>
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
       <a href="itinerary.html" class="bottom-nav__item">
-        <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
+        <img src="../images/calendar-39.svg" class="bottom-nav__icon">
         <span class="bottom-nav__label">Itinerary</span>
       </a>
       <a href="homepage.html" class="bottom-nav__item active">
-        <img src="../images/home-42.svg" alt="Home" class="bottom-nav__icon">
+        <img src="../images/home-42.svg" class="bottom-nav__icon">
         <span class="bottom-nav__label">Home</span>
       </a>
       <a href="emergency.html" class="bottom-nav__item">
-        <img src="../images/icon-emergency-44.png" alt="Emergency" class="bottom-nav__icon">
+        <img src="../images/icon-emergency-44.png" class="bottom-nav__icon">
         <span class="bottom-nav__label">Emergency</span>
       </a>
       <a href="settings.html" class="bottom-nav__item">
-        <img src="../images/node-46.png" alt="Settings" class="bottom-nav__icon">
+        <img src="../images/node-46.png" class="bottom-nav__icon">
         <span class="bottom-nav__label">Settings</span>
       </a>
     </div>
   </div>
 
   <script>
+    function loadFavoritesList() {
+      const container = document.getElementById("favoriteEventsContainer");
+      container.innerHTML = "";
+
+      const favs = loadFavorites().filter(f => f.type === "event");
+
+      if (favs.length === 0) {
+        container.innerHTML = `<p style="color:#777; text-align:center; margin-top:20px;">No favorite events yet.</p>`;
+        return;
+      }
+
+      favs.forEach(f => {
+        const div = document.createElement("div");
+        div.className = "list-item";
+        div.dataset.id = f.id;
+
+        div.innerHTML = `
+          <img src="${f.image}" class="list-item__image">
+          <div class="list-item__content">
+            <div class="list-item__title">${f.title}</div>
+            <div class="list-item__subtitle">${f.subtitle || ""}</div>
+          </div>
+          <div class="list-item__actions">
+            <button class="event-fav-btn icon-button is-active">♥</button>
+            <span style="font-size:20px; cursor:pointer;">📍</span>
+            <span style="font-size:20px; cursor:pointer;">+</span>
+          </div>
+        `;
+
+        // remove fav
+        div.querySelector(".event-fav-btn").onclick = function (e) {
+          e.stopPropagation();
+          showUnsaveModal(f.id);
+        };
+
+        // open event details
+        div.onclick = function () {
+          window.location.href = "events.html?id=" + f.id;
+        };
+
+        container.appendChild(div);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", loadFavoritesList);
+  </script>
+
+  <script>
     function switchTab(tab) {
-      // Hide all tabs
-      document.getElementById('eventsTab').style.display = 'none';
-      document.getElementById('restaurantsTab').style.display = 'none';
-      document.getElementById('activitiesTab').style.display = 'none';
+      document.getElementById("eventsTab").style.display = "none";
+      document.getElementById("restaurantsTab").style.display = "none";
+      document.getElementById("activitiesTab").style.display = "none";
 
-      // Remove active class from all tabs
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
 
-      // Show selected tab
-      if (tab === 'events') {
-        document.getElementById('eventsTab').style.display = 'block';
-        document.querySelectorAll('.tab')[1].classList.add('active');
-      } else if (tab === 'restaurants') {
-        document.getElementById('restaurantsTab').style.display = 'block';
-        document.querySelectorAll('.tab')[0].classList.add('active');
-      } else if (tab === 'activities') {
-        document.getElementById('activitiesTab').style.display = 'block';
-        document.querySelectorAll('.tab')[2].classList.add('active');
+      if (tab === "events") {
+        document.getElementById("eventsTab").style.display = "block";
+        document.querySelectorAll(".tab")[1].classList.add("active");
+      } else if (tab === "restaurants") {
+        document.getElementById("restaurantsTab").style.display = "block";
+        document.querySelectorAll(".tab")[0].classList.add("active");
+      } else {
+        document.getElementById("activitiesTab").style.display = "block";
+        document.querySelectorAll(".tab")[2].classList.add("active");
       }
     }
   </script>
-<script src="../js/app.js"></script>
+
 </body>
 </html>
-

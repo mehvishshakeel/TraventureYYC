@@ -422,9 +422,66 @@
 
   </script>
 
+  <script>
+    // --- Favorite Storage Helpers ---
+    function loadFavorites() {
+      return JSON.parse(localStorage.getItem("favorites") || "[]");
+    }
+
+    function saveFavorites(list) {
+      localStorage.setItem("favorites", JSON.stringify(list));
+    }
+  </script>
+
+  <script>
+    // Event LIST heart logic (correct version)
+    document.querySelectorAll('.list-item[data-type="event"]').forEach(card => {
+
+      const favBtn = card.querySelector('.event-fav-btn');
+      const id = card.dataset.id;
+      const title = card.querySelector('.list-item__title')?.textContent.trim() || "";
+      const subtitle = card.querySelector('.list-item__subtitle')?.textContent.trim() || "";
+      const image = card.querySelector('.list-item__image')?.src || "";
+
+      function updateHeart() {
+        const favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+        favBtn.textContent = isFav ? "♥" : "♡";
+        favBtn.classList.toggle("is-active", isFav);
+      }
+
+      updateHeart();
+
+      favBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        let favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+
+        if (isFav) {
+          // REMOVE favorite
+          favs = favs.filter(f => f.id !== id);
+        } else {
+          // ADD favorite
+          favs.push({
+            id,
+            title,
+            subtitle,
+            image,
+            type: "event"
+          });
+        }
+
+        saveFavorites(favs);
+        updateHeart();
+      });
+    });
+  </script>
+
+
+
   <!-- OVERLAY LOGIC (same as attractions, adjusted for events) -->
   <script>
-
     (function setupEventDetailOverlay() {
       const overlay = document.getElementById("eventDetailOverlay");
       if (!overlay) return;
@@ -446,7 +503,11 @@
         const id = card.dataset.id;
         currentId = id;
 
+        // Let global listener know current ID
+        document.dispatchEvent(new CustomEvent("openOverlayEvent", { detail: { id }}));
+
         const title = card.querySelector(".list-item__title")?.textContent.trim() || "";
+        const subtitle = card.querySelector(".list-item__subtitle")?.textContent.trim() || "";
         const img = card.querySelector(".list-item__image")?.src || "";
         const details = EVENT_DETAILS[id] || {};
 
@@ -466,40 +527,51 @@
         overlay.classList.add("is-visible");
       }
 
-      // Open overlay on card click (not icons)
-      document.querySelectorAll(".list-item").forEach(card => {
+      // Open overlay on card click
+      document.querySelectorAll(".list-item[data-type='event']").forEach(card => {
         card.addEventListener("click", (e) => {
           if (e.target.closest(".list-item__actions")) return;
           openOverlay(card);
         });
       });
 
-      backBtn.addEventListener("click", () => {
-        overlay.classList.remove("is-visible");
-      });
+      backBtn.addEventListener("click", () => overlay.classList.remove("is-visible"));
 
       learnBtn.addEventListener("click", () => {
         if (currentUrl) window.open(currentUrl, "_blank");
       });
 
+      // --- FIXED OVERLAY HEART LOGIC ---
       favBtn.addEventListener("click", () => {
-        const favorites = loadFavorites();
-        const idx = favorites.findIndex(f => f.id === currentId);
+        let favs = loadFavorites();
+        const isFav = favs.some(f => f.id === currentId);
 
-        if (idx >= 0) {
-          favorites.splice(idx, 1);
+        if (isFav) {
+          favs = favs.filter(f => f.id !== currentId);
           favBtn.textContent = "♡";
           favBtn.classList.remove("is-active");
         } else {
-          favorites.push({
+          favs.push({
             id: currentId,
             title: titleHeroEl.textContent,
+            subtitle: dateEl.textContent.replace("Date: ", ""),
+            image: imgEl.src,
             type: "event"
           });
           favBtn.textContent = "♥";
           favBtn.classList.add("is-active");
         }
-        saveFavorites(favorites);
+
+        saveFavorites(favs);
+
+        // update list page heart too
+        const listHeart = document.querySelector(
+          `.list-item[data-id="${currentId}"] .event-fav-btn`
+        );
+        if (listHeart) {
+          listHeart.textContent = isFav ? "♡" : "♥";
+          listHeart.classList.toggle("is-active", !isFav);
+        }
       });
 
       addBtn.addEventListener("click", () => {
@@ -511,16 +583,11 @@
           location: ""
         };
 
-        sessionStorage.setItem(
-          "pendingItineraryData",
-          JSON.stringify(pending)
-        );
-
+        sessionStorage.setItem("pendingItineraryData", JSON.stringify(pending));
         window.location.href = "itinerary-edit.html";
       });
+
     })();
-
-  </script>
-
+    </script>
 </body>
 </html>
