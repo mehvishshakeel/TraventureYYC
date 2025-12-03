@@ -6,6 +6,7 @@
   <title>Home - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
 </head>
+
 <body>
   <div class="app-container">
     <!-- Status Bar -->
@@ -21,7 +22,6 @@
           <img src="../images/wifi-59.svg" alt="WiFi">
         </div>
         <div class="status-bar__battery">
-          <img src="../images/rectangle-56.svg" alt="Battery">
           <img src="../images/combined-shape-57.svg" alt="Battery">
           <img src="../images/rectangle-58.svg" alt="Battery">
         </div>
@@ -44,15 +44,30 @@
       <div class="top-bar__actions">
         <a href="signup.html" style="color: var(--color-primary); font-size: 14px; margin-right: var(--spacing-sm);">Sign up</a>
         <div class="language-selector">
-          <span>ENG</span>
-          <img src="../images/english-51.png" alt="English" style="width: 20px; height: 20px;">
+          <button class="lang-btn">
+            <span class="lang-text">ENG</span>
+            <img src="../images/english-51.png" alt="English" class="flag-icon">
+          </button>
+          <div class="lang-menu">
+            <div class="lang-option" data-lang="en">English</div>
+            <div class="lang-option" data-lang="fr">Français</div>
+            <div class="lang-option" data-lang="es">Español</div>
+            <div class="lang-option" data-lang="ch">中文</div>
+            <div class="lang-option" data-lang="jp">日本語</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Emergency Button -->
-    <a href="emergency.html" class="emergency-button">!</a>
+    <div id="langModal" class="call-modal-overlay" style="display:none;">
+      <div class="call-modal">
+        <h2>Language Feature</h2>
+        <p>This feature is currently in development.</p>
 
+        <button class="modal-cancel-btn" onclick="closeLangModal()">Close</button>
+      </div>
+    </div>
+    
     <!-- Content -->
     <div class="content">
       <!-- Profile Section -->
@@ -111,9 +126,7 @@
         </a>
 
         <a href="itinerary.html" class="homepage-card">
-          <div style="background: linear-gradient(135deg, var(--color-primary-light), var(--color-card-bg)); height: 150px; display: flex; align-items: center; justify-content: center;">
-            <img src="../images/calendar-39.svg" alt="Itinerary" style="width: 60px; height: 60px;">
-          </div>
+          <img src="../images/Travel-Itinerary.png" alt="Itinerary" class="homepage-card__image" style="opacity: 0.8;">
           <div class="homepage-card__content">
             <div class="homepage-card__title">Itinerary</div>
           </div>
@@ -181,6 +194,7 @@
       }
     });
   </script>
+  <script src="../js/app.js"></script>
 </body>
 </html>
 

@@ -21,7 +21,6 @@
           <img src="../images/wifi-59.svg" alt="WiFi">
         </div>
         <div class="status-bar__battery">
-          <img src="../images/rectangle-56.svg" alt="Battery">
           <img src="../images/combined-shape-57.svg" alt="Battery">
           <img src="../images/rectangle-58.svg" alt="Battery">
         </div>
@@ -30,57 +29,112 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-      <a href="emergency.html" style="color: var(--color-text-black);">←</a>
+      <a href="emergency.html" style="color: var(--color-text-black); font-size: x-large;">←</a>
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
       <div class="top-bar__actions">
+        <a href="signup.html" style="color: var(--color-primary); font-size: 14px; margin-right: var(--spacing-sm);">Sign up</a>
         <div class="language-selector">
-          <span>ENG</span>
-          <img src="../images/english-51.png" alt="English" style="width: 20px; height: 20px;">
+          <button class="lang-btn">
+            <span class="lang-text">ENG</span>
+            <img src="../images/english-51.png" alt="English" class="flag-icon">
+          </button>
+          <div class="lang-menu">
+            <div class="lang-option" data-lang="en">English</div>
+            <div class="lang-option" data-lang="fr">Français</div>
+            <div class="lang-option" data-lang="es">Español</div>
+            <div class="lang-option" data-lang="ch">中文</div>
+            <div class="lang-option" data-lang="jp">日本語</div>
+          </div>
         </div>
       </div>
     </div>
+
+    <div id="langModal" class="call-modal-overlay" style="display:none;">
+      <div class="call-modal">
+        <h2>Language Feature</h2>
+        <p>This feature is currently in development.</p>
+
+        <button class="modal-cancel-btn" onclick="closeLangModal()">Close</button>
+      </div>
+    </div>
+
+    <script src="../js/app.js"></script>
 
     <!-- Content -->
     <div class="content">
       <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-md);">Consulate & Embassy</h1>
 
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <span>🔍</span>
+        <input type="text" class="search-bar__input" placeholder="">
+      </div>      
+
       <!-- Embassies List -->
-      <div class="list-item">
+      <div class="list-item list-item--emergency">
         <div class="list-item__content">
-          <div class="list-item__title">US Consulate in Calgary</div>
+          <div class="list-item__title">US Consulate in Calgary</div> <!--TODO: Add in real phone numbers-->
           <div class="list-item__subtitle">615 Macleod Trail SE, Calgary, AB T2G 4T8</div>
           <div class="list-item__subtitle">1 km away</div>
         </div>
-        <a href="map.html" style="font-size: 24px; cursor: pointer;">📍</a>
+        <div class="emergency-actions">
+          <a href="tel:4031234567">
+            <img src="../images/Call_Icon.png" class="embassy-action-icon">
+          </a>
+          <a href="map.html?place=US Consulate in Calgary&return=embassy">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>
       </div>
 
-      <div class="list-item">
+      <div class="list-item list-item--emergency">
         <div class="list-item__content">
-          <div class="list-item__title">Consulate General of the Federal Republic of Germany</div>
-          <div class="list-item__subtitle">Calgary, AB</div>
+          <div class="list-item__title">Consul (Honorary) of the Federal Republic of Germany</div>
+          <div class="list-item__subtitle">Encor Place, 645 7 Ave SW #2300, Calgary, AB T2P 4G8</div>
           <div class="list-item__subtitle">2 km away</div>
         </div>
-        <a href="map.html" style="font-size: 24px; cursor: pointer;">📍</a>
+        <div class="emergency-actions">
+          <a href="tel:4031234567">
+            <img src="../images/Call_Icon.png" class="embassy-action-icon">
+          </a>
+          <a href="map.html?place=Consul (Honorary) of the Federal Republic of Germany&return=embassy">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>
       </div>
 
-      <div class="list-item">
+      <div class="list-item list-item--emergency">
         <div class="list-item__content">
-          <div class="list-item__title">Honorary Consulate of the Philippines</div>
-          <div class="list-item__subtitle">Calgary, AB</div>
+          <div class="list-item__title">Consulate General of the Philippines</div>
+          <div class="list-item__subtitle">1001 1st St SE Suite 100, Calgary, AB T2G 5G3</div>
           <div class="list-item__subtitle">3 km away</div>
         </div>
-        <a href="map.html" style="font-size: 24px; cursor: pointer;">📍</a>
+        <div class="emergency-actions">
+          <a href="tel:4031234567">
+            <img src="../images/Call_Icon.png" class="embassy-action-icon">
+          </a>
+          <a href="map.html?place=Consulate General of the Philippines&return=embassy">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>
       </div>
 
-      <div class="list-item">
+      <div class="list-item list-item--emergency">
         <div class="list-item__content">
-          <div class="list-item__title">Honorary Consulate of Mexico</div>
-          <div class="list-item__subtitle">Calgary, AB</div>
+          <div class="list-item__title">Consulate of Mexico</div>
+          <div class="list-item__subtitle">407 2 St SW #400, Calgary, AB T2P 2Y3</div>
           <div class="list-item__subtitle">2.5 km away</div>
         </div>
-        <a href="map.html" style="font-size: 24px; cursor: pointer;">📍</a>
+        <div class="emergency-actions">
+          <a href="tel:4031234567">
+            <img src="../images/Call_Icon.png" class="embassy-action-icon">
+          </a>
+          <a href="map.html?place=Consulate of Mexico&return=embassy">
+            <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+          </a>
+        </div>
       </div>
     </div>
 
@@ -104,6 +158,7 @@
       </a>
     </div>
   </div>
+<script src="../js/app.js"></script>
 </body>
 </html>
 

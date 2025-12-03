@@ -6,6 +6,20 @@
   <title>Emergency - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
 </head>
+
+<div id="callModal" class="call-modal-overlay" style="display: none;">
+  <div class="call-modal">
+    <h2 id="modalTitle"></h2>
+    <p id="modalDescription"></p>
+
+    <div class="modal-number-box" id="modalNumberDisplay"></div>
+
+    <button class="modal-call-btn" id="confirmCallBtn">Call</button>
+    <button class="modal-cancel-btn" onclick="closeCallModal()">Cancel</button>
+  </div>
+</div>
+<script src="../js/app.js"></script>
+
 <body>
   <div class="app-container">
     <!-- Status Bar -->
@@ -21,7 +35,6 @@
           <img src="../images/wifi-59.svg" alt="WiFi">
         </div>
         <div class="status-bar__battery">
-          <img src="../images/rectangle-56.svg" alt="Battery">
           <img src="../images/combined-shape-57.svg" alt="Battery">
           <img src="../images/rectangle-58.svg" alt="Battery">
         </div>
@@ -30,75 +43,79 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-      <a href="homepage.html" style="color: var(--color-text-black);">←</a>
+      <a href="homepage.html" style="color: var(--color-text-black); font-size: x-large;">←</a>
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
       <div class="top-bar__actions">
+        <a href="signup.html" style="color: var(--color-primary); font-size: 14px; margin-right: var(--spacing-sm);">Sign up</a>
         <div class="language-selector">
-          <span>ENG</span>
-          <img src="../images/english-51.png" alt="English" style="width: 20px; height: 20px;">
+          <button class="lang-btn">
+            <span class="lang-text">ENG</span>
+            <img src="../images/english-51.png" alt="English" class="flag-icon">
+          </button>
+          <div class="lang-menu">
+            <div class="lang-option" data-lang="en">English</div>
+            <div class="lang-option" data-lang="fr">Français</div>
+            <div class="lang-option" data-lang="es">Español</div>
+            <div class="lang-option" data-lang="ch">中文</div>
+            <div class="lang-option" data-lang="jp">日本語</div>
+          </div>
         </div>
       </div>
     </div>
+
+    <div id="langModal" class="call-modal-overlay" style="display:none;">
+      <div class="call-modal">
+        <h2>Language Feature</h2>
+        <p>This feature is currently in development.</p>
+
+        <button class="modal-cancel-btn" onclick="closeLangModal()">Close</button>
+      </div>
+    </div>
+
+    <script src="../js/app.js"></script>
 
     <!-- Content -->
-    <div class="content">
-      <div class="emergency-hero">
-        <div class="emergency-hero__icon">🚨</div>
-        <h1 class="emergency-hero__title">Call 911</h1>
-        <p style="color: var(--color-text-dark); margin-top: var(--spacing-sm);">For life-threatening emergencies</p>
+  <div class="content emergency-layout">
+
+    <!-- Top Alarm Circle -->
+    <button class="911-btn"
+      onclick="openCallModal(
+      'Emergency Services (911)',
+      '911',
+      'Use 911 only for life-threatening emergencies requiring police, fire, or ambulance.'
+      )">
+      
+      <div class="emergency-top">
+        <div class="alarm-circle">
+          <div class="alarm-emoji">🚨</div>
       </div>
+      <h2 class="call-911-text">Call 911</h2>
+    </button>
 
-      <div class="emergency-options">
-        <a href="emergency-hospitals.html" class="emergency-option">
-          <div class="emergency-option__icon">🏥</div>
-          <div class="emergency-option__text">Hospitals/Clinics</div>
-          <div>→</div>
-        </a>
 
-        <a href="emergency-embassy.html" class="emergency-option">
-          <div class="emergency-option__icon">🏛️</div>
-          <div class="emergency-option__text">Embassy/Consulate</div>
-          <div>→</div>
-        </a>
+    <!-- Grid of Emergency Options -->
+    <div class="emergency-grid">
 
-        <a href="emergency-contacts.html" class="emergency-option">
-          <div class="emergency-option__icon">📞</div>
-          <div class="emergency-option__text">Emergency Contacts</div>
-          <div>→</div>
-        </a>
-      </div>
+      <a href="emergency-hospitals.html" class="emergency-card">
+        <div class="card-emoji">🏥</div>
+        <p>Nearest<br>Hospitals/Clinics</p>
+      </a>
 
-      <!-- Non-Emergency Section -->
-      <div style="margin-top: var(--spacing-xl);">
-        <h2 class="section-title">Non-Emergency Contacts</h2>
-        
-        <div class="list-item">
-          <div class="list-item__content">
-            <div class="list-item__title">Police (Non-Emergency)</div>
-            <div class="list-item__subtitle">403-266-1234</div>
-          </div>
-          <button class="btn btn--primary" onclick="showAlert('Police (Non-Emergency)', '403-266-1234')">Call</button>
-        </div>
-
-        <div class="list-item">
-          <div class="list-item__content">
-            <div class="list-item__title">City Services</div>
-            <div class="list-item__subtitle">311</div>
-          </div>
-          <button class="btn btn--primary" onclick="showAlert('City Services', '311')">Call</button>
-        </div>
-
-        <div class="list-item">
-          <div class="list-item__content">
-            <div class="list-item__title">Visitor Information Center</div>
-            <div class="list-item__subtitle">403-263-8510</div>
-          </div>
-          <button class="btn btn--primary" onclick="showAlert('Visitor Information Center', '403-263-8510')">Call</button>
-        </div>
-      </div>
+      <a href="emergency-embassy.html" class="emergency-card">
+        <div class="card-emoji">🏛️</div>
+        <p>Embassy &<br>Consulate</p>
+      </a>
     </div>
+
+    <div class="other-services-wrapper">
+      <a href="emergency-contacts.html" class="emergency-card">
+        <div class="card-emoji">📞</div>
+        <p>Other Services</p>
+      </a>
+    </div>
+  </div>
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
@@ -120,50 +137,6 @@
       </a>
     </div>
   </div>
-
-  <!-- Alert Modal -->
-  <div id="alertModal" class="modal-overlay" style="display: none;">
-    <div class="modal">
-      <div class="modal__header">
-        <h3 class="modal__title" id="alertTitle">Alert</h3>
-        <button class="modal__close" onclick="closeAlert()">×</button>
-      </div>
-      <div class="modal__body">
-        <p id="alertMessage">When to call 911 vs non-emergency number (403-266-1234)</p>
-      </div>
-      <div class="modal__actions">
-        <button class="btn btn--secondary" onclick="closeAlert()">Cancel</button>
-        <button class="btn btn--primary" onclick="makeCall()">Call</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function showAlert(title, number) {
-      document.getElementById('alertTitle').textContent = title;
-      document.getElementById('alertMessage').textContent = `Call ${number}?`;
-      document.getElementById('alertModal').style.display = 'flex';
-      window.currentNumber = number;
-    }
-
-    function closeAlert() {
-      document.getElementById('alertModal').style.display = 'none';
-    }
-
-    function makeCall() {
-      if (window.currentNumber) {
-        window.location.href = `tel:${window.currentNumber}`;
-      }
-      closeAlert();
-    }
-
-    // Close modal on overlay click
-    document.getElementById('alertModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeAlert();
-      }
-    });
-  </script>
 </body>
 </html>
 

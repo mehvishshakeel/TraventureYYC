@@ -119,6 +119,7 @@
   padding: var(--spacing-xs) var(--spacing-sm);
   color: var(--color-text-white);
   font-size: 13px;
+  position: relative;
 }
 
 /* Content Area */
