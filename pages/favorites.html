@@ -141,7 +141,7 @@
           </div>
           <div class="list-item__actions">
             <button class="event-fav-btn icon-button is-active">♥</button>
-            <span style="font-size:20px; cursor:pointer;">+</span>
+            <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
           </div>
         `;
 
@@ -151,12 +151,31 @@
           showUnsaveModal(f.id);
         };
 
+        // add to itinerary
+        div.querySelector(".add-to-itinerary-btn").onclick = function (e) {
+          e.stopPropagation();
+
+          const pending = {
+            title: f.title,
+            subtitle: f.subtitle || "",
+            image: f.image || "",
+            eventId: f.id,
+            date: new Date().toISOString().slice(0, 10),
+            startTime: "13:00",
+            endTime: "14:00",
+            location: ""
+          };
+
+          sessionStorage.setItem("pendingItineraryData", JSON.stringify(pending));
+          window.location.href = "itinerary-edit.html";
+        };
+
+
         // open event details
         div.onclick = function () {
           sessionStorage.setItem("cameFromFavorites", "yes");
           window.location.href = "events.html?id=" + f.id;
         };
-
 
         container.appendChild(div);
       });
