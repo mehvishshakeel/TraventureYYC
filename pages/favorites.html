@@ -95,46 +95,14 @@
         </div>
       </div>
 
-      <!-- Restaurants Tab Content -->
-      <div id="restaurantsTab" class="tab-content" style="display: none;">
-        <div class="list-item">
-          <img src="../images/foods-image-18.png" alt="Wendy's" class="list-item__image">
-          <div class="list-item__content">
-            <div class="list-item__title">Wendy's</div>
-            <div class="list-item__subtitle">
-              <div class="rating">
-                <span class="rating__value">4.5</span>
-                <span class="rating__count">(2k)</span>
-              </div>
-              <div>10-20 min away</div>
-            </div>
-          </div>
-          <div class="list-item__actions">
-            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
-            <span style="font-size: 20px; cursor: pointer;">📍</span>
-            <span style="font-size: 20px; cursor: pointer;">+</span>
-          </div>
-        </div>
+<!-- Restaurants Tab Content -->
+<div id="restaurantsTab" class="tab-content" style="display: none;">
+  <div id="restaurantsList"></div>
+  <p id="noRestaurantsMessage" style="margin-top: 16px; color: var(--color-text-muted); display:none;">
+    You haven't added any favourite restaurants yet.
+  </p>
+</div>
 
-        <div class="list-item">
-          <img src="../images/foods-image-18.png" alt="Ayana Shawarma" class="list-item__image">
-          <div class="list-item__content">
-            <div class="list-item__title">Ayana Shawarma</div>
-            <div class="list-item__subtitle">
-              <div class="rating">
-                <span class="rating__value">4.3</span>
-                <span class="rating__count">(1k)</span>
-              </div>
-              <div>10-20 min away</div>
-            </div>
-          </div>
-          <div class="list-item__actions">
-            <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon" style="fill: red;">
-            <span style="font-size: 20px; cursor: pointer;">📍</span>
-            <span style="font-size: 20px; cursor: pointer;">+</span>
-          </div>
-        </div>
-      </div>
 
       <!-- Activities Tab Content -->
       <div id="activitiesTab" class="tab-content" style="display: none;">
@@ -172,7 +140,7 @@
         <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
         <span class="bottom-nav__label">Itinerary</span>
       </a>
-      <a href="homepage.html" class="bottom-nav__item active">
+      <a href="homepage.html" class="bottom-nav__item">
         <img src="../images/home-42.svg" alt="Home" class="bottom-nav__icon">
         <span class="bottom-nav__label">Home</span>
       </a>
@@ -187,29 +155,115 @@
     </div>
   </div>
 
-  <script>
-    function switchTab(tab) {
-      // Hide all tabs
-      document.getElementById('eventsTab').style.display = 'none';
-      document.getElementById('restaurantsTab').style.display = 'none';
-      document.getElementById('activitiesTab').style.display = 'none';
+<script>
+  function switchTab(tab) {
+    // Hide all tabs
+    document.getElementById('eventsTab').style.display = 'none';
+    document.getElementById('restaurantsTab').style.display = 'none';
+    document.getElementById('activitiesTab').style.display = 'none';
 
-      // Remove active class from all tabs
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    // Remove active class from all tabs
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
 
-      // Show selected tab
-      if (tab === 'events') {
-        document.getElementById('eventsTab').style.display = 'block';
-        document.querySelectorAll('.tab')[1].classList.add('active');
-      } else if (tab === 'restaurants') {
-        document.getElementById('restaurantsTab').style.display = 'block';
-        document.querySelectorAll('.tab')[0].classList.add('active');
-      } else if (tab === 'activities') {
-        document.getElementById('activitiesTab').style.display = 'block';
-        document.querySelectorAll('.tab')[2].classList.add('active');
-      }
+    // Show selected tab
+    if (tab === 'events') {
+      document.getElementById('eventsTab').style.display = 'block';
+      document.querySelectorAll('.tab')[1].classList.add('active');
+    } else if (tab === 'restaurants') {
+      document.getElementById('restaurantsTab').style.display = 'block';
+      document.querySelectorAll('.tab')[0].classList.add('active');
+    } else if (tab === 'activities') {
+      document.getElementById('activitiesTab').style.display = 'block';
+      document.querySelectorAll('.tab')[2].classList.add('active');
     }
-  </script>
+  }
+
+  // ================================
+  // FAVORITE RESTAURANTS RENDERING
+  // ================================
+
+  function getFavoriteRestaurants() {
+    const key = "favoriteRestaurants";
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      console.error("Failed to parse favoriteRestaurants from localStorage:", e);
+      return [];
+    }
+  }
+
+  function saveFavoriteRestaurants(list) {
+    localStorage.setItem("favoriteRestaurants", JSON.stringify(list));
+  }
+
+  function removeFavoriteRestaurantByName(name) {
+    const current = getFavoriteRestaurants();
+    const updated = current.filter(r => r.name !== name);
+    saveFavoriteRestaurants(updated);
+  }
+
+  function renderFavoriteRestaurants() {
+    const listContainer = document.getElementById("restaurantsList");
+    const emptyMsg = document.getElementById("noRestaurantsMessage");
+
+    if (!listContainer || !emptyMsg) return;
+
+    const favorites = getFavoriteRestaurants();
+    listContainer.innerHTML = "";
+
+    if (!favorites.length) {
+      emptyMsg.style.display = "block";
+      return;
+    }
+
+    emptyMsg.style.display = "none";
+
+    favorites.forEach(place => {
+      const item = document.createElement("div");
+      item.className = "list-item";
+
+      const imageSrc = place.image || "../images/foods-image-18.png";
+      const rating = place.rating || "—";
+      const time = place.estimated_time || "";
+
+      item.innerHTML = `
+        <img src="${imageSrc}" alt="${place.name || "Restaurant"}" class="list-item__image">
+        <div class="list-item__content">
+          <div class="list-item__title">${place.name || "Unnamed place"}</div>
+          <div class="list-item__subtitle">
+            <div class="rating">
+              <span class="rating__value">${rating}</span>
+            </div>
+            ${time ? `<div>${time}</div>` : ""}
+          </div>
+        </div>
+        <div class="list-item__actions">
+          <!-- Heart = remove from favourites -->
+          <span class="list-item__icon fav-heart" style="font-size: 20px; cursor: pointer;">❤️</span>
+        </div>
+      `;
+
+      const heart = item.querySelector(".fav-heart");
+      heart.addEventListener("click", () => {
+        removeFavoriteRestaurantByName(place.name);
+        renderFavoriteRestaurants();
+      });
+
+      listContainer.appendChild(item);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Initial render of restaurants favorites
+    renderFavoriteRestaurants();
+
+    // Default visible tab is Events (matches your current HTML)
+    switchTab('events');
+  });
+</script>
 <script src="../js/app.js"></script>
 </body>
 </html>

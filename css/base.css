@@ -270,8 +270,8 @@
 }
 
 .bottom-nav__icon {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   margin-bottom: var(--spacing-xs);
   display: block;
 }
@@ -284,6 +284,7 @@
 
 .bottom-nav__label {
   font-size: 10px;
+  color: black;
 }
 
 /* Buttons */

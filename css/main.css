@@ -596,14 +596,12 @@
   }
 }
 
-/* Box shadow behind active bottom-nav icon */
-.bottom-nav__item.active .bottom-nav__icon {
-  background: white;                 /* keeps it clean */
-  padding: 1px;                      /* creates the box shape */
-  border-radius: 3px;               /* soften the box (adjust if needed) */
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.25); /* box-shaped shadow */
+/* Bottom nav highlight for active page */
+.bottom-nav__item {
+  position: relative;
+  padding-bottom: 6px;
 }
 
-
-
-
+.bottom-nav__item.active {
+  border-bottom: 3px solid #000000; /* BLACK underline */
+}

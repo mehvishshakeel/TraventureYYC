@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Activity Details - TraventureYYC</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <div class="app-container app-container--detail">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-bar__left">
+        <div class="status-bar__time">9:41</div>
+      </div>
+      <div class="status-bar__right">
+        <div class="status-bar__signal">
+          <img src="../images/mobile-signal-60.svg" alt="Signal">
+        </div>
+        <div class="status-bar__wifi">
+          <img src="../images/wifi-59.svg" alt="WiFi">
+        </div>
+        <div class="status-bar__battery">
+          <img src="../images/rectangle-56.svg" alt="Battery">
+          <img src="../images/combined-shape-57.svg" alt="Battery">
+          <img src="../images/rectangle-58.svg" alt="Battery">
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar__logo">
+        Traventure<span class="top-bar__logo-accent">YYC</span>
+      </div>
+      <div class="top-bar__actions">
+        <div class="language-selector">
+          <span>ENG</span>
+          <img src="../images/english-51.png" alt="English" style="width: 20px; height: 20px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail Screen -->
+    <div class="activity-detail-screen">
+      <!-- Hero image + overlay buttons -->
+      <div class="activity-detail-hero">
+        <img id="detailImage"
+             src="../images/things-to-do-image-26.png"
+             alt=""
+             class="activity-detail-hero__img">
+
+        <!-- Back arrow -->
+        <button type="button"
+                class="activity-detail-hero__back"
+                onclick="history.back()">
+          ←
+        </button>
+
+        <!-- Heart + add -->
+        <div class="activity-detail-hero__actions">
+          <button type="button"
+                  id="detailFav"
+                  class="activity-detail-hero__icon">
+            ♡
+          </button>
+          <button type="button"
+                  id="detailAdd"
+                  class="activity-detail-hero__icon">
+            +
+          </button>
+        </div>
+      </div>
+
+      <!-- White content card -->
+      <div class="activity-detail-body">
+        <h1 id="detailTitle" class="activity-detail-title">Activity title</h1>
+
+        <p id="detailIntro" class="activity-detail-text"></p>
+        <p id="detailAddress" class="activity-detail-text"></p>
+        <p id="detailDescription" class="activity-detail-text"></p>
+
+        <a id="detailLink"
+           href="#"
+           target="_blank"
+           rel="noopener"
+           class="activity-detail-learn">
+          Learn more →
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+      <a href="itinerary.html" class="bottom-nav__item">
+        <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Itinerary</span>
+      </a>
+      <a href="homepage.html" class="bottom-nav__item active">
+        <img src="../images/home-42.svg" alt="Home" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Home</span>
+      </a>
+      <a href="emergency.html" class="bottom-nav__item">
+        <img src="../images/icon-emergency-44.png" alt="Emergency" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Emergency</span>
+      </a>
+      <a href="Settings/settings.html" class="bottom-nav__item">
+        <img src="../images/node-46.png" alt="Settings" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Settings</span>
+      </a>
+    </div>
+  </div>
+
+
+  <!-- Shared JS (favorites, itinerary, etc.) -->
+  <script src="../js/app.js"></script>
+
+  <!-- Detail-page-specific JS -->
+  <script>
+    // Static data for activities (tweak text / images / URLs as needed)
+    const ACTIVITY_DATA = {
+      "calgary-tower": {
+        title: "Calgary Tower",
+        subtitle: "Iconic observation tower in downtown Calgary",
+        intro: "Take in 360° views of Calgary from the glass-floored observation deck.",
+        address: "Address: 101 9 Ave SW, Calgary, AB T2P 1J9",
+        description: "Great for first-time visitors, the Calgary Tower gives you a panoramic view of the city and the Rockies. Visit at sunset or after dark to see the skyline light up.",
+        image: "../images/things-to-do-image-26.png",
+        link: "https://www.calgarytower.com/"
+      },
+      "princes-island-park": {
+        title: "Prince's Island Park",
+        subtitle: "Beautiful park in the heart of Calgary",
+        intro: "A riverside green space perfect for walks, picnics, and summer festivals.",
+        address: "Address: 698 Eau Claire Ave SW, Calgary, AB T2P 5N4",
+        description: "Located just off downtown, Prince's Island Park is a local favourite for relaxing, biking, and taking photos by the Bow River.",
+        image: "../images/things-to-do-image-26.png",
+        link: "https://www.visitcalgary.com/places-to-go/parks-outdoors/princes-island-park"
+      },
+      "peace-bridge": {
+        title: "Peace Bridge",
+        subtitle: "Famous pedestrian bridge across the Bow River",
+        intro: "The Peace Bridge is open year-round and offers beautiful views of the Bow River and downtown Calgary, especially at sunset.",
+        address: "Address: 98 Memorial Dr NW, Calgary, AB T2N 5C1",
+        description: "Designed by Santiago Calatrava and opened in 2012, this striking red bridge connects downtown to the north side of the Bow River. It’s one of Calgary’s most photographed spots.",
+        image: "../images/things-to-do-image-26.png",  // swap to Peace Bridge hero image if you have it
+        link: "https://www.visitcalgary.com/things-to-do/stories-from-calgary/peace-bridge"
+      },
+      "bow-river-pathway": {
+        title: "Bow River Pathway",
+        subtitle: "Scenic pathway along the river",
+        intro: "A long, connected pathway following the Bow River—great for walks, runs, or cycling.",
+        address: "Access points all along the river through Calgary.",
+        description: "Follow the Bow River Pathway to explore parks, viewpoints, and bridges at your own pace.",
+        image: "../images/things-to-do-image-26.png",
+        link: "https://www.visitcalgary.com/paths-trails/bow-river-pathway"
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id') || 'peace-bridge';
+      const data = ACTIVITY_DATA[id];
+      if (!data) return;
+
+      // Fill content
+      document.getElementById('detailTitle').textContent = data.title;
+      document.getElementById('detailIntro').textContent = data.intro;
+      document.getElementById('detailAddress').textContent = data.address;
+      document.getElementById('detailDescription').textContent = data.description;
+      document.getElementById('detailImage').src = data.image;
+      document.getElementById('detailLink').href = data.link;
+
+      const baseItem = {
+        id: id,
+        title: data.title,
+        subtitle: data.subtitle,
+        type: 'activity'
+      };
+
+      const favBtn = document.getElementById('detailFav');
+      const addBtn = document.getElementById('detailAdd');
+
+      // Initial favorite state
+      let favorites = loadFavorites();
+      let isFav = favorites.some(f => f.id === baseItem.id);
+      favBtn.textContent = isFav ? '♥' : '♡';
+
+      favBtn.addEventListener('click', () => {
+        favorites = loadFavorites();
+        const index = favorites.findIndex(f => f.id === baseItem.id);
+
+        if (index >= 0) {
+          favorites.splice(index, 1);
+          isFav = false;
+        } else {
+          favorites.push(baseItem);
+          isFav = true;
+        }
+
+        saveFavorites(favorites);
+        favBtn.textContent = isFav ? '♥' : '♡';
+      });
+
+      addBtn.addEventListener('click', () => {
+        const items = loadQuickAdds();
+        items.push({
+          ...baseItem,
+          addedAt: new Date().toISOString()
+        });
+        saveQuickAdds(items);
+
+        addBtn.textContent = '✓';
+        setTimeout(() => {
+          addBtn.textContent = '+';
+        }, 1000);
+      });
+    });
+  </script>
+</body>
+</html>
