@@ -36,7 +36,7 @@ function setupSearchFilters() {
    2. FAVORITES / WISHLIST
    ------------------------- */
 
-const FAVORITES_KEY = 'traventure_favorites';
+const FAVORITES_KEY = 'favorites';
 
 function loadFavorites() {
   try {
@@ -62,6 +62,7 @@ function getCardData(cardEl) {
   const subtitle = cardEl.querySelector('.list-item__subtitle')?.textContent.trim() || '';
   const id = cardEl.dataset.id || title;
   const type = cardEl.dataset.type || 'item';
+  const image    = cardEl.querySelector('.list-item__image')?.src || '';
   return { id, title, subtitle, type };
 }
 
