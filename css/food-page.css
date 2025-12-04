@@ -226,18 +226,19 @@ body.popup-open {
    ============================ */
 
 .place-popup-overlay {
-  position: absolute;   /* relative to .app-container */
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 0px;  
 
   background: rgba(0, 0, 0, 0.35);
   display: none;
   align-items: flex-end;   /* bottom sheet */
   justify-content: center;
-  z-index: 950;            /* below bottom-nav (1000) */
+  z-index: 950;
 }
+
 
 .place-popup-overlay.show {
   display: flex;
@@ -258,8 +259,10 @@ body.popup-open {
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden;        /* scroll stays inside .popup-scroll */
+  overflow: hidden;       
   padding-bottom: 50px;
+
+ 
 }
 
 /* Drag handle */
