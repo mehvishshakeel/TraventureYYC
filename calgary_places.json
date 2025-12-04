@@ -436,13 +436,85 @@
       "phone": "403-956-1111" 
     },
     {
-      "id": "south_hospital", 
+      "id": "childrens_hospital", 
       "name": "Alberta Children's Hospital",
       "rating": "",
       "category": "",    
       "estimated_time":"",      
       "address": "28 Oki Dr, Calgary, AB T3B 6A8",
       "phone": "403-955-7211" 
-    }       
+    },  
+    {
+      "id": "monterey_clinic", 
+      "name": "Monterey Medical Clinic",
+      "rating": "",
+      "category": "",    
+      "estimated_time":"",      
+      "address": "2220 68 St NE Unit 750, Calgary, AB T1Y 6Y7",
+      "phone": "403-454-5140" 
+    },
+    {
+      "id": "now_clinic", 
+      "name": "Now Medical Clinic & Walk in",
+      "rating": "",
+      "category": "",    
+      "estimated_time":"",      
+      "address": "2520 23 St NE #19, Calgary, AB T2E 8L2",
+      "phone": "587-391-8188" 
+    }, 
+    {
+      "id": "varsity_clinic", 
+      "name": "Varsity Medical & Wellness",
+      "rating": "",
+      "category": "",    
+      "estimated_time":"",      
+      "address": "8 Varsity Estates Cir NW Suite 230, Calgary, AB T3A 2Z3",
+      "phone": "403-289-1901" 
+    }, 
+    {
+      "id": "university_clinic", 
+      "name": "University City Clinic",
+      "rating": "",
+      "category": "",    
+      "estimated_time":"",      
+      "address": "3630 Brentwood Rd NW #327, Calgary, AB T2L 2M6",
+      "phone": "403-514-0500" 
+    },
+    {
+      "id": "pharmasave_pharm", 
+      "name": "Pharmasave Martindale",
+      "rating": "",
+      "category": "",    
+      "estimated_time":"",      
+      "address": "79 Martindale Blvd NE, Calgary, AB T3J 3M7",
+      "phone": "403-453-9210" 
+    },      
+    {
+      "id": "rexall_pharm", 
+      "name": "Rexall",
+      "rating": "",
+      "category": "",    
+      "estimated_time":"",      
+      "address": "1403 29 St NW, Calgary, AB T2N 2T9",
+      "phone": "403-367-0660" 
+    }, 
+    {
+      "id": "medicare_pharm", 
+      "name": "Medicare Plus Pharmacy",
+      "rating": "",
+      "category": "",    
+      "estimated_time":"",      
+      "address": "6208 Rundlehorn Dr NE, Calgary, AB T1Y 2X1",
+      "phone": "403-454-5140" 
+    }, 
+    {
+      "id": "ida_pharm", 
+      "name": "I.D.A. Madigan Pharmacy",
+      "rating": "",
+      "category": "",    
+      "estimated_time":"",      
+      "address": "6060 Memorial Dr #68, Calgary, AB T2A 5Z5",
+      "phone": "403-457-9250" 
+    }                                      
   ]
 }

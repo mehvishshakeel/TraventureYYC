@@ -2,423 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Food - TraventureYYC</title>
+
+  <!-- Global styles -->
   <link rel="stylesheet" href="../css/main.css">
-
-  <!-- Page-specific layout + popup styles -->
-  <style>
-    
-    body.food-page {
-      margin: 0;
-      height: 100vh;
-    }
-
-    body.food-page .app-container {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Scrollable middle section */
-    body.food-page .content {
-      flex: 1;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: 16px var(--spacing-md) 24px;
-    }
-
-    body.food-page .bottom-nav {
-      flex-shrink: 0;
-    }
-
-    /* Hide scrollbars visually */
-    .content::-webkit-scrollbar {
-      display: none;
-    }
-    .content {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    /* Category filters */
-    .food-category-filters {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      padding: 8px 0;
-      position: relative;
-      z-index: 5;
-    }
-
-    .food-category-filter {
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--color-primary-light);
-      background-color: var(--color-background);
-      white-space: nowrap;
-      font-size: 14px;
-      color: var(--color-text-dark);
-      flex-shrink: 0;
-      cursor: pointer;
-      transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.15s ease;
-    }
-
-    .food-category-filter:hover {
-      background-color: var(--color-primary-light);
-      transform: translateY(-2px);
-    }
-
-    .food-category-filter.active {
-      background-color: var(--color-primary);
-      color: var(--color-text-white);
-      border-color: var(--color-primary);
-      font-weight: 600;
-    }
-
-    /* Restaurant cards */
-    .list-item {
-      display: flex;
-      flex-direction: column;
-      background: var(--color-background);
-      border-radius: 16px;
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
-      margin-bottom: 16px;
-      cursor: pointer;
-    }
-
-    .list-item__image-wrapper {
-      position: relative;
-      width: 100%;
-      height: 160px;
-      overflow: hidden;
-    }
-
-    .list-item__image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .list-item__favorite {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.95);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .list-item__details {
-      padding: 8px 12px 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .list-item__title {
-      font-size: 17px;
-      font-weight: 600;
-      color: var(--color-text-black);
-    }
-
-    .list-item__bottom-row {
-      display: flex;
-      align-items: center;
-      min-height: 28px;
-    }
-
-    .list-item__meta-block {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 13px;
-      color: var(--color-text-dark);
-    }
-
-    .list-item__rating-star {
-      color: #ffd700;
-    }
-
-    .list-item__actions-inline {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-left: 30px;
-    }
-
-    .list-item__icon-pill {
-      width: 30px;
-      height: 30px;
-      background: #f3f3f3;
-      border: 1px solid #dadada;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* ====== BOTTOM SHEET POPUP (75% height) ====== */
-.place-popup-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  display: none;
-  align-items: flex-end;   /* bottom sheet */
-  justify-content: center;
-  z-index: 999;
-}
-
-.place-popup-overlay.show {
-  display: flex;
-}
-
-
-.place-popup-panel {
-  width: 100%;
-  max-width: var(--mobile-width, 430px);
-
-  /* 75% of screen height, lifted above bottom nav (~64px tall) */
-  max-height: calc(75vh - 64px);
-  margin-bottom: 64px;
-
-  background: var(--color-background);
-  border-radius: 18px 18px 0 0;
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.25);
-  padding: var(--spacing-md) var(--spacing-lg);
-
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden; /* keep scroll inside .popup-scroll */
-  padding-bottom: 50px;
-}
-
-
-
-    .popup-drag {
-      width: 40px;
-      height: 4px;
-      border-radius: 999px;
-      background: #ddd;
-      align-self: center;
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .popup-close-btn {
-      position: absolute;
-      top: 10px;
-      right: 16px;
-      border: none;
-      background: transparent;
-      font-size: 22px;
-      cursor: pointer;
-    }
-
-    .popup-header {
-      text-align: center;
-      margin-top: 6px;
-      margin-bottom: var(--spacing-md);
-    }
-
-    .popup-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--color-text-black);
-      margin-bottom: 4px;
-    }
-
-    .popup-sub {
-      font-size: 13px;
-      color: var(--color-text-dark);
-      line-height: 1.4;
-    }
-
-    .popup-sub span + span::before {
-      content: " • ";
-      margin: 0 4px;
-    }
-
-.popup-scroll {
-  flex: 1;
-  min-height: 0;                 /* IMPORTANT for flexbox scrolling */
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding-right: 4px;
-}
-
-
-    .popup-section-title {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--color-text-black);
-    }
-
-    .popup-dish-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: var(--spacing-md);
-    }
-
-    .popup-dish {
-      display: flex;
-      gap: 10px;
-      padding: 8px;
-      border-radius: 10px;
-      background: var(--color-card-bg, #f7f7f7);
-    }
-
-    .popup-dish__image {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-
-    .popup-dish__info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      font-size: 13px;
-    }
-
-    .popup-dish__name {
-      font-weight: 600;
-      color: var(--color-text-black);
-    }
-
-    .popup-dish__cost {
-      font-weight: 500;
-      color: var(--color-primary);
-      font-size: 13px;
-    }
-
-    .popup-dish__desc {
-      font-size: 12px;
-      color: var(--color-text-dark);
-      opacity: 0.8;
-    }
-
-    .popup-empty {
-      font-size: 13px;
-      color: var(--color-text-dark);
-      opacity: 0.8;
-    }
-
-    /* ====== REVIEWS SECTION ====== */
-    .popup-review-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: var(--spacing-md);
-    }
-
-    .popup-review {
-      display: flex;
-      gap: 10px;
-      padding: 8px;
-      border-radius: 10px;
-      background: var(--color-card-bg, #f7f7f7);
-    }
-
-    .popup-review__image {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-
-    .popup-review__info {
-      display: flex;
-      flex-direction: column;
-      font-size: 13px;
-    }
-
-    .popup-review__name {
-      font-weight: 600;
-      color: var(--color-text-black);
-    }
-
-    .popup-review__date {
-      font-size: 11px;
-      opacity: 0.7;
-    }
-
-    .popup-review__text {
-      margin-top: 3px;
-      font-size: 13px;
-      color: var(--color-text-dark);
-    }
-    .popup-header-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.popup-header-text {
-  flex: 1;
-  min-width: 0;
-}
-
-.popup-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--color-text-black);
-  margin-bottom: 4px;
-  word-break: break-word;
-}
-
-.popup-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.popup-icon-pill {
-  width: 30px;
-  height: 30px;
-  font-size: 14px;
-  padding: 0;
-}
-
-.heart-btn {
-  font-size: 20px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.heart-btn.active {
-  transform: scale(1.15);
-}
-
-
-
-
-  </style>
+  <!-- Page-specific styles -->
+  <link rel="stylesheet" href="../css/food-page.css">
 </head>
 
 <body class="food-page">
@@ -449,7 +40,8 @@
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
       <div class="top-bar__actions">
-        <a href="signup.html" style="color: var(--color-primary); font-size: 14px; margin-right: var(--spacing-sm);">Sign up</a>
+        <a href="signup.html"
+           style="color: var(--color-primary); font-size: 14px; margin-right: var(--spacing-sm);">Sign up</a>
         <div class="language-selector">
           <button class="lang-btn">
             <span class="lang-text">ENG</span>
@@ -466,6 +58,7 @@
       </div>
     </div>
 
+    <!-- Language modal -->
     <div id="langModal" class="call-modal-overlay" style="display:none;">
       <div class="call-modal">
         <h2>Language Feature</h2>
@@ -474,8 +67,6 @@
         <button class="modal-cancel-btn" onclick="closeLangModal()">Close</button>
       </div>
     </div>
-
-    <script src="../js/app.js"></script>
 
     <!-- Content (scrollable middle) -->
     <div class="content">
@@ -494,7 +85,12 @@
       <!-- Search Bar -->
       <div class="search-bar">
         <span>🔍</span>
-        <input type="text" class="search-bar__input" id="foodSearchInput" placeholder="What are you craving today?">
+        <input
+          type="text"
+          class="search-bar__input"
+          id="foodSearchInput"
+          placeholder="What are you craving today?"
+        >
       </div>
 
       <!-- Popular Section -->
@@ -504,13 +100,66 @@
       </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- 75% HEIGHT PLACE POPUP (bottom sheet) - now INSIDE app-container -->
+    <div id="placePopup" class="place-popup-overlay">
+      <div class="place-popup-panel" onclick="event.stopPropagation()">
+        <div class="popup-drag"></div>
+        <button id="popupCloseBtn" class="popup-close-btn">×</button>
+
+        <div class="popup-header">
+          <div class="popup-header-main">
+            <div class="popup-header-text">
+              <div id="popupName" class="popup-title"></div>
+              <div class="popup-sub">
+                <span id="popupRating"></span>
+                <span id="popupPhone"></span>
+              </div>
+            </div>
+
+            <div class="popup-header-actions">
+              <a
+                id="popupMapBtn"
+                href="#"
+                class="list-item__icon-pill popup-icon-pill popup-map-link"
+                aria-label="Open map"
+              ><img src="../images/Directions_Icon.png" class="embassy-action-icon" alt=""></a>
+
+              <button
+                id="popupPhoneBtn"
+                class="list-item__icon-pill popup-icon-pill"
+                aria-label="Call restaurant"
+              ><img src="../images/Call_Icon.png" class="embassy-action-icon" alt=""></button>
+
+              <button
+                id="popupAddBtn"
+                class="list-item__icon-pill popup-icon-pill"
+                aria-label="Add to itinerary"
+              ><img src="../images/plus.jpg" class="embassy-action-icon" alt=""></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="popup-scroll">
+          <div class="popup-section">
+            <div class="popup-section-title">Popular dishes</div>
+            <div id="popupDishesList" class="popup-dish-list"></div>
+          </div>
+
+          <div class="popup-section">
+            <div class="popup-section-title">Customer reviews</div>
+            <div id="popupReviewsList" class="popup-review-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Bottom Navigation -->
     <div class="bottom-nav">
       <a href="itinerary.html" class="bottom-nav__item">
         <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
         <span class="bottom-nav__label">Itinerary</span>
       </a>
-      <a href="homepage.html" class="bottom-nav__item active">
+      <a href="homepage.html" class="bottom-nav__item">
         <img src="../images/home-42.svg" alt="Home" class="bottom-nav__icon">
         <span class="bottom-nav__label">Home</span>
       </a>
@@ -525,62 +174,84 @@
     </div>
   </div>
 
-  <!-- 75% HEIGHT PLACE POPUP (bottom sheet) -->
-  <div id="placePopup" class="place-popup-overlay">
-    <div class="place-popup-panel" onclick="event.stopPropagation()">
-      <div class="popup-drag"></div>
-      <button id="popupCloseBtn" class="popup-close-btn">×</button>
+    
+    <!-- ============================
+     FOOD PAGE CALL MODAL
+=============================== -->
+<div id="foodCallModal" class="call-modal-overlay" style="display:none;">
+  <div class="call-modal">
+    <h2 id="foodModalTitle">Call Restaurant</h2>
+    <p id="foodModalDescription">Would you like to call this restaurant?</p>
 
-<div class="popup-header">
-  <div class="popup-header-main">
-    <div class="popup-header-text">
-      <div id="popupName" class="popup-title"></div>
-      <div class="popup-sub">
-        <span id="popupRating"></span>
-        <span id="popupPhone"></span>
-      </div>
-    </div>
+    <div id="foodModalNumberDisplay" class="modal-number-box"></div>
 
-    <div class="popup-header-actions">
-      <a
-        id="popupMapBtn"
-        href="#"
-        class="list-item__icon-pill popup-icon-pill popup-map-link"
-        aria-label="Open map"
-      >↗</a>
+    <button id="foodConfirmCallBtn" class="modal-call-btn">Call</button>
+    <button class="modal-cancel-btn" onclick="closeFoodCallModal()">Cancel</button>
+  </div>
+</div>
+<!-- ============================
+     FOOD PAGE - FAVORITE ALREADY ADDED MODAL
+=============================== -->
+<div id="foodFavoriteModal" class="call-modal-overlay" style="display:none;">
+  <div class="call-modal">
+    <h2 id="foodFavoriteTitle">Already in Favorites</h2>
+    <p id="foodFavoriteDescription">
+      This place is already in your favorites list.
+    </p>
 
-      <button
-        id="popupPhoneBtn"
-        class="list-item__icon-pill popup-icon-pill"
-        aria-label="Call restaurant"
-      >☎</button>
-
-      <button
-        id="popupAddBtn"
-        class="list-item__icon-pill popup-icon-pill"
-        aria-label="Add to itinerary"
-      >+</button>
-    </div>
+    <button class="modal-cancel-btn" onclick="closeFoodFavoriteModal()">Close</button>
   </div>
 </div>
 
+<!-- ============================
+     FOOD PAGE - ADD TO ITINERARY MODAL
+     (same style as call modal)
+=============================== -->
+<div id="foodItineraryModal" class="call-modal-overlay" style="display:none;">
+  <div class="call-modal">
+    <h2 id="foodItineraryTitle">Add to Itinerary</h2>
+    <p id="foodItineraryDescription">
+      Choose a date, time, and optional details for this restaurant.
+    </p>
 
-      <div class="popup-scroll">
-        <div class="popup-section">
-          <div class="popup-section-title">Popular dishes</div>
-          <div id="popupDishesList" class="popup-dish-list"></div>
-        </div>
+    <div class="modal-number-box" style="text-align:left;">
+      <div style="margin-bottom:8px;">
+        <label for="foodItineraryDate"><strong>Date</strong></label><br>
+        <input
+          type="date"
+          id="foodItineraryDate"
+          style="width:100%; margin-top:4px; padding:6px; border-radius:8px; border:1px solid #ccc;"
+        >
+      </div>
 
-        <!-- NEW: Customer Reviews section -->
-        <div class="popup-section">
-          <div class="popup-section-title">Customer reviews</div>
-          <div id="popupReviewsList" class="popup-review-list"></div>
-        </div>
+      <div style="margin-bottom:8px;">
+        <label for="foodItineraryTime"><strong>Time</strong> (optional)</label><br>
+        <input
+          type="time"
+          id="foodItineraryTime"
+          style="width:100%; margin-top:4px; padding:6px; border-radius:8px; border:1px solid #ccc;"
+        >
+      </div>
+
+      <div>
+        <label for="foodItineraryDetails"><strong>Details</strong> (optional)</label><br>
+        <input
+          type="text"
+          id="foodItineraryDetails"
+          placeholder="e.g., Dinner, 18:00 - 19:30"
+          style="width:100%; margin-top:4px; padding:6px; border-radius:8px; border:1px solid #ccc;"
+        >
       </div>
     </div>
-  </div>
 
-  <!-- If you have global JS -->
+    <button id="foodConfirmItineraryBtn" class="modal-call-btn">Add to itinerary</button>
+    <button class="modal-cancel-btn" onclick="closeFoodItineraryModal()">Cancel</button>
+  </div>
+</div>
+
+  </div> <!-- end .app-container -->
+
+  <!-- Global JS -->
   <script src="../js/app.js"></script>
 
   <!-- Page JS -->
@@ -589,8 +260,8 @@
     const DISHES_JSON_URL  = "../dishes.json";
     const REVIEWS_JSON_URL = "../reviews.json";
 
-    const listContainer     = document.getElementById("popular-list");
-    const searchInput       = document.getElementById("foodSearchInput");
+    const listContainer = document.getElementById("popular-list");
+    const searchInput   = document.getElementById("foodSearchInput");
 
     // Popup elements
     const popupOverlay       = document.getElementById("placePopup");
@@ -600,10 +271,9 @@
     const popupPhoneEl       = document.getElementById("popupPhone");
     const popupDishesListEl  = document.getElementById("popupDishesList");
     const popupReviewsListEl = document.getElementById("popupReviewsList");
-    const popupMapBtn   = document.getElementById("popupMapBtn");
-const popupPhoneBtn = document.getElementById("popupPhoneBtn");
-const popupAddBtn   = document.getElementById("popupAddBtn");
-
+    const popupMapBtn        = document.getElementById("popupMapBtn");
+    const popupPhoneBtn      = document.getElementById("popupPhoneBtn");
+    const popupAddBtn        = document.getElementById("popupAddBtn");
 
     const FOOD_PLACEHOLDER_IMAGE = "../images/foods-image-18.png";
 
@@ -611,95 +281,106 @@ const popupAddBtn   = document.getElementById("popupAddBtn");
     let dishesByPlace  = {};
     let reviewsByPlace = {};
     let currentCategory = "fastfood";
-  function getDishesForPlace(place) {
-  if (!place || !place.name) return [];
-  return dishesByPlace[place.name] || [];
-}
-function openPlacePopup(place) {
-  popupNameEl.textContent   = place.name || "";
-  popupRatingEl.textContent = place.rating || "No rating";
-  popupPhoneEl.textContent  = place.phone || "No phone";
 
-  const mapUrl = `map.html?place=${encodeURIComponent(place.name || "")}`;
-
-  // Map button in header
-  popupMapBtn.href = mapUrl;
-  popupMapBtn.onclick = (e) => {
-    e.stopPropagation();
-    // let the anchor navigate normally
-  };
-
-  // Phone button in header
-  popupPhoneBtn.onclick = (e) => {
-    e.stopPropagation();
-    const phoneNumber = place.phone || "";
-    if (!phoneNumber) return;
-    const confirmCall = confirm(`Call ${phoneNumber}?`);
-    if (confirmCall) {
-      window.location.href = `tel:${phoneNumber.replace(/[^0-9]/g, "")}`;
+    function getDishesForPlace(place) {
+      if (!place || !place.name) return [];
+      return dishesByPlace[place.name] || [];
     }
-  };
-
-  // Add-to-itinerary button in header
-  popupAddBtn.onclick = (e) => {
-    e.stopPropagation();
-    handleAddToItinerary(place);
-  };
-
-  // ======================
-  //  Popular dishes
-  // ======================
-  const dishes = getDishesForPlace(place);
-
-  if (!dishes.length) {
-    popupDishesListEl.innerHTML =
-      '<p class="popup-empty">No dish information available yet.</p>';
-  } else {
-    popupDishesListEl.innerHTML = dishes.map(dish => `
-      <div class="popup-dish">
-        <img
-          src="${FOOD_PLACEHOLDER_IMAGE}"
-          alt="${dish.name}"
-          class="popup-dish__image"
-        >
-        <div class="popup-dish__info">
-          <div class="popup-dish__name">${dish.name}</div>
-          <div class="popup-dish__cost">${dish.cost || ""}</div>
-          <div class="popup-dish__desc">${dish.description || ""}</div>
-        </div>
-      </div>
-    `).join("");
+function getFavoriteList() {
+  try {
+    return JSON.parse(localStorage.getItem("favoriteRestaurants") || "[]");
+  } catch {
+    return [];
   }
-
-  // ======================
-  //  Customer reviews
-  // ======================
-  const reviews = (reviewsByPlace[place.name] || []);
-  if (!reviews.length) {
-    popupReviewsListEl.innerHTML = '<p class="popup-empty">No reviews yet.</p>';
-  } else {
-    popupReviewsListEl.innerHTML = reviews.map(r => `
-      <div class="popup-review">
-        <img
-          src="${r.photo || FOOD_PLACEHOLDER_IMAGE}"
-          alt="Food"
-          class="popup-review__image"
-        >
-        <div class="popup-review__info">
-          <div class="popup-review__name">${r.customer_name}</div>
-          <div class="popup-review__date">${r.date}</div>
-          <div class="popup-review__text">${r.review}</div>
-        </div>
-      </div>
-    `).join("");
-  }
-
-  popupOverlay.classList.add("show");
 }
 
+    function openPlacePopup(place) {
+      document.body.classList.add("popup-open");
+
+      popupNameEl.textContent   = place.name || "";
+      popupRatingEl.textContent = place.rating || "No rating";
+      popupPhoneEl.textContent  = place.phone || "No phone";
+
+      const mapUrl = `map.html?place=${encodeURIComponent(place.name || "")}&return=food`;
+
+      // Map button in header
+      popupMapBtn.href = mapUrl;
+      popupMapBtn.onclick = (e) => {
+        e.stopPropagation();
+      };
+
+// Phone button in popup header
+popupPhoneBtn.onclick = (e) => {
+  e.stopPropagation();
+
+  const rawNumber = place.phone || "";
+  if (!rawNumber) return;
+
+  const cleaned = rawNumber.replace(/[^0-9]/g, "");
+
+  openFoodCallModal(
+    place.name || "Call Restaurant",
+    cleaned,
+    "Would you like to call this restaurant?"
+  );
+};
+
+
+      // Add-to-itinerary button in header
+      popupAddBtn.onclick = (e) => {
+        e.stopPropagation();
+        handleAddToItinerary(place);
+      };
+
+      // Popular dishes
+      const dishes = getDishesForPlace(place);
+      if (!dishes.length) {
+        popupDishesListEl.innerHTML =
+          '<p class="popup-empty">No dish information available yet.</p>';
+      } else {
+        popupDishesListEl.innerHTML = dishes.map(dish => `
+          <div class="popup-dish">
+            <img
+              src="${FOOD_PLACEHOLDER_IMAGE}"
+              alt="${dish.name}"
+              class="popup-dish__image"
+            >
+            <div class="popup-dish__info">
+              <div class="popup-dish__name">${dish.name}</div>
+              <div class="popup-dish__cost">${dish.cost || ""}</div>
+              <div class="popup-dish__desc">${dish.description || ""}</div>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      // Customer reviews
+      const reviews = (reviewsByPlace[place.name] || []);
+      if (!reviews.length) {
+        popupReviewsListEl.innerHTML = '<p class="popup-empty">No reviews yet.</p>';
+      } else {
+        popupReviewsListEl.innerHTML = reviews.map(r => `
+          <div class="popup-review">
+            <img
+              src="${r.photo || FOOD_PLACEHOLDER_IMAGE}"
+              alt="Food"
+              class="popup-review__image"
+            >
+            <div class="popup-review__info">
+              <div class="popup-review__name">${r.customer_name}</div>
+              <div class="popup-review__date">${r.date}</div>
+              <div class="popup-review__text">${r.review}</div>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      popupOverlay.classList.add("show");
+    }
 
     function closePlacePopup() {
       popupOverlay.classList.remove("show");
+      document.body.classList.remove("popup-open");
     }
 
     popupOverlay.addEventListener("click", (e) => {
@@ -709,152 +390,156 @@ function openPlacePopup(place) {
     });
     popupCloseBtn.addEventListener("click", closePlacePopup);
 
-    // Favorites (heart)
-    function handleAddToFavorites(place) {
+// Favorites (heart)
+function handleAddToFavorites(place) {
+  const key = "favoriteRestaurants";
+  const existing = JSON.parse(localStorage.getItem(key) || "[]");
+  const alreadySaved = existing.some(fav => fav.name === place.name);
+
+  if (!alreadySaved) {
+    // Just save silently (no web prompt)
+    existing.push({
+      name: place.name,
+      rating: place.rating,
+      estimated_time: place.estimated_time,
+      image: FOOD_PLACEHOLDER_IMAGE,
+      category: place.category || "restaurant"
+    });
+    localStorage.setItem(key, JSON.stringify(existing));
+    // no alert here on purpose
+  } else {
+    // Show custom modal (same design as openCallModal)
+    openFoodFavoriteModal(place.name);
+  }
+}
+
+
+    function removeFromFavorites(place) {
       const key = "favoriteRestaurants";
       const existing = JSON.parse(localStorage.getItem(key) || "[]");
-      const alreadySaved = existing.some(fav => fav.name === place.name);
-
-      if (!alreadySaved) {
-        existing.push({
-          name: place.name,
-          rating: place.rating,
-          estimated_time: place.estimated_time,
-          image: FOOD_PLACEHOLDER_IMAGE,
-          category: place.category || "restaurant"
-        });
-        localStorage.setItem(key, JSON.stringify(existing));
-        alert(`${place.name} has been added to Favorites.`);
-      } else {
-        alert(`${place.name} is already in your Favorites.`);
-      }
+      const filtered = existing.filter(fav => fav.name !== place.name);
+      localStorage.setItem(key, JSON.stringify(filtered));
     }
 
     // Add to itinerary (+)
-    function handleAddToItinerary(place) {
-      const date = prompt(
-        "Which date do you want to add this to? (YYYY-MM-DD between 2026-07-11 and 2026-07-20)",
-        "2026-07-14"
-      );
-      if (!date) return;
+function handleAddToItinerary(place) {
+  openFoodItineraryModal(place);
+}
 
-      const time = prompt("Start time (HH:MM, 24h format)", "18:00") || "";
-      const detailsInput = prompt("Details (e.g., Dinner, 18:00 - 19:30)", "") || "";
 
-      const event = {
-        date: date,
-        time: time,
-        title: place.name,
-        details: detailsInput || (time ? time + " - TBD" : ""),
-        address: place.address || "",
-        image: FOOD_PLACEHOLDER_IMAGE
-      };
 
-      const key = "userItineraryEvents";
-      const existing = JSON.parse(localStorage.getItem(key) || "[]");
-      existing.push(event);
-      localStorage.setItem(key, JSON.stringify(existing));
+   // Render list of places into cards
+function renderPlaces(places) {
+  listContainer.innerHTML = "";
 
-      alert(`${place.name} was added to your itinerary on ${date}.`);
-    }
+  const favorites = getFavoriteList();
 
-    // Render list of places into cards
-    function renderPlaces(places) {
-      listContainer.innerHTML = "";
+  places.forEach(place => {
+    const mapUrl = `map.html?place=${encodeURIComponent(place.name)}&return=food`;
+    const item = document.createElement("div");
+    item.className = "list-item";
 
-      places.forEach(place => {
-        const mapUrl = `map.html?place=${encodeURIComponent(place.name)}`;
+    // Check if already favorited
+    const isFav = favorites.some(f => f.name === place.name);
+    const heartIcon = isFav ? "❤️" : "♡";
+    const heartState = isFav ? "true" : "false";
 
-        const item = document.createElement("div");
-        item.className = "list-item";
+    item.innerHTML = `
+      <div class="list-item__image-wrapper">
+        <img src="${FOOD_PLACEHOLDER_IMAGE}" class="list-item__image" alt="${place.name}">
+        <div class="list-item__favorite heart-btn" data-fav="${heartState}">${heartIcon}</div>
+      </div>
 
-        item.innerHTML = `
-          <div class="list-item__image-wrapper">
-            <img src="${FOOD_PLACEHOLDER_IMAGE}" class="list-item__image" alt="${place.name}">
-<div class="list-item__favorite heart-btn" data-fav="false">♡</div>
+      <div class="list-item__details">
+        <div class="list-item__title">${place.name}</div>
 
-          </div>
-
-          <div class="list-item__details">
-            <div class="list-item__title">${place.name}</div>
-
-            <div class="list-item__bottom-row">
-              <div class="list-item__meta-block">
-                <div class="list-item__rating">
-                  <span class="list-item__rating-star">★</span>
-                  <span>${place.rating}</span>
-                </div>
-                <div class="list-item__time">
-                  <span>${place.estimated_time}</span>
-                </div>
-              </div>
-
-              <div class="list-item__actions-inline">
-                <a href="${mapUrl}" class="list-item__icon-pill list-item__map-link">↗</a>
-                <button class="list-item__icon-pill list-item__phone-link" data-phone="${place.phone || ""}">☎</button>
-                <button class="list-item__icon-pill list-item__add-link">+</button>
-              </div>
+        <div class="list-item__bottom-row">
+          <div class="list-item__meta-block">
+            <div class="list-item__rating">
+              <span class="list-item__rating-star">★</span>
+              <span>${place.rating}</span>
+            </div>
+            <div class="list-item__time">
+              <span>${place.estimated_time}</span>
             </div>
           </div>
-        `;
 
-        // Whole card click → popup
-        item.addEventListener("click", () => {
-          openPlacePopup(place);
-        });
+          <div class="list-item__actions-inline">
+            <a href="${mapUrl}" class="list-item__icon-pill list-item__map-link">
+              <img src="../images/Directions_Icon.png" class="embassy-action-icon">
+            </a>
 
-        // Heart
-// Heart toggle
-const favoriteButton = item.querySelector(".heart-btn");
+            <button class="list-item__phone-link" data-phone="${place.phone || ''}">
+              <img src="../images/Call_Icon.png" class="embassy-action-icon">
+            </button>
 
-favoriteButton.addEventListener("click", (event) => {
-  event.stopPropagation();
+            <button class="list-item__icon-pill list-item__add-link">
+              <img src="../images/plus.jpg" class="embassy-action-icon">
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
 
-  const isFav = favoriteButton.dataset.fav === "true";
+    // Whole card click → popup
+    item.addEventListener("click", () => {
+      openPlacePopup(place);
+    });
 
-  if (!isFav) {
-    favoriteButton.dataset.fav = "true";
-    favoriteButton.classList.add("active");
-    favoriteButton.textContent = "❤️";
-    handleAddToFavorites(place);
-  } else {
-    favoriteButton.dataset.fav = "false";
-    favoriteButton.classList.remove("active");
-    favoriteButton.textContent = "♡";
-    removeFromFavorites(place);
-  }
-});
+    // Heart toggle
+    const favoriteButton = item.querySelector(".heart-btn");
+    favoriteButton.addEventListener("click", (event) => {
+      event.stopPropagation();
 
+      const isFavNow = favoriteButton.dataset.fav === "true";
 
-        // Map button
-        const mapLink = item.querySelector(".list-item__map-link");
-        mapLink.addEventListener("click", (event) => {
-          event.stopPropagation(); // don't open popup
-          // normal navigation via href
-        });
+      if (!isFavNow) {
+        favoriteButton.dataset.fav = "true";
+        favoriteButton.classList.add("active");
+        favoriteButton.textContent = "❤️";
+        handleAddToFavorites(place);
+      } else {
+        favoriteButton.dataset.fav = "false";
+        favoriteButton.classList.remove("active");
+        favoriteButton.textContent = "♡";
+        removeFromFavorites(place);
+      }
+    });
 
-        // Phone button
-        const phoneButton = item.querySelector(".list-item__phone-link");
-        phoneButton.addEventListener("click", (event) => {
-          event.stopPropagation();
-          const phoneNumber = phoneButton.dataset.phone || "";
-          if (!phoneNumber) return;
-          const confirmCall = confirm(`Call ${phoneNumber}?`);
-          if (confirmCall) {
-            window.location.href = `tel:${phoneNumber.replace(/[^0-9]/g, "")}`;
-          }
-        });
+    // Map button
+    const mapLink = item.querySelector(".list-item__map-link");
+    mapLink.addEventListener("click", (event) => {
+      event.stopPropagation(); // don't open popup
+    });
 
-        // Add to itinerary
-        const addButton = item.querySelector(".list-item__add-link");
-        addButton.addEventListener("click", (event) => {
-          event.stopPropagation();
-          handleAddToItinerary(place);
-        });
+    // Phone button
+    const phoneButton = item.querySelector(".list-item__phone-link");
+    phoneButton.addEventListener("click", (event) => {
+      event.stopPropagation();
 
-        listContainer.appendChild(item);
-      });
-    }
+      const rawNumber = phoneButton.dataset.phone || "";
+      if (!rawNumber) return;
+
+      const cleaned = rawNumber.replace(/[^0-9]/g, "");
+
+      openFoodCallModal(
+        place.name || "Call Restaurant",
+        cleaned,
+        "Would you like to call this restaurant?"
+      );
+    });
+
+    // Add to itinerary
+    const addButton = item.querySelector(".list-item__add-link");
+    addButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      handleAddToItinerary(place);
+    });
+
+    listContainer.appendChild(item);
+  });
+}
+
 
     // Category filters
     function applyCategoryFilters() {
@@ -891,90 +576,235 @@ favoriteButton.addEventListener("click", (event) => {
 
     searchInput.addEventListener("input", filterAndRender);
 
-    // Fetch JSON + init
-// Fetch JSON + init (with structure detection + better errors)
-Promise.all([
-  fetch(PLACES_JSON_URL).then(resp => {
-    if (!resp.ok) throw new Error("places.json HTTP " + resp.status);
-    return resp.json();
-  }),
-  fetch(DISHES_JSON_URL).then(resp => {
-    if (!resp.ok) throw new Error("dishes.json HTTP " + resp.status);
-    return resp.json();
-  }).catch(err => {
-    console.error("Failed to load dishes.json:", err);
-    return {}; // fallback
-  }),
-  fetch(REVIEWS_JSON_URL).then(resp => {
-    if (!resp.ok) throw new Error("reviews.json HTTP " + resp.status);
-    return resp.json();
-  }).catch(err => {
-    console.error("Failed to load reviews.json:", err);
-    return {}; // fallback
-  })
-])
-  .then(([placesJson, dishesJson, reviewsJson]) => {
-    console.log("placesJson:", placesJson);
-    console.log("dishesJson:", dishesJson);
-    console.log("reviewsJson:", reviewsJson);
+    // Fetch JSON + init (with structure detection + better errors)
+    Promise.all([
+      fetch(PLACES_JSON_URL).then(resp => {
+        if (!resp.ok) throw new Error("places.json HTTP " + resp.status);
+        return resp.json();
+      }),
+      fetch(DISHES_JSON_URL).then(resp => {
+        if (!resp.ok) throw new Error("dishes.json HTTP " + resp.status);
+        return resp.json();
+      }).catch(err => {
+        console.error("Failed to load dishes.json:", err);
+        return {}; // fallback
+      }),
+      fetch(REVIEWS_JSON_URL).then(resp => {
+        if (!resp.ok) throw new Error("reviews.json HTTP " + resp.status);
+        return resp.json();
+      }).catch(err => {
+        console.error("Failed to load reviews.json:", err);
+        return {}; // fallback
+      })
+    ])
+      .then(([placesJson, dishesJson, reviewsJson]) => {
+        console.log("placesJson:", placesJson);
+        console.log("dishesJson:", dishesJson);
+        console.log("reviewsJson:", reviewsJson);
 
-    // --- Places ---
-    allPlaces = placesJson.places || [];
-    console.log("Loaded places:", allPlaces.length);
+        // Places
+        allPlaces = placesJson.places || [];
+        console.log("Loaded places:", allPlaces.length);
 
-    // --- Dishes: handle BOTH possible formats ---
-    const rawDishes = dishesJson || {};
-    if (rawDishes.dishesByPlace) {
-      // Preferred structure:
-      // { "dishesByPlace": { "Peter's Drive-In": [ ... ] } }
-      dishesByPlace = rawDishes.dishesByPlace;
-    } else if (Array.isArray(rawDishes.places)) {
-      // Legacy structure:
-      // { "places": [ { name: "...", dishes: [...] }, ... ] }
-      dishesByPlace = {};
-      rawDishes.places.forEach(p => {
-        if (p.name && Array.isArray(p.dishes)) {
-          dishesByPlace[p.name] = p.dishes;
+        // Dishes: handle BOTH possible formats
+        const rawDishes = dishesJson || {};
+        if (rawDishes.dishesByPlace) {
+          dishesByPlace = rawDishes.dishesByPlace;
+        } else if (Array.isArray(rawDishes.places)) {
+          dishesByPlace = {};
+          rawDishes.places.forEach(p => {
+            if (p.name && Array.isArray(p.dishes)) {
+              dishesByPlace[p.name] = p.dishes;
+            }
+          });
+        } else {
+          dishesByPlace = {};
+          console.warn("Unknown dishes.json structure:", rawDishes);
         }
-      });
-    } else {
-      dishesByPlace = {};
-      console.warn("Unknown dishes.json structure:", rawDishes);
-    }
 
-    // --- Reviews: handle BOTH possible formats ---
-    const rawReviews = reviewsJson || {};
-    if (rawReviews.reviewsByPlace) {
-      // Preferred structure:
-      // { "reviewsByPlace": { "Peter's Drive-In": [ ... ] } }
-      reviewsByPlace = rawReviews.reviewsByPlace;
-    } else if (Array.isArray(rawReviews.places)) {
-      // Legacy structure:
-      // { "places": [ { name: "...", reviews: [...] }, ... ] }
-      reviewsByPlace = {};
-      rawReviews.places.forEach(p => {
-        if (p.name && Array.isArray(p.reviews)) {
-          reviewsByPlace[p.name] = p.reviews;
+        // Reviews: handle BOTH possible formats
+        const rawReviews = reviewsJson || {};
+        if (rawReviews.reviewsByPlace) {
+          reviewsByPlace = rawReviews.reviewsByPlace;
+        } else if (Array.isArray(rawReviews.places)) {
+          reviewsByPlace = {};
+          rawReviews.places.forEach(p => {
+            if (p.name && Array.isArray(p.reviews)) {
+              reviewsByPlace[p.name] = p.reviews;
+            }
+          });
+        } else {
+          reviewsByPlace = {};
+          console.warn("Unknown reviews.json structure:", rawReviews);
         }
+
+        console.log("dishesByPlace keys:", Object.keys(dishesByPlace));
+        console.log("reviewsByPlace keys:", Object.keys(reviewsByPlace));
+
+        // initial list = fast food
+        const defaultList = allPlaces.filter(p => p.category === "fastfood");
+        renderPlaces(defaultList);
+        applyCategoryFilters();
+      })
+      .catch(err => {
+        console.error("Error loading JSON:", err);
+        listContainer.innerHTML = "<p>Could not load places.</p>";
       });
-    } else {
-      reviewsByPlace = {};
-      console.warn("Unknown reviews.json structure:", rawReviews);
-    }
 
-    console.log("dishesByPlace keys:", Object.keys(dishesByPlace));
-    console.log("reviewsByPlace keys:", Object.keys(reviewsByPlace));
+      // =====================================================
+//   FOOD PAGE — CALL MODAL (isolated from global modal)
+// =====================================================
 
-    // initial list = fast food
-    const defaultList = allPlaces.filter(p => p.category === "fastfood");
-    renderPlaces(defaultList);
-    applyCategoryFilters();
-  })
-  .catch(err => {
-    console.error("Error loading JSON:", err);
-    listContainer.innerHTML = "<p>Could not load places.</p>";
+let currentFoodCallNumber = "";
+
+// Open the modal
+function openFoodCallModal(title, number, description) {
+  document.getElementById("foodModalTitle").textContent = title;
+  document.getElementById("foodModalDescription").textContent = description;
+  document.getElementById("foodModalNumberDisplay").textContent = number;
+
+  currentFoodCallNumber = number;
+
+  document.getElementById("foodCallModal").style.display = "flex";
+}
+
+// Close modal
+function closeFoodCallModal() {
+  document.getElementById("foodCallModal").style.display = "none";
+}
+
+// Confirm call
+const foodConfirmCallBtn = document.getElementById("foodConfirmCallBtn");
+if (foodConfirmCallBtn) {
+  foodConfirmCallBtn.addEventListener("click", () => {
+    if (!currentFoodCallNumber) return;
+    window.location.href = `tel:${currentFoodCallNumber}`;
   });
+}
+// =====================================================
+//   FOOD PAGE — FAVORITE ALREADY ADDED MODAL
+// =====================================================
+
+let currentFavoritePlaceName = "";
+
+function openFoodFavoriteModal(placeName) {
+  currentFavoritePlaceName = placeName || "This place";
+
+  const titleEl = document.getElementById("foodFavoriteTitle");
+  const descEl  = document.getElementById("foodFavoriteDescription");
+  const modal   = document.getElementById("foodFavoriteModal");
+
+  if (titleEl) {
+    titleEl.textContent = "Already in Favorites";
+  }
+  if (descEl) {
+    descEl.textContent = `${currentFavoritePlaceName} is already in your favorites list.`;
+  }
+  if (modal) {
+    modal.style.display = "flex";
+  }
+}
+
+function closeFoodFavoriteModal() {
+  const modal = document.getElementById("foodFavoriteModal");
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+// =====================================================
+//   FOOD PAGE — ADD TO ITINERARY MODAL
+// =====================================================
+
+let currentFoodItineraryPlace = null;
+
+function openFoodItineraryModal(place) {
+  currentFoodItineraryPlace = place;
+
+  // Set title text
+  const titleEl = document.getElementById("foodItineraryTitle");
+  if (titleEl) {
+    titleEl.textContent = place.name || "Add to itinerary";
+  }
+
+  // Optional: tweak description
+  const descEl = document.getElementById("foodItineraryDescription");
+  if (descEl) {
+    descEl.textContent = "Choose a date, time, and optional details for this restaurant.";
+  }
+
+  // Prefill fields with something reasonable
+  const dateInput = document.getElementById("foodItineraryDate");
+  const timeInput = document.getElementById("foodItineraryTime");
+  const detailsInput = document.getElementById("foodItineraryDetails");
+
+  if (dateInput) {
+    // default to some date (or leave blank if you prefer)
+    dateInput.value = "2026-07-14";
+  }
+  if (timeInput) {
+    timeInput.value = "18:00";
+  }
+  if (detailsInput) {
+    detailsInput.value = "";
+  }
+
+  const modal = document.getElementById("foodItineraryModal");
+  if (modal) {
+    modal.style.display = "flex";
+  }
+}
+
+function closeFoodItineraryModal() {
+  const modal = document.getElementById("foodItineraryModal");
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+// Confirm button: actually add to localStorage
+const foodConfirmItineraryBtn = document.getElementById("foodConfirmItineraryBtn");
+if (foodConfirmItineraryBtn) {
+  foodConfirmItineraryBtn.addEventListener("click", () => {
+    if (!currentFoodItineraryPlace) return;
+
+    const dateInput = document.getElementById("foodItineraryDate");
+    const timeInput = document.getElementById("foodItineraryTime");
+    const detailsInput = document.getElementById("foodItineraryDetails");
+
+    const date = dateInput ? dateInput.value : "";
+    if (!date) {
+      alert("Please choose a date.");
+      return;
+    }
+
+    const time = timeInput ? (timeInput.value || "") : "";
+    const detailsRaw = detailsInput ? (detailsInput.value || "") : "";
+
+    const FOOD_PLACEHOLDER_IMAGE = "../images/foods-image-18.png";
+
+    const event = {
+      date: date,
+      time: time,
+      title: currentFoodItineraryPlace.name,
+      details: detailsRaw || (time ? time + " - TBD" : ""),
+      address: currentFoodItineraryPlace.address || "",
+      image: FOOD_PLACEHOLDER_IMAGE
+    };
+
+    const key = "userItineraryEvents";
+    const existing = JSON.parse(localStorage.getItem(key) || "[]");
+    existing.push(event);
+    localStorage.setItem(key, JSON.stringify(existing));
+
+    alert(`${currentFoodItineraryPlace.name} was added to your itinerary on ${date}.`);
+    closeFoodItineraryModal();
+  });
+}
 
   </script>
 </body>
 </html>
+
