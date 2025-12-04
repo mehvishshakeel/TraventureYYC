@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Events - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
+
+
 </head>
 
 <body>
@@ -35,7 +38,11 @@
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
       <div class="top-bar__actions">
-        <a href="signup.html" style="color: var(--color-primary); font-size: 14px; margin-right: var(--spacing-sm);">Sign up</a>
+        <a href="signup.html"
+           style="color: var(--color-primary); font-size: 14px; margin-right: var(--spacing-sm);">
+          Sign up
+        </a>
+
         <div class="language-selector">
           <button class="lang-btn">
             <span class="lang-text">ENG</span>
@@ -52,20 +59,13 @@
       </div>
     </div>
 
-    <div id="langModal" class="call-modal-overlay" style="display:none;">
-      <div class="call-modal">
-        <h2>Language Feature</h2>
-        <p>This feature is currently in development.</p>
-
-        <button class="modal-cancel-btn" onclick="closeLangModal()">Close</button>
-      </div>
-    </div>
-
     <script src="../js/app.js"></script>
 
     <!-- Content -->
     <div class="content">
-      <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-md);">Calgary's Events</h1>
+      <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-md);">
+        Calgary's Events
+      </h1>
 
       <!-- Search Bar -->
       <div class="search-bar">
@@ -73,60 +73,166 @@
         <input type="text" class="search-bar__input" placeholder="Search events...">
       </div>
 
-      <!-- Events List -->
-      <div class="list-item">
-        <img src="../images/events-image-30.png" alt="Canada Day" class="list-item__image">
-        <div class="list-item__content">
-          <div class="list-item__title">Canada Day in Calgary</div>
-          <div class="list-item__subtitle">July 1st</div>
-        </div>
-        <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon">
-          <span style="font-size: 20px; cursor: pointer;">+</span>
-        </div>
-      </div>
+          
 
-      <div class="list-item">
-        <img src="../images/events-image-30.png" alt="Calgary Stampede" class="list-item__image">
+      <!-- EVENTS LIST (Chronological from July 14 onward) -->
+
+      <!-- 1. Calgary Stampede (Ends July 14) -->
+      <div class="list-item" data-id="stampede" data-type="event">
+        <img src="../images/calgarystampede.png" class="list-item__image">
         <div class="list-item__content">
           <div class="list-item__title">Calgary Stampede</div>
-          <div class="list-item__subtitle">July 3 - July 12</div>
+          <div class="list-item__subtitle">July 5 – July 14</div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon">
-          <span style="font-size: 20px; cursor: pointer;">+</span>
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
         </div>
       </div>
 
-      <div class="list-item">
-        <img src="../images/events-image-30.png" alt="WBC FC Vancouver" class="list-item__image">
+      <!-- 2. Zoo After Dark -->
+      <div class="list-item" data-id="zoo-after-dark" data-type="event">
+        <img src="../images/zooafterdark.jpg" class="list-item__image">
         <div class="list-item__content">
-          <div class="list-item__title">WBC FC Vancouver...</div>
-          <div class="list-item__subtitle">July 8</div>
+          <div class="list-item__title">Zoo After Dark</div>
+          <div class="list-item__subtitle">July 18 • 6:00 PM</div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon">
-          <span style="font-size: 20px; cursor: pointer;">+</span>
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
         </div>
       </div>
 
-      <div class="list-item">
-        <img src="../images/events-image-30.png" alt="Coca-Cola Stage" class="list-item__image">
+      <!-- 3. YYC Food Truck Festival -->
+      <div class="list-item" data-id="food-truck-fest" data-type="event">
+        <img src="../images/foodtruck.jpg" class="list-item__image">
         <div class="list-item__content">
-          <div class="list-item__title">Coca-Cola Stage</div>
-          <div class="list-item__subtitle">Live music and performances</div>
+          <div class="list-item__title">YYC Food Truck Festival</div>
+          <div class="list-item__subtitle">July 20 • 12:00 – 8:00 PM</div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png" alt="Favorite" class="list-item__icon">
-          <span style="font-size: 20px; cursor: pointer;">+</span>
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
+      </div>
+
+      <!-- 4. Calgary Folk Music Festival -->
+      <div class="list-item" data-id="folk-festival" data-type="event">
+        <img src="../images/folkfest.jpg" class="list-item__image">
+        <div class="list-item__content">
+          <div class="list-item__title">Calgary Folk Music Festival</div>
+          <div class="list-item__subtitle">July 25 – 28</div>
+        </div>
+        <div class="list-item__actions">
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
+      </div>
+
+      <!-- 5. Calgary Marathon Expo -->
+      <div class="list-item" data-id="marathon-expo" data-type="event">
+        <img src="../images/marathon.jpg" class="list-item__image">
+        <div class="list-item__content">
+          <div class="list-item__title">Calgary Marathon Expo</div>
+          <div class="list-item__subtitle">July 27</div>
+        </div>
+        <div class="list-item__actions">
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
+      </div>
+
+      <!-- 6. Taste of Calgary -->
+      <div class="list-item" data-id="taste-of-calgary" data-type="event">
+        <img src="../images/tasteofcalgary.jpg" class="list-item__image">
+        <div class="list-item__content">
+          <div class="list-item__title">Taste of Calgary</div>
+          <div class="list-item__subtitle">Aug 1 – 5</div>
+        </div>
+        <div class="list-item__actions">
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
+      </div>
+
+      <!-- 7. GlobalFest Fireworks -->
+      <div class="list-item" data-id="globalfest" data-type="event">
+        <img src="../images/firework.jpg" class="list-item__image">
+        <div class="list-item__content">
+          <div class="list-item__title">GlobalFest Fireworks</div>
+          <div class="list-item__subtitle">Aug 15 – 24 • 10:00 PM</div>
+        </div>
+        <div class="list-item__actions">
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
+      </div>
+
+      <!-- 8. Beyond Van Gogh (Exhibition) -->
+      <div class="list-item" data-id="van-gogh" data-type="event">
+        <img src="../images/vangogh.jpg" class="list-item__image">
+        <div class="list-item__content">
+          <div class="list-item__title">Beyond Van Gogh</div>
+          <div class="list-item__subtitle">July – August</div>
+        </div>
+        <div class="list-item__actions">
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- EVENT DETAIL OVERLAY -->
+    <div id="eventDetailOverlay" class="activity-detail-overlay">
+      <div class="activity-detail-card">
+        <div class="activity-detail-hero">
+          <img id="eventDetailImage" src="" alt="Event image">
+
+          <div class="activity-detail-hero-top">
+            <button type="button" class="activity-detail-back" id="eventDetailBack">←</button>
+
+            <div class="activity-detail-hero-right">
+              <button type="button" class="icon-button" id="eventDetailFav">♡</button>
+              <button type="button" class="icon-button" id="eventDetailAdd">+</button>
+            </div>
+          </div>
+
+          <div class="activity-detail-hero-title-wrap">
+            <span id="eventDetailTitleHero" class="activity-detail-hero-title">TITLE</span>
+          </div>
+        </div>
+
+        <div class="activity-detail-body">
+          <p id="eventDetailIntro"></p>
+          <p id="eventDetailDate" class="activity-detail-address"></p>
+          <p id="eventDetailParagraph"></p>
+
+          <button type="button" id="eventDetailLearnMore"
+                  class="btn btn--primary btn--full" style="margin-top: 16px;">
+            Learn more ➜
+          </button>
         </div>
       </div>
     </div>
 
+    <!-- UNIVERSAL UNSAVE MODAL -->
+    <div id="unsaveModal" class="call-modal-overlay" style="display:none;">
+      <div class="call-modal">
+        <h2>Remove Favorite?</h2>
+        <p>Unsave this event?</p>
+        <div class="modal-btn-row">
+          <button id="unsaveYesBtn" class="modal-confirm-btn">Yes</button>
+          <button id="unsaveNoBtn" class="modal-cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
       <a href="itinerary.html" class="bottom-nav__item">
-        <img src="../images/calendar-39.svg" alt="Itinerary" class="bottom-nav__icon">
+        <img src="../images/calendar-39.svg" class="bottom-nav__icon">
         <span class="bottom-nav__label">Itinerary</span>
       </a>
       <a href="homepage.html" class="bottom-nav__item">
@@ -134,16 +240,316 @@
         <span class="bottom-nav__label">Home</span>
       </a>
       <a href="emergency.html" class="bottom-nav__item">
-        <img src="../images/icon-emergency-44.png" alt="Emergency" class="bottom-nav__icon">
+        <img src="../images/icon-emergency-44.png" class="bottom-nav__icon">
         <span class="bottom-nav__label">Emergency</span>
       </a>
       <a href="settings.html" class="bottom-nav__item">
-        <img src="../images/node-46.png" alt="Settings" class="bottom-nav__icon">
+        <img src="../images/node-46.png" class="bottom-nav__icon">
         <span class="bottom-nav__label">Settings</span>
       </a>
     </div>
   </div>
-<script src="../js/app.js"></script>
+
+  <script src="../js/app.js"></script>
+
+  <!-- EVENT DETAILS DATA -->
+  <script>
+    const EVENT_DETAILS = {
+      "stampede": {
+        intro: "The Greatest Outdoor Show on Earth.",
+        date: "July 5 – July 14",
+        hasFixedTime: false,
+        description:
+          "The Calgary Stampede features rodeos, concerts, parades, night shows, agricultural exhibits, and a massive midway.",
+        learnMoreUrl: "https://www.calgarystampede.com/"
+      },
+
+      "zoo-after-dark": {
+        intro: "Exclusive evening experience at Calgary Zoo.",
+        date: "July 18 • 6:00 PM – 9:00 PM",
+        hasFixedTime: true,
+        fixedStart: "18:00",
+        fixedEnd: "21:00",
+        description:
+          "Enjoy zoo exhibits after hours with live music, adult beverages, and a unique night-time atmosphere.",
+        learnMoreUrl: "https://www.calgaryzoo.com/"
+      },
+
+      "food-truck-fest": {
+        intro: "The biggest summer food truck celebration in Calgary.",
+        date: "July 20 • 12:00 – 8:00 PM",
+        hasFixedTime: true,
+        fixedStart: "12:00",
+        fixedEnd: "20:00",
+        description:
+          "Over 40 local food trucks serving international dishes, desserts, drinks, and live music throughout the day.",
+        learnMoreUrl: "https://www.yycbta.com/"
+      },
+
+      "folk-festival": {
+        intro: "70+ artists performing at Prince's Island Park.",
+        date: "July 25 – 28",
+        hasFixedTime: false,
+        description:
+          "A multi-day festival featuring international musicians, artisan markets, food vendors, and stunning outdoor stages.",
+        learnMoreUrl: "https://www.calgaryfolkfest.com/"
+      },
+
+      "marathon-expo": {
+        intro: "Gear, wellness products, workshops, and demos.",
+        date: "July 27",
+        hasFixedTime: false,
+        description:
+          "A full-day expo for runners featuring vendors, free samples, expert talks, and marathon preparation resources.",
+        learnMoreUrl: "https://www.calgarymarathon.com/"
+      },
+
+      "taste-of-calgary": {
+        intro: "Taste foods from Calgary’s best restaurants.",
+        date: "Aug 1 – 5",
+        hasFixedTime: false,
+        description:
+          "A citywide food festival offering samples from diverse cuisines, craft drinks, desserts, and entertainment.",
+        learnMoreUrl: "https://www.tasteofcalgary.com/"
+      },
+
+      "globalfest": {
+        intro: "International fireworks competition and night market.",
+        date: "Aug 15 – 24 • 10:00 PM",
+        hasFixedTime: true,
+        fixedStart: "22:00",
+        fixedEnd: "22:30",
+        description:
+          "Teams from around the world compete with choreographed pyromusical shows, accompanied by a vibrant cultural night market.",
+        learnMoreUrl: "https://www.globalfest.ca/"
+      },
+
+      "van-gogh": {
+        intro: "Immersive walk-through digital art experience.",
+        date: "July – August",
+        hasFixedTime: false,
+        description:
+          "Step inside Van Gogh’s most famous paintings with 360° projections, atmospheric soundscapes, and interactive displays.",
+        learnMoreUrl: "https://www.vangoghcalgary.com/"
+      }
+    };
+
+  </script>
+
+  <script>
+    // --- Favorite Storage Helpers ---
+    function loadFavorites() {
+      return JSON.parse(localStorage.getItem("favorites") || "[]");
+    }
+
+    function saveFavorites(list) {
+      localStorage.setItem("favorites", JSON.stringify(list));
+    }
+  </script>
+
+  <script>
+    // Event LIST heart logic (correct version)
+    document.querySelectorAll('.list-item[data-type="event"]').forEach(card => {
+
+      const favBtn = card.querySelector('.event-fav-btn');
+      const id = card.dataset.id;
+      const title = card.querySelector('.list-item__title')?.textContent.trim() || "";
+      const subtitle = card.querySelector('.list-item__subtitle')?.textContent.trim() || "";
+      const image = card.querySelector('.list-item__image')?.src || "";
+
+      function updateHeart() {
+        const favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+        favBtn.textContent = isFav ? "♥" : "♡";
+        favBtn.classList.toggle("is-active", isFav);
+      }
+
+      updateHeart();
+
+      favBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        let favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+
+        if (isFav) {
+          openUnsaveModal(id, () => {
+            favs = favs.filter(f => f.id !== id);
+            saveFavorites(favs);
+            updateHeart();
+          });
+        } else {
+          // ADD favorite
+          favs.push({
+            id,
+            title,
+            subtitle,
+            image,
+            type: "event"
+          });
+        }
+        saveFavorites(favs);
+        updateHeart();
+      });
+    });
+  </script>
+
+
+
+  <!-- OVERLAY LOGIC (same as attractions, adjusted for events) -->
+  <script>
+    (function setupEventDetailOverlay() {
+      const overlay = document.getElementById("eventDetailOverlay");
+      if (!overlay) return;
+
+      const imgEl = document.getElementById("eventDetailImage");
+      const titleHeroEl = document.getElementById("eventDetailTitleHero");
+      const introEl = document.getElementById("eventDetailIntro");
+      const dateEl = document.getElementById("eventDetailDate");
+      const descEl = document.getElementById("eventDetailParagraph");
+      const learnBtn = document.getElementById("eventDetailLearnMore");
+      const backBtn = document.getElementById("eventDetailBack");
+      const favBtn = document.getElementById("eventDetailFav");
+      const addBtn = document.getElementById("eventDetailAdd");
+
+      let currentId = null;
+      let currentUrl = null;
+
+      function openOverlay(card) {
+        const id = card.dataset.id;
+        currentId = id;
+
+        // Let global listener know current ID
+        document.dispatchEvent(new CustomEvent("openOverlayEvent", { detail: { id }}));
+
+        const title = card.querySelector(".list-item__title")?.textContent.trim() || "";
+        const subtitle = card.querySelector(".list-item__subtitle")?.textContent.trim() || "";
+        const img = card.querySelector(".list-item__image")?.src || "";
+        const details = EVENT_DETAILS[id] || {};
+
+        imgEl.src = img;
+        imgEl.alt = title;
+        titleHeroEl.textContent = title;
+        introEl.textContent = details.intro || "";
+        dateEl.textContent = "Date: " + (details.date || "");
+        descEl.textContent = details.description || "";
+        currentUrl = details.learnMoreUrl || "#";
+
+        const favorites = loadFavorites();
+        const isFav = favorites.some(f => f.id === id);
+        favBtn.classList.toggle("is-active", isFav);
+        favBtn.textContent = isFav ? "♥" : "♡";
+
+        overlay.classList.add("is-visible");
+      }
+
+      // Open overlay on card click
+      document.querySelectorAll(".list-item[data-type='event']").forEach(card => {
+        card.addEventListener("click", (e) => {
+          if (e.target.closest(".list-item__actions")) return;
+          openOverlay(card);
+        });
+      });
+
+      backBtn.addEventListener("click", () => {
+        const fromFav = sessionStorage.getItem("cameFromFavorites");
+
+        if (fromFav === "yes") {
+          sessionStorage.removeItem("cameFromFavorites");
+          window.location.href = "favorites.html";
+        } else {
+          overlay.classList.remove("is-visible");
+        }
+      });
+
+
+      learnBtn.addEventListener("click", () => {
+        if (currentUrl) window.open(currentUrl, "_blank");
+      });
+
+      // --- FIXED OVERLAY HEART LOGIC ---
+      favBtn.addEventListener("click", () => {
+        let favs = loadFavorites();
+        const isFav = favs.some(f => f.id === currentId);
+
+        if (isFav) {
+          // SHOW UNSAVE CONFIRMATION MODAL
+          openUnsaveModal(currentId, () => {
+            favs = favs.filter(f => f.id !== currentId);
+            saveFavorites(favs);
+
+            // update UI in detail overlay
+            favBtn.textContent = "♡";
+            favBtn.classList.remove("is-active");
+
+            // also update event list page heart
+            const listHeart = document.querySelector(
+              `.list-item[data-id="${currentId}"] .event-fav-btn`
+            );
+            if (listHeart) {
+              listHeart.textContent = "♡";
+              listHeart.classList.remove("is-active");
+            }
+          });
+
+        } else {
+          // ADD FAVORITE
+          favs.push({
+            id: currentId,
+            title: titleHeroEl.textContent,
+            subtitle: dateEl.textContent.replace("Date: ", ""),
+            image: imgEl.src,
+            type: "event"
+          });
+
+          saveFavorites(favs);
+
+          // update UI
+          favBtn.textContent = "♥";
+          favBtn.classList.add("is-active");
+
+          // also update event list page heart
+          const listHeart = document.querySelector(
+            `.list-item[data-id="${currentId}"] .event-fav-btn`
+          );
+          if (listHeart) {
+            listHeart.textContent = "♥";
+            listHeart.classList.add("is-active");
+          }
+        }
+      });
+
+
+      addBtn.addEventListener("click", () => {
+        const pending = {
+          title: titleHeroEl.textContent,
+          date: new Date().toISOString().slice(0, 10),
+          startTime: "13:00",
+          endTime: "14:00",
+          location: ""
+        };
+
+        sessionStorage.setItem("pendingItineraryData", JSON.stringify(pending));
+        window.location.href = "itinerary-edit.html";
+      });
+
+    })();
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const openId = urlParams.get("id");
+      if (!openId) return;
+
+      // Find card with that id
+      const card = document.querySelector(`.list-item[data-id="${openId}"]`);
+      if (!card) return;
+
+      // Simulate clicking the card to open overlay
+      card.click();
+    });
+    </script>
+
 </body>
 </html>
-
