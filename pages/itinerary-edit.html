@@ -101,7 +101,13 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-      <a href="itinerary.html" style="color: var(--color-text-black);">←</a>
+    <a
+      href="itinerary.html"
+      style="color: var(--color-text-black);"
+      onclick="event.preventDefault(); window.history.back();">
+      ←
+    </a>
+
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
