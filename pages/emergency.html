@@ -43,7 +43,7 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-      <a href="homepage.html" style="color: var(--color-text-black); font-size: x-large;">←</a>
+      <a id="backButton" href="homepage.html" style="color: var(--color-text-black); font-size: x-large;">←</a>
       <div class="top-bar__logo">
         Traventure<span class="top-bar__logo-accent">YYC</span>
       </div>
@@ -138,6 +138,27 @@
       </a>
     </div>
   </div>
+
+  <script>
+    // Set back button based on where user came from
+    document.addEventListener('DOMContentLoaded', function() {
+      const backButton = document.getElementById('backButton');
+      if (backButton) {
+        const referrer = sessionStorage.getItem('emergencyReferrer');
+        
+        if (referrer === 'index') {
+          // If came from index page, go back to index
+          backButton.href = '../index.html';
+        } else {
+          // Default to homepage (also if came from homepage or other pages)
+          backButton.href = 'homepage.html';
+        }
+        
+        // Clear the referrer after using it (optional, but keeps it clean)
+        // sessionStorage.removeItem('emergencyReferrer');
+      }
+    });
+  </script>
 </body>
 </html>
 
