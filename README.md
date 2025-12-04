@@ -391,13 +391,10 @@ This walkthrough demonstrates the authentication flow: starting as a guest, then
 
 **Scenario**: Tony wants to find an upcoming event in Calgary and add it to his itinerary.
 
-#### Step 1: Login and Access Events
-1. **Login**: Log into TraventureYYC using saved account credentials
-   - **Email**: `tony@traventure.com`
-   - **Password**: `tony123`
-2. **Observe**: Homepage displays "Hello, Tony"
-3. **Click**: "Events" card on the homepage (shows event/calendar icon)
-4. **Observe**: Navigate to "Calgary's Events" page showing:
+#### Step 1: Access Events
+1. **Note**: You should already be logged in from Walkthrough 1 (as Tony or any user)
+2. **From Homepage**: Click "Events" card on the homepage (shows event/calendar icon)
+3. **Observe**: Navigate to "Calgary's Events" page showing:
    - Page title: "Calgary's Events"
    - Search bar at the top with 🔍 icon
    - List of upcoming events below
@@ -448,13 +445,10 @@ This walkthrough demonstrates the authentication flow: starting as a guest, then
 
 **Scenario**: Tony wants to find a shawarma restaurant for lunch.
 
-#### Step 1: Login and Access Food Discovery
-1. **Login**: Log into TraventureYYC using saved account credentials
-   - **Email**: `tony@traventure.com`
-   - **Password**: `tony123`
-2. **Observe**: Homepage displays "Hello, Tony"
-3. **Click**: "Food Spots" card on the homepage
-4. **Observe**: Navigate to food discovery page showing:
+#### Step 1: Access Food Discovery
+1. **Note**: You should already be logged in from Walkthrough 1 (as Tony or any user)
+2. **From Homepage**: Click "Food Spots" card on the homepage
+3. **Observe**: Navigate to food discovery page showing:
    - Page title/header
    - Search bar at top
    - Cuisine filter options (fast food, Indian, Halal, etc.)
@@ -567,11 +561,10 @@ This walkthrough demonstrates the authentication flow: starting as a guest, then
 
 **Scenario**: Yutong wants to convert 500 Chinese Yuan to Canadian Dollars.
 
-#### Step 1: Login and Access Currency Converter
-1. **Login**: Log into TraventureYYC using saved account credentials
-2. **Observe**: Homepage displays personalized greeting
-3. **Click**: "Currency Conversion" card on the homepage
-4. **Observe**: Navigate to currency conversion page showing:
+#### Step 1: Access Currency Converter
+1. **Note**: You should already be logged in from Walkthrough 1
+2. **From Homepage**: Click "Currency Conversion" card on the homepage
+3. **Observe**: Navigate to currency conversion page showing:
    - Page title: "CURRENCY CONVERSION"
    - Currency conversion interface with:
      - "From" currency dropdown
@@ -614,13 +607,10 @@ This walkthrough demonstrates the authentication flow: starting as a guest, then
 
 **Scenario**: Tony wants to discover new attractions in Calgary and add them to his itinerary.
 
-#### Step 1: Login and Access Attractions
-1. **Login**: Log into TraventureYYC using saved account credentials
-   - **Email**: `tony@traventure.com`
-   - **Password**: `tony123`
-2. **Observe**: Homepage displays "Hello, Tony"
-3. **Click**: "Activities" card on the homepage
-4. **Observe**: Navigate to "Attractions" page showing:
+#### Step 1: Access Attractions
+1. **Note**: You should already be logged in from Walkthrough 1 (as Tony or any user)
+2. **From Homepage**: Click "Activities" card on the homepage
+3. **Observe**: Navigate to "Attractions" page showing:
    - Page title/header
    - Search bar (if available)
    - Scrollable list of attractions
