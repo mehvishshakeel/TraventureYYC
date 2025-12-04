@@ -60,7 +60,6 @@ function getCardData(cardEl) {
   if (!cardEl) return null;
   const title = cardEl.querySelector('.list-item__title')?.textContent.trim() || '';
   const subtitle = cardEl.querySelector('.list-item__subtitle')?.textContent.trim() || '';
-  // Use title as a simple id – good enough for this prototype
   const id = cardEl.dataset.id || title;
   const type = cardEl.dataset.type || 'item';
   return { id, title, subtitle, type };
@@ -69,27 +68,32 @@ function getCardData(cardEl) {
 function applyFavoriteState(cardEl, favorites) {
   const data = getCardData(cardEl);
   if (!data) return;
+
   const isFav = favorites.some(f => f.id === data.id);
-  if (isFav) {
-    cardEl.classList.add('is-favorite');
-  } else {
-    cardEl.classList.remove('is-favorite');
+  const heartBtn = cardEl.querySelector('.list-item__fav-btn');
+
+  if (heartBtn) {
+    heartBtn.classList.toggle('is-active', isFav);
+    heartBtn.textContent = isFav ? '♥' : '♡';
   }
+
+  cardEl.classList.toggle('is-favorite', isFav);
 }
 
 function setupWishlistToggles() {
   const favorites = loadFavorites();
 
-  // Attach click handlers to heart icons on list items
   document.querySelectorAll('.list-item').forEach(cardEl => {
-    const heart = cardEl.querySelector('.list-item__actions .list-item__icon');
-    if (!heart) return;
+    const heartBtn = cardEl.querySelector('.list-item__fav-btn');
+    if (!heartBtn) return;
 
-    // Initial state based on stored favorites
+    // initial state
     applyFavoriteState(cardEl, favorites);
 
-    heart.style.cursor = 'pointer';
-    heart.addEventListener('click', () => {
+    heartBtn.style.cursor = 'pointer';
+    heartBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // don’t open the detail overlay
+
       const data = getCardData(cardEl);
       if (!data || !data.id) return;
 
@@ -97,10 +101,10 @@ function setupWishlistToggles() {
       const index = current.findIndex(item => item.id === data.id);
 
       if (index >= 0) {
-        // Remove from favorites
+        // remove
         current.splice(index, 1);
       } else {
-        // Add to favorites
+        // add
         current.push(data);
       }
 
@@ -109,6 +113,7 @@ function setupWishlistToggles() {
     });
   });
 }
+
 
 /* -------------------------
    3. ADD TO ITINERARY (+)
