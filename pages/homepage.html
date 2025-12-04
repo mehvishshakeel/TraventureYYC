@@ -143,46 +143,59 @@
       </a>
     </div>
   </div>
+<script>
+  // Load current user from sessionStorage and display name
+  window.addEventListener('DOMContentLoaded', function() {
+    try {
+      const userData = sessionStorage.getItem('currentUser');
+      const greetingElement = document.getElementById('profileGreeting');
+      const signupBtn = document.querySelector('.top-bar__actions a'); // Sign up button
 
-  <script>
-    // Load current user from sessionStorage and display name
-    window.addEventListener('DOMContentLoaded', function() {
-      try {
-        const userData = sessionStorage.getItem('currentUser');
-        const greetingElement = document.getElementById('profileGreeting');
-        
-        if (userData) {
-          const user = JSON.parse(userData);
-          if (greetingElement) {
-            // Check if user is guest
-            if (user.email === 'guest@guest.com' || user.username === 'guest' || user.name === 'Guest User') {
-              greetingElement.textContent = 'Hello';
-            } else if (user.name) {
-              // Extract first name if full name is provided
-              const firstName = user.name.split(' ')[0];
-              greetingElement.textContent = `Hello, ${firstName}`;
-            } else if (user.username) {
-              // Fallback to username if name is not available
-              greetingElement.textContent = `Hello, ${user.username}`;
-            } else {
-              greetingElement.textContent = 'Hello';
-            }
-          }
-        } else {
-          // If no user is logged in, show just "Hello"
-          if (greetingElement) {
+      if (userData) {
+        const user = JSON.parse(userData);
+
+        const isGuest =
+          user.email === 'guest@guest.com' ||
+          user.username === 'guest' ||
+          user.name === 'Guest User';
+
+        // ✔ Guest → SHOW Sign Up
+        // ✔ Logged-in user → HIDE Sign Up
+        if (signupBtn) {
+          signupBtn.style.display = isGuest ? 'inline-block' : 'none';
+        }
+
+        // Greeting logic stays the same
+        if (greetingElement) {
+          if (isGuest) {
+            greetingElement.textContent = 'Hello';
+          } else if (user.name) {
+            const firstName = user.name.split(' ')[0];
+            greetingElement.textContent = `Hello, ${firstName}`;
+          } else if (user.username) {
+            greetingElement.textContent = `Hello, ${user.username}`;
+          } else {
             greetingElement.textContent = 'Hello';
           }
         }
-      } catch (e) {
-        console.error('Error loading user data:', e);
-        const greetingElement = document.getElementById('profileGreeting');
-        if (greetingElement) {
-          greetingElement.textContent = 'Hello';
-        }
+
+      } else {
+        // No user logged in → Treat like guest → Show signup
+        if (signupBtn) signupBtn.style.display = 'inline-block';
+        if (greetingElement) greetingElement.textContent = 'Hello';
       }
-    });
-  </script>
+
+    } catch (e) {
+      console.error('Error loading user data:', e);
+
+      const greetingElement = document.getElementById('profileGreeting');
+      const signupBtn = document.querySelector('.top-bar__actions a');
+
+      if (greetingElement) greetingElement.textContent = 'Hello';
+      if (signupBtn) signupBtn.style.display = 'inline-block'; // Show sign up on error
+    }
+  });
+</script>
   <script src="../js/app.js"></script>
 </body>
 </html>
