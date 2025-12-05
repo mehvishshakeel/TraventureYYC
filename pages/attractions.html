@@ -7,119 +7,7 @@
   <title>Attractions - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
 
-  <style>
-    .activity-detail-overlay {
-      position: fixed;
-      left: 0;
-      right: 0;
-      top: 135px;
-      bottom: 80px;
-      background: transparent;
-      display: none;
-      justify-content: center;
-      align-items: flex-start;
-      z-index: 500;
-    }
-    .activity-detail-overlay.is-visible {
-      display: flex;
-    }
-    .activity-detail-card {
-      background: #fdf9f9;
-      width: 41%;
-      max-width: 390px;
-      margin: 0 auto;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      border-radius: 24px 24px 0 0;
-      overflow: hidden;
-    }
-    .activity-detail-hero {
-      position: relative;
-      overflow: hidden;
-      border-bottom-left-radius: 24px;
-      border-bottom-right-radius: 24px;
-    }
-    .activity-detail-hero img {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-      display: block;
-    }
-    .activity-detail-hero-top {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      right: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .activity-detail-back {
-      width: 32px;
-      height: 32px;
-      border-radius: 16px;
-      border: none;
-      background: #ffffffdd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-    .activity-detail-hero-right {
-      display: flex;
-      gap: 8px;
-    }
 
-    .list-item__fav-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 16px;
-      font-size: 18px;
-      padding: 0;
-    }
-
-    .icon-button {
-      width: 34px;
-      height: 34px;
-      border-radius: 17px;
-      border: none;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    }
-    .icon-button.is-active {
-      background: #ff6b81;
-      color: #fff;
-    }
-    .activity-detail-hero-title-wrap {
-      position: absolute;
-      bottom: 16px;
-      left: 16px;
-      right: 16px;
-    }
-    .activity-detail-hero-title {
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 20px;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-    }
-    .activity-detail-body {
-      padding: 16px;
-      overflow-y: auto;
-    }
-    .activity-detail-body p {
-      margin-bottom: 8px;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-    .activity-detail-address {
-      font-weight: 600;
-    }
-  </style>
 </head>
 <body>
   <div class="app-container">
@@ -312,33 +200,32 @@
       </div>
     </div>
 
-    <!-- Activity Detail “screen” -->
-    <div id="activityDetailOverlay" class="activity-detail-overlay">
-      <div class="activity-detail-card">
-        <div class="activity-detail-hero">
-          <img id="activityDetailImage" src="" alt="Attraction image">
+    <!-- Event Detail “screen” -->
+    <div id="activityDetailOverlay" class="bottom-sheet-overlay">
+      <div class="bottom-sheet-card">
+        <div class="bottom-sheet-hero">
+          <img id="activityDetailImage">
 
-          <div class="activity-detail-hero-top">
-            <button type="button" class="activity-detail-back" id="activityDetailBack">←</button>
+          <div class="bottom-sheet-hero-top">
+            <button id="activityDetailBack" class="bottom-sheet-back-btn">←</button>
 
-            <div class="activity-detail-hero-right">
-              <button type="button" class="icon-button" id="activityDetailFav" aria-label="Add to favourites">♡</button>
-              <button type="button" class="icon-button" id="activityDetailAdd" aria-label="Add to itinerary">+</button>
+            <div class="bottom-sheet-actions">
+              <button id="activityDetailFav" class="icon-button">♡</button>
+              <button id="activityDetailAdd" class="icon-button">+</button>
             </div>
           </div>
 
-          <div class="activity-detail-hero-title-wrap">
-            <span id="activityDetailTitleHero" class="activity-detail-hero-title">TITLE</span>
+          <div class="bottom-sheet-title-wrap">
+            <span id="activityDetailTitleHero" class="bottom-sheet-title"></span>
           </div>
         </div>
 
-        <div class="activity-detail-body">
+        <div class="bottom-sheet-body">
           <p id="activityDetailIntro"></p>
           <p id="activityDetailAddress" class="activity-detail-address"></p>
           <p id="activityDetailParagraph"></p>
 
-          <button type="button"
-                  id="activityDetailLearnMore"
+          <button id="activityDetailLearnMore"
                   class="btn btn--primary btn--full"
                   style="margin-top: 16px;">
             Learn more ➜
@@ -346,6 +233,8 @@
         </div>
       </div>
     </div>
+
+
 
     <!-- Bottom Navigation -->
         <div class="bottom-nav">

@@ -970,6 +970,104 @@
   color: #000;
 }
 
+/* ======================================================
+   UNIVERSAL BOTTOM SHEET OVERLAY (Events + Activities)
+   ====================================================== */
+
+.bottom-sheet-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 135px;
+  bottom: 80px;
+  display: none;
+  justify-content: center;
+  align-items: flex-start;
+  background: transparent;
+  z-index: 500;
+}
+
+.bottom-sheet-overlay.is-visible {
+  display: flex;
+}
+
+.bottom-sheet-card {
+  background: #fdf9f9;
+  width: 41%;
+  max-width: 390px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px 24px 0 0;
+  overflow: hidden;
+}
+
+.bottom-sheet-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.bottom-sheet-hero img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+.bottom-sheet-hero-top {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottom-sheet-back-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background: #ffffffdd;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.bottom-sheet-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.bottom-sheet-title-wrap {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+}
+
+.bottom-sheet-title {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.bottom-sheet-body {
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.bottom-sheet-body p {
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.bottom-sheet-address {
+  font-weight: 600;
+}
 
 
 

@@ -7,69 +7,6 @@
   <title>Events - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
 
-  <style>
-    .sheet-overlay {
-  position: fixed;
-  inset: 0;
-  display: none;
-  justify-content: center;
-  align-items: flex-end;
-  background: rgba(0,0,0,0.35);
-  z-index: 999;
-}
-
-.sheet-backdrop {
-  position: absolute;
-  inset: 0;
-}
-
-.sheet-panel {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  background: #fff;
-  border-radius: 20px 20px 0 0;
-  overflow: hidden;
-  transform: translateY(100%);
-  transition: 0.25s ease-out;
-}
-
-.sheet-panel.visible {
-  transform: translateY(0);
-}
-
-.sheet-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.sheet-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px;
-}
-
-.sheet-back-btn {
-  background: #eee;
-  border: none;
-  width: 34px;
-  height: 34px;
-  border-radius: 17px;
-  font-size: 18px;
-}
-
-.sheet-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.sheet-body {
-  padding: 16px;
-}
-
-  </style>
-
 </head>
 
 <body>
@@ -245,34 +182,42 @@
 
     </div>
 
-    <!-- EVENT DETAIL OVERLAY -->
-    <div id="eventSheetOverlay" class="sheet-overlay">
-      <div class="sheet-backdrop"></div>
+    <!-- EVENT DETAIL BOTTOM SHEET (same design as Activities) -->
+    <div id="eventSheetOverlay" class="bottom-sheet-overlay">
+      <div class="bottom-sheet-card">
+        
+        <div class="bottom-sheet-hero">
+          <img id="sheetImage">
 
-      <div class="sheet-panel">
-        <div class="sheet-header">
-          <button id="sheetBackBtn" class="sheet-back-btn">←</button>
+          <div class="bottom-sheet-hero-top">
+            <button id="sheetBackBtn" class="bottom-sheet-back-btn">←</button>
 
-          <div class="sheet-actions">
-            <button id="sheetFavBtn" class="icon-button">♡</button>
-            <button id="sheetAddBtn" class="icon-button">+</button>
+            <div class="bottom-sheet-actions">
+              <button id="sheetFavBtn" class="icon-button">♡</button>
+              <button id="sheetAddBtn" class="icon-button">+</button>
+            </div>
+          </div>
+
+          <div class="bottom-sheet-title-wrap">
+            <span id="sheetTitle" class="bottom-sheet-title"></span>
           </div>
         </div>
 
-        <img id="sheetImage" class="sheet-image">
-
-        <div class="sheet-body">
-          <h2 id="sheetTitle"></h2>
+        <div class="bottom-sheet-body">
           <p id="sheetIntro"></p>
           <p id="sheetDate" style="font-weight:600;"></p>
           <p id="sheetDesc"></p>
 
-          <button id="sheetLearnMoreBtn" class="btn btn--primary btn--full" style="margin-top: 16px;">
+          <button id="sheetLearnMoreBtn"
+                  class="btn btn--primary btn--full"
+                  style="margin-top: 16px;">
             Learn more ➜
           </button>
         </div>
+
       </div>
     </div>
+
 
     <!-- UNIVERSAL UNSAVE MODAL -->
     <div id="unsaveModal" class="call-modal-overlay" style="display:none;">
@@ -452,140 +397,139 @@
     });
   </script>
 
-
-
+  <script>
   <!-- OVERLAY LOGIC (same as attractions, adjusted for events) -->
-    <script>
     (function setupEventBottomSheet() {
 
-      const sheet = document.getElementById("eventSheetOverlay");
-      if (!sheet) return;
+  const overlay = document.getElementById("eventSheetOverlay");
+  if (!overlay) return;
 
-      const panel = sheet.querySelector(".sheet-panel");
-      const backdrop = sheet.querySelector(".sheet-backdrop");
+  const cardEl = overlay.querySelector(".bottom-sheet-card");
 
-      const imgEl = document.getElementById("sheetImage");
-      const titleEl = document.getElementById("sheetTitle");
-      const introEl = document.getElementById("sheetIntro");
-      const dateEl = document.getElementById("sheetDate");
-      const descEl = document.getElementById("sheetDesc");
-      const learnBtn = document.getElementById("sheetLearnMoreBtn");
+  const imgEl = document.getElementById("sheetImage");
+  const titleEl = document.getElementById("sheetTitle");
+  const introEl = document.getElementById("sheetIntro");
+  const dateEl = document.getElementById("sheetDate");
+  const descEl = document.getElementById("sheetDesc");
+  const learnBtn = document.getElementById("sheetLearnMoreBtn");
 
-      const favBtn = document.getElementById("sheetFavBtn");
-      const addBtn = document.getElementById("sheetAddBtn");
-      const backBtn = document.getElementById("sheetBackBtn");
+  const favBtn = document.getElementById("sheetFavBtn");
+  const addBtn = document.getElementById("sheetAddBtn");
+  const backBtn = document.getElementById("sheetBackBtn");
 
-      let currentId = null;
+  let currentId = null;
 
-      function openSheet(card) {
-        const id = card.dataset.id;
-        currentId = id;
+  function openSheet(card) {
+    const id = card.dataset.id;
+    currentId = id;
 
-        const title = card.querySelector(".list-item__title")?.textContent.trim() || "";
-        const subtitle = card.querySelector(".list-item__subtitle")?.textContent.trim() || "";
-        const img = card.querySelector(".list-item__image")?.src || "";
-        const details = EVENT_DETAILS[id] || {};
+    const title = card.querySelector(".list-item__title")?.textContent.trim() ?? "";
+    const img = card.querySelector(".list-item__image")?.src ?? "";
+    const details = EVENT_DETAILS[id] ?? {};
 
-        imgEl.src = img;
-        titleEl.textContent = title;
-        introEl.textContent = details.intro || "";
-        dateEl.textContent = details.date || "";
-        descEl.textContent = details.description || "";
-        learnBtn.onclick = () => window.open(details.learnMoreUrl, "_blank");
+    imgEl.src = img;
+    titleEl.textContent = title;
+    introEl.textContent = details.intro || "";
+    dateEl.textContent = details.date || "";
+    descEl.textContent = details.description || "";
+    learnBtn.onclick = () => window.open(details.learnMoreUrl, "_blank");
 
-        const favs = loadFavorites();
-        const isFav = favs.some(f => f.id === id);
-        favBtn.textContent = isFav ? "♥" : "♡";
-        favBtn.classList.toggle("is-active", isFav);
+    // Sync favorite state
+    const favs = loadFavorites();
+    const isFav = favs.some(f => f.id === id);
+    favBtn.textContent = isFav ? "♥" : "♡";
+    favBtn.classList.toggle("is-active", isFav);
 
-        sheet.style.display = "flex";
-        setTimeout(() => panel.classList.add("visible"), 10);
-      }
+    overlay.classList.add("is-visible");
+  }
 
-      // Clicking cards opens sheet
-      document.querySelectorAll(".list-item[data-type='event']").forEach(card => {
-        card.addEventListener("click", (e) => {
-          if (e.target.closest(".list-item__actions")) return;
-          openSheet(card);
-        });
-      });
+  // Open when clicking card
+  document.querySelectorAll(".list-item[data-type='event']").forEach(card => {
+    card.addEventListener("click", (e) => {
+      if (e.target.closest(".list-item__actions")) return;
+      openSheet(card);
+    });
+  });
 
-      // Close sheet
-      function closeSheet() {
-        panel.classList.remove("visible");
-        setTimeout(() => sheet.style.display = "none", 200);
-      }
+  // Close sheet
+  function closeSheet() {
+    overlay.classList.remove("is-visible");
+  }
 
-      backBtn.addEventListener("click", () => {
-        const fromFav = sessionStorage.getItem("cameFromFavorites");
-        if (fromFav) {
-          sessionStorage.removeItem("cameFromFavorites");
-          window.location.href = "favorites.html";
-        } else {
-          closeSheet();
+  backBtn.addEventListener("click", () => {
+    const fromFav = sessionStorage.getItem("cameFromFavorites");
+
+    if (fromFav === "yes") {
+      sessionStorage.removeItem("cameFromFavorites");
+      window.location.href = "favorites.html";
+    } else {
+      closeSheet();
+    }
+  });
+
+  // FAVORITE BUTTON
+  favBtn.addEventListener("click", () => {
+    let favs = loadFavorites();
+    const isFav = favs.some(f => f.id === currentId);
+
+    if (isFav) {
+      openUnsaveModal(currentId, () => {
+        favs = favs.filter(f => f.id !== currentId);
+        saveFavorites(favs);
+
+        favBtn.textContent = "♡";
+        favBtn.classList.remove("is-active");
+
+        const listHeart = document.querySelector(`
+          .list-item[data-id="${currentId}"] .event-fav-btn`
+        );
+        if (listHeart) {
+          listHeart.textContent = "♡";
+          listHeart.classList.remove("is-active");
         }
       });
 
-      backdrop.addEventListener("click", closeSheet);
+    } else {
+      const card = document.querySelector(`.list-item[data-id="${currentId}"]`);
 
-      // FAVORITE BUTTON (same logic as your event detail overlay)
-      favBtn.addEventListener("click", () => {
-        let favs = loadFavorites();
-        const isFav = favs.some(f => f.id === currentId);
-
-        if (isFav) {
-          openUnsaveModal(currentId, () => {
-            favs = favs.filter(f => f.id !== currentId);
-            saveFavorites(favs);
-
-            favBtn.textContent = "♡";
-            favBtn.classList.remove("is-active");
-
-            const listHeart = document.querySelector(`.list-item[data-id="${currentId}"] .event-fav-btn`);
-            if (listHeart) {
-              listHeart.textContent = "♡";
-              listHeart.classList.remove("is-active");
-            }
-          });
-
-        } else {
-          const card = document.querySelector(`.list-item[data-id="${currentId}"]`);
-
-          favs.push({
-            id: currentId,
-            title: titleEl.textContent,
-            subtitle: dateEl.textContent,
-            image: imgEl.src,
-            type: "event"
-          });
-
-          saveFavorites(favs);
-          favBtn.textContent = "♥";
-          favBtn.classList.add("is-active");
-
-          const listHeart = document.querySelector(`.list-item[data-id="${currentId}"] .event-fav-btn`);
-          if (listHeart) {
-            listHeart.textContent = "♥";
-            listHeart.classList.add("is-active");
-          }
-        }
+      favs.push({
+        id: currentId,
+        title: titleEl.textContent,
+        subtitle: dateEl.textContent,
+        image: imgEl.src,
+        type: "event"
       });
 
-      // ADD TO ITINERARY
-      addBtn.addEventListener("click", () => {
-        const pending = {
-          title: titleEl.textContent,
-          date: new Date().toISOString().slice(0,10),
-          startTime: "13:00",
-          endTime: "14:00",
-          location: ""
-        };
+      saveFavorites(favs);
+      favBtn.textContent = "♥";
+      favBtn.classList.add("is-active");
 
-        sessionStorage.setItem("pendingItineraryData", JSON.stringify(pending));
-        window.location.href = "itinerary-edit.html";
-      });
+      const listHeart = document.querySelector(`
+        .list-item[data-id="${currentId}"] .event-fav-btn`
+      );
+      if (listHeart) {
+        listHeart.textContent = "♥";
+        listHeart.classList.add("is-active");
+      }
+    }
+  });
 
-    })();
+  // ADD to itinerary
+  addBtn.addEventListener("click", () => {
+    const pending = {
+      title: titleEl.textContent,
+      date: new Date().toISOString().slice(0, 10),
+      startTime: "13:00",
+      endTime: "14:00",
+      location: ""
+    };
+
+    sessionStorage.setItem("pendingItineraryData", JSON.stringify(pending));
+    window.location.href = "itinerary-edit.html";
+  });
+
+})();
+
     </script>
 
 
