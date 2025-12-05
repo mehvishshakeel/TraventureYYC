@@ -5,6 +5,100 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Home - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
+
+  <!-- Collage grid overrides -->
+  <style>
+    .homepage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 columns */
+      grid-auto-rows: 110px;                 /* base row height */
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-md);
+    }
+
+    .homepage-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
+    }
+
+    .homepage-card__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .homepage-card__content {
+      position: absolute;
+      inset: 0;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      color: #fff;
+      font-weight: 600;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .homepage-card__title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .homepage-card__badge {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .homepage-card__title--large {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .homepage-card__time {
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    /* Collage layout positions */
+    .homepage-card--upcoming {
+      grid-column: 1 / span 2;  /* columns 1–2 */
+      grid-row: 1 / span 2;     /* rows 1–2 */
+    }
+
+    .homepage-card--food {
+      grid-column: 3 / 4;
+      grid-row: 1 / 2;
+    }
+
+    .homepage-card--events {
+      grid-column: 3 / 4;
+      grid-row: 2 / 3;
+    }
+
+    .homepage-card--currency {
+      grid-column: 1 / 2;
+      grid-row: 3 / 4;
+    }
+
+    .homepage-card--saved {
+      grid-column: 2 / 3;
+      grid-row: 3 / 4;
+    }
+
+    .homepage-card--activities {
+      grid-column: 3 / 4;
+      grid-row: 3 / span 2;   /* tall card */
+    }
+
+    .homepage-card--itinerary {
+      grid-column: 1 / span 2;
+      grid-row: 4 / 5;
+    }
+  </style>
 </head>
 
 <body>
@@ -76,50 +170,70 @@
         <div class="profile-greeting" id="profileGreeting">Hello</div>
       </div>
 
-      <!-- Homepage Grid -->
+      <!-- Collage Homepage Grid -->
       <div class="homepage-grid">
-        <a href="food-homepage.html" class="homepage-card">
-          <img src="../images/food1.png" alt="Food Spots" class="homepage-card__image">
+
+        <!-- Big Upcoming Event card -->
+        <a class="homepage-card homepage-card--upcoming">
+          <img src="../images/calgary-zoo.jpg" alt="Upcoming Event" class="homepage-card__image">
           <div class="homepage-card__content">
-            <div class="homepage-card__title">Food Spots</div>
+            <div class="homepage-card__badge">Upcoming Event</div>
+            <div class="homepage-card__title homepage-card__title--large">Calgary Zoo</div>
+            <div class="homepage-card__time">10:00 → 12:00</div>
           </div>
         </a>
 
-        <a href="events.html" class="homepage-card">
-          <img src="../images/calgarystampede.png" alt="Events" class="homepage-card__image">
+        <!-- Food (top-right) -->
+        <a href="food-homepage.html" class="homepage-card homepage-card--food">
+          <img src="../images/food1.png" alt="Food Spots" class="homepage-card__image">
+          <div class="homepage-card__content">
+            <div class="homepage-card__title">Foods</div>
+          </div>
+        </a>
+
+        <!-- Events (middle-right small) -->
+        <a href="events.html" class="homepage-card homepage-card--itinerary">
+          <img src="../images/events1.png" alt="Events" class="homepage-card__image">
           <div class="homepage-card__content">
             <div class="homepage-card__title">Events</div>
           </div>
         </a>
 
-        <a href="currency.html" class="homepage-card">
+        <!-- Currency (bottom-left) -->
+        <a href="currency.html" class="homepage-card homepage-card--currency">
           <img src="../images/currency-image-22.png" alt="Currency Conversion" class="homepage-card__image">
           <div class="homepage-card__content">
             <div class="homepage-card__title">Currency Conversion</div>
           </div>
         </a>
 
-        <a href="favorites.html" class="homepage-card">
+        <!-- Saved Places (bottom-mid) -->
+        <a href="favorites.html" class="homepage-card homepage-card--saved">
           <img src="../images/favorite1.png" alt="Favorites" class="homepage-card__image">
           <div class="homepage-card__content">
-            <div class="homepage-card__title">Favorites</div>
-            <img src="../images/heart-icon-36.png" alt="Heart" style="width: 20px; height: 20px; position: absolute; top: 8px; right: 8px;">
+            <div class="homepage-card__title">Saved Places</div>
+            <img src="../images/heart-icon-36.png"
+                 alt="Heart"
+                 style="width: 20px; height: 20px; position: absolute; bottom: 8px; right: 8px;">
           </div>
         </a>
 
-        <a href="attractions.html" class="homepage-card">
-          <img src="../images/things-to-do-image-26.png" alt="Activities" class="homepage-card__image">
+        <!-- Activities (tall right card) -->
+        <a href="attractions.html" class="homepage-card homepage-card--activities">
+          <img src="../images/calgary1.png" alt="Activities" class="homepage-card__image">
           <div class="homepage-card__content">
             <div class="homepage-card__title">Activities</div>
           </div>
         </a>
 
-        <a href="itinerary.html" class="homepage-card">
-          <img src="../images/Travel-Itinerary.png" alt="Itinerary" class="homepage-card__image" style="opacity: 0.8;">
+        <!-- Itinerary (wide bottom card) -->
+        <a href="itinerary.html" class="homepage-card homepage-card--events">
+          <img src="../images/Travel-Itinerary.png" alt="Itinerary" class="homepage-card__image" style="opacity: 0.85;">
           <div class="homepage-card__content">
             <div class="homepage-card__title">Itinerary</div>
           </div>
         </a>
+
       </div>
     </div>
 
@@ -143,60 +257,57 @@
       </a>
     </div>
   </div>
-<script>
-  // Load current user from sessionStorage and display name
-  window.addEventListener('DOMContentLoaded', function() {
-    try {
-      const userData = sessionStorage.getItem('currentUser');
-      const greetingElement = document.getElementById('profileGreeting');
-      const signupBtn = document.querySelector('.top-bar__actions a'); // Sign up button
 
-      if (userData) {
-        const user = JSON.parse(userData);
+  <script>
+    // Load current user from sessionStorage and display name
+    window.addEventListener('DOMContentLoaded', function() {
+      try {
+        const userData = sessionStorage.getItem('currentUser');
+        const greetingElement = document.getElementById('profileGreeting');
+        const signupBtn = document.querySelector('.top-bar__actions a'); // Sign up button
 
-        const isGuest =
-          user.email === 'guest@guest.com' ||
-          user.username === 'guest' ||
-          user.name === 'Guest User';
+        if (userData) {
+          const user = JSON.parse(userData);
 
-        // ✔ Guest → SHOW Sign Up
-        // ✔ Logged-in user → HIDE Sign Up
-        if (signupBtn) {
-          signupBtn.style.display = isGuest ? 'inline-block' : 'none';
-        }
+          const isGuest =
+            user.email === 'guest@guest.com' ||
+            user.username === 'guest' ||
+            user.name === 'Guest User';
 
-        // Greeting logic stays the same
-        if (greetingElement) {
-          if (isGuest) {
-            greetingElement.textContent = 'Hello';
-          } else if (user.name) {
-            const firstName = user.name.split(' ')[0];
-            greetingElement.textContent = `Hello, ${firstName}`;
-          } else if (user.username) {
-            greetingElement.textContent = `Hello, ${user.username}`;
-          } else {
-            greetingElement.textContent = 'Hello';
+          if (signupBtn) {
+            signupBtn.style.display = isGuest ? 'inline-block' : 'none';
           }
+
+          if (greetingElement) {
+            if (isGuest) {
+              greetingElement.textContent = 'Hello';
+            } else if (user.name) {
+              const firstName = user.name.split(' ')[0];
+              greetingElement.textContent = `Hello, ${firstName}`;
+            } else if (user.username) {
+              greetingElement.textContent = `Hello, ${user.username}`;
+            } else {
+              greetingElement.textContent = 'Hello';
+            }
+          }
+
+        } else {
+          if (signupBtn) signupBtn.style.display = 'inline-block';
+          if (greetingElement) greetingElement.textContent = 'Hello';
         }
 
-      } else {
-        // No user logged in → Treat like guest → Show signup
-        if (signupBtn) signupBtn.style.display = 'inline-block';
+      } catch (e) {
+        console.error('Error loading user data:', e);
+
+        const greetingElement = document.getElementById('profileGreeting');
+        const signupBtn = document.querySelector('.top-bar__actions a');
+
         if (greetingElement) greetingElement.textContent = 'Hello';
+        if (signupBtn) signupBtn.style.display = 'inline-block';
       }
+    });
+  </script>
 
-    } catch (e) {
-      console.error('Error loading user data:', e);
-
-      const greetingElement = document.getElementById('profileGreeting');
-      const signupBtn = document.querySelector('.top-bar__actions a');
-
-      if (greetingElement) greetingElement.textContent = 'Hello';
-      if (signupBtn) signupBtn.style.display = 'inline-block'; // Show sign up on error
-    }
-  });
-</script>
   <script src="../js/app.js"></script>
 </body>
 </html>
-
