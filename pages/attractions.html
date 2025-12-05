@@ -177,6 +177,19 @@
 
     <script src="../js/app.js"></script>
 
+    <!-- UNIVERSAL UNSAVE MODAL (same as Events) -->
+    <div id="unsaveModal" class="call-modal-overlay" style="display:none;">
+      <div class="call-modal">
+        <h2>Remove Favorite?</h2>
+        <p>Unsave this item?</p>
+        <div class="modal-btn-row">
+          <button id="unsaveYesBtn" class="modal-confirm-btn">Yes</button>
+          <button id="unsaveNoBtn" class="modal-cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+
     <!-- Content -->
     <div class="content">
       <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-md);">
@@ -358,6 +371,30 @@
 
   <script src="../js/app.js"></script>
 
+  <script>
+    function loadFavorites() {
+      return JSON.parse(localStorage.getItem("favorites") || "[]");
+    }
+    function saveFavorites(list) {
+      localStorage.setItem("favorites", JSON.stringify(list));
+    }
+
+    function openUnsaveModal(id, onConfirm) {
+      const modal = document.getElementById("unsaveModal");
+      modal.style.display = "flex";
+
+      document.getElementById("unsaveYesBtn").onclick = () => {
+        modal.style.display = "none";
+        onConfirm(); // Execute removal
+      };
+
+      document.getElementById("unsaveNoBtn").onclick = () => {
+        modal.style.display = "none";
+      };
+    }
+    </script>
+
+
   <!-- Detail overlay logic -->
   <script>
     // Rich text + URLs for each attraction (keyed by data-id)
@@ -492,27 +529,61 @@
       });
 
       // Favourite toggle – uses same localStorage as hearts
+      // Favourite toggle – uses same localStorage as hearts, with unsave modal
       favBtn.addEventListener("click", () => {
         if (!currentId || typeof loadFavorites !== "function" || typeof saveFavorites !== "function") return;
 
-        const title   = titleHeroEl.textContent || "";
-        const subtitle = ""; // could be filled from details if needed
+        let favs = loadFavorites();
+        const isFav = favs.some(f => f.id === currentId);
+        const title = titleHeroEl.textContent || "";
+        const imgSrc = imgEl.src || "";
+        const subtitle = ""; // optional – you can fill from ATTRACTION_DETAILS if you like
 
-        let favorites = loadFavorites();
-        const idx = favorites.findIndex(f => f.id === currentId);
+        if (isFav) {
+          // Show unsave confirmation
+          openUnsaveModal(currentId, () => {
+            favs = favs.filter(f => f.id !== currentId);
+            saveFavorites(favs);
 
-        if (idx >= 0) {
-          favorites.splice(idx, 1);
-          favBtn.classList.remove("is-active");
-          favBtn.textContent = "♡";
+            // Update overlay heart
+            favBtn.classList.remove("is-active");
+            favBtn.textContent = "♡";
+
+            // Also update list heart
+            const listHeart = document.querySelector(
+              `.list-item[data-id="${currentId}"] .event-fav-btn`
+            );
+            if (listHeart) {
+              listHeart.textContent = "♡";
+              listHeart.classList.remove("is-active");
+            }
+          });
         } else {
-          favorites.push({ id: currentId, title, subtitle, type: "activity" });
+          // Add favourite
+          favs.push({
+            id: currentId,
+            title,
+            subtitle,
+            image: imgSrc,
+            type: "activity"
+          });
+          saveFavorites(favs);
+
+          // Update overlay heart
           favBtn.classList.add("is-active");
           favBtn.textContent = "♥";
-        }
 
-        saveFavorites(favorites);
+          // Also update list heart
+          const listHeart = document.querySelector(
+            `.list-item[data-id="${currentId}"] .event-fav-btn`
+          );
+          if (listHeart) {
+            listHeart.textContent = "♥";
+            listHeart.classList.add("is-active");
+          }
+        }
       });
+
 
       // "+" button: same idea as + on list – pre-fill itinerary edit form
       addBtn.addEventListener("click", () => {
@@ -538,5 +609,88 @@
       });
     })();
   </script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.list-item[data-type="activity"]').forEach(card => {
+      const favBtn = card.querySelector('.event-fav-btn');
+      const addBtn = card.querySelector('.add-to-itinerary-btn');
+      const id = card.dataset.id;
+      const title = card.querySelector('.list-item__title')?.textContent.trim() || "";
+      const subtitle = card.querySelector('.list-item__subtitle')?.textContent.trim() || "";
+      const image = card.querySelector('.list-item__image')?.src || "";
+
+      // Sync heart state from favorites
+      function updateHeart() {
+        const favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+        favBtn.textContent = isFav ? "♥" : "♡";
+        favBtn.classList.toggle("is-active", isFav);
+      }
+
+      updateHeart();
+
+      // Heart click: add/remove with confirmation
+      favBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // don't open overlay
+
+        let favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+
+        if (isFav) {
+          // ask before unsave
+          openUnsaveModal(id, () => {
+            favs = favs.filter(item => item.id !== id);
+            saveFavorites(favs);
+            updateHeart();
+          });
+        } else {
+          favs.push({
+            id,
+            title,
+            subtitle,
+            image,
+            type: "activity"
+          });
+          saveFavorites(favs);
+          updateHeart();
+        }
+      });
+
+      // "+" click: send to itinerary-edit with prefilled data
+      addBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // don't open overlay
+
+        const details = ATTRACTION_DETAILS[id] || {};
+        const address = (details.address || "").replace(/^Address:\s*/i, "");
+
+        const today = new Date();
+        const isoDate = today.toISOString().slice(0, 10); // yyyy-mm-dd
+
+        const pending = {
+          title,
+          date: isoDate,
+          startTime: "13:00",
+          endTime: "14:00",
+          location: address
+        };
+
+        sessionStorage.setItem("pendingItineraryData", JSON.stringify(pending));
+        window.location.href = "itinerary-edit.html?from=attractions";
+      });
+    });
+
+    // Deep-link: open overlay when coming from Favorites with ?id=
+    const params = new URLSearchParams(window.location.search);
+    const openId = params.get("id");
+    if (openId) {
+      const card = document.querySelector(`.list-item[data-id="${openId}"]`);
+      if (card) {
+        card.click();
+      }
+    }
+  });
+  </script>
+
 </body>
 </html>

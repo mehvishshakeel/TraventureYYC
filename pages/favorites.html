@@ -92,7 +92,13 @@
       </div>
 
       <div id="restaurantsTab" class="tab-content" style="display:none;"></div>
-      <div id="activitiesTab" class="tab-content" style="display:none;"></div>
+      
+      <!-- ACTIVITES TAB -->
+      
+      <div id="activitiesTab" class="tab-content" style="display:none;">
+        <div id="favoriteActivitiesContainer"></div>
+      </div>
+
     </div>
 
     <!-- Bottom Navigation -->
@@ -181,8 +187,89 @@
       });
     }
 
-    document.addEventListener("DOMContentLoaded", loadFavoritesList);
+    document.addEventListener("DOMContentLoaded", () => {
+      loadFavoritesList();        // events
+      renderFavoriteActivities(); // activities
+    });
+
   </script>
+
+  <script>
+    function loadFavoriteActivities() {
+      return loadFavorites().filter(f => f.type === "activity");
+    }
+
+    function renderFavoriteActivities() {
+      const container = document.getElementById("favoriteActivitiesContainer");
+      container.innerHTML = "";
+
+      const favs = loadFavoriteActivities();
+
+      if (favs.length === 0) {
+        container.innerHTML = `<p style="color:#777; text-align:center; margin-top:20px;">
+          No favorite activities yet.
+        </p>`;
+        return;
+      }
+
+      favs.forEach(f => {
+        const div = document.createElement("div");
+        div.className = "list-item";
+        div.dataset.id = f.id;
+
+        div.innerHTML = `
+          <img src="${f.image}" class="list-item__image">
+          <div class="list-item__content">
+            <div class="list-item__title">${f.title}</div>
+            <div class="list-item__subtitle">${f.subtitle || ""}</div>
+          </div>
+          <div class="list-item__actions">
+            <button class="event-fav-btn icon-button is-active">♥</button>
+            <span class="add-to-itinerary-btn" style="font-size:20px;">+</span>
+          </div>
+        `;
+
+        // HEART REMOVE
+        div.querySelector(".event-fav-btn").onclick = (e) => {
+          e.stopPropagation();
+
+          openUnsaveModal(f.id, () => {
+            let favs = loadFavorites().filter(item => item.id !== f.id);
+            saveFavorites(favs);
+            renderFavoriteActivities();
+          });
+        };
+
+        // ADD TO ITINERARY
+        div.querySelector(".add-to-itinerary-btn").onclick = (e) => {
+          e.stopPropagation();
+
+          const pending = {
+            title: f.title,
+            subtitle: f.subtitle || "",
+            image: f.image || "",
+            eventId: f.id,
+            date: new Date().toISOString().slice(0, 10),
+            startTime: "13:00",
+            endTime: "14:00",
+            location: ""
+          };
+
+          sessionStorage.setItem("pendingItineraryData", JSON.stringify(pending));
+          window.location.href = "itinerary-edit.html";
+        };
+
+        // OPEN DETAILS PAGE
+        div.onclick = () => {
+          sessionStorage.setItem("cameFromFavorites", "yes");
+          window.location.href = "attractions.html?id=" + f.id;
+        };
+
+        container.appendChild(div);
+      });
+    }
+    </script>
+
 
 <script>
   function switchTab(tab) {
