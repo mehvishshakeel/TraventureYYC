@@ -495,15 +495,12 @@
         descEl.textContent        = details.description || "";
 
         // favourite state based on shared store from app.js
-        if (typeof loadFavorites === "function") {
-          const favorites = loadFavorites();
-          const isFav = favorites.some(f => f.id === id);
-          favBtn.classList.toggle("is-active", isFav);
-          favBtn.textContent = isFav ? "♥" : "♡";
-        } else {
-          favBtn.classList.remove("is-active");
-          favBtn.textContent = "♡";
-        }
+  
+        const favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+
+        favBtn.textContent = isFav ? "♥" : "♡";
+        favBtn.classList.toggle("is-active", isFav);
 
         overlay.classList.add("is-visible");
       }
@@ -518,8 +515,15 @@
 
       // Back closes overlay
       backBtn.addEventListener("click", () => {
+      const fromFav = sessionStorage.getItem("cameFromFavorites");
+
+      if (fromFav === "yes") {
+        sessionStorage.removeItem("cameFromFavorites");
+        window.location.href = "favorites.html";
+      } else {
         overlay.classList.remove("is-visible");
-      });
+      }
+    });
 
       // Learn more button
       learnBtn.addEventListener("click", () => {
@@ -528,7 +532,6 @@
         }
       });
 
-      // Favourite toggle – uses same localStorage as hearts
       // Favourite toggle – uses same localStorage as hearts, with unsave modal
       favBtn.addEventListener("click", () => {
         if (!currentId || typeof loadFavorites !== "function" || typeof saveFavorites !== "function") return;
