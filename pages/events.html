@@ -7,6 +7,68 @@
   <title>Events - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
 
+  <style>
+    .sheet-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: flex-end;
+  background: rgba(0,0,0,0.35);
+  z-index: 999;
+}
+
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+}
+
+.sheet-panel {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  overflow: hidden;
+  transform: translateY(100%);
+  transition: 0.25s ease-out;
+}
+
+.sheet-panel.visible {
+  transform: translateY(0);
+}
+
+.sheet-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.sheet-back-btn {
+  background: #eee;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 17px;
+  font-size: 18px;
+}
+
+.sheet-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.sheet-body {
+  padding: 16px;
+}
+
+  </style>
 
 </head>
 
@@ -184,32 +246,28 @@
     </div>
 
     <!-- EVENT DETAIL OVERLAY -->
-    <div id="eventDetailOverlay" class="activity-detail-overlay">
-      <div class="activity-detail-card">
-        <div class="activity-detail-hero">
-          <img id="eventDetailImage" src="" alt="Event image">
+    <div id="eventSheetOverlay" class="sheet-overlay">
+      <div class="sheet-backdrop"></div>
 
-          <div class="activity-detail-hero-top">
-            <button type="button" class="activity-detail-back" id="eventDetailBack">←</button>
+      <div class="sheet-panel">
+        <div class="sheet-header">
+          <button id="sheetBackBtn" class="sheet-back-btn">←</button>
 
-            <div class="activity-detail-hero-right">
-              <button type="button" class="icon-button" id="eventDetailFav">♡</button>
-              <button type="button" class="icon-button" id="eventDetailAdd">+</button>
-            </div>
-          </div>
-
-          <div class="activity-detail-hero-title-wrap">
-            <span id="eventDetailTitleHero" class="activity-detail-hero-title">TITLE</span>
+          <div class="sheet-actions">
+            <button id="sheetFavBtn" class="icon-button">♡</button>
+            <button id="sheetAddBtn" class="icon-button">+</button>
           </div>
         </div>
 
-        <div class="activity-detail-body">
-          <p id="eventDetailIntro"></p>
-          <p id="eventDetailDate" class="activity-detail-address"></p>
-          <p id="eventDetailParagraph"></p>
+        <img id="sheetImage" class="sheet-image">
 
-          <button type="button" id="eventDetailLearnMore"
-                  class="btn btn--primary btn--full" style="margin-top: 16px;">
+        <div class="sheet-body">
+          <h2 id="sheetTitle"></h2>
+          <p id="sheetIntro"></p>
+          <p id="sheetDate" style="font-weight:600;"></p>
+          <p id="sheetDesc"></p>
+
+          <button id="sheetLearnMoreBtn" class="btn btn--primary btn--full" style="margin-top: 16px;">
             Learn more ➜
           </button>
         </div>
@@ -397,30 +455,31 @@
 
 
   <!-- OVERLAY LOGIC (same as attractions, adjusted for events) -->
-  <script>
-    (function setupEventDetailOverlay() {
-      const overlay = document.getElementById("eventDetailOverlay");
-      if (!overlay) return;
+    <script>
+    (function setupEventBottomSheet() {
 
-      const imgEl = document.getElementById("eventDetailImage");
-      const titleHeroEl = document.getElementById("eventDetailTitleHero");
-      const introEl = document.getElementById("eventDetailIntro");
-      const dateEl = document.getElementById("eventDetailDate");
-      const descEl = document.getElementById("eventDetailParagraph");
-      const learnBtn = document.getElementById("eventDetailLearnMore");
-      const backBtn = document.getElementById("eventDetailBack");
-      const favBtn = document.getElementById("eventDetailFav");
-      const addBtn = document.getElementById("eventDetailAdd");
+      const sheet = document.getElementById("eventSheetOverlay");
+      if (!sheet) return;
+
+      const panel = sheet.querySelector(".sheet-panel");
+      const backdrop = sheet.querySelector(".sheet-backdrop");
+
+      const imgEl = document.getElementById("sheetImage");
+      const titleEl = document.getElementById("sheetTitle");
+      const introEl = document.getElementById("sheetIntro");
+      const dateEl = document.getElementById("sheetDate");
+      const descEl = document.getElementById("sheetDesc");
+      const learnBtn = document.getElementById("sheetLearnMoreBtn");
+
+      const favBtn = document.getElementById("sheetFavBtn");
+      const addBtn = document.getElementById("sheetAddBtn");
+      const backBtn = document.getElementById("sheetBackBtn");
 
       let currentId = null;
-      let currentUrl = null;
 
-      function openOverlay(card) {
+      function openSheet(card) {
         const id = card.dataset.id;
         currentId = id;
-
-        // Let global listener know current ID
-        document.dispatchEvent(new CustomEvent("openOverlayEvent", { detail: { id }}));
 
         const title = card.querySelector(".list-item__title")?.textContent.trim() || "";
         const subtitle = card.querySelector(".list-item__subtitle")?.textContent.trim() || "";
@@ -428,64 +487,61 @@
         const details = EVENT_DETAILS[id] || {};
 
         imgEl.src = img;
-        imgEl.alt = title;
-        titleHeroEl.textContent = title;
+        titleEl.textContent = title;
         introEl.textContent = details.intro || "";
-        dateEl.textContent = "Date: " + (details.date || "");
+        dateEl.textContent = details.date || "";
         descEl.textContent = details.description || "";
-        currentUrl = details.learnMoreUrl || "#";
+        learnBtn.onclick = () => window.open(details.learnMoreUrl, "_blank");
 
-        const favorites = loadFavorites();
-        const isFav = favorites.some(f => f.id === id);
-        favBtn.classList.toggle("is-active", isFav);
+        const favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
         favBtn.textContent = isFav ? "♥" : "♡";
+        favBtn.classList.toggle("is-active", isFav);
 
-        overlay.classList.add("is-visible");
+        sheet.style.display = "flex";
+        setTimeout(() => panel.classList.add("visible"), 10);
       }
 
-      // Open overlay on card click
+      // Clicking cards opens sheet
       document.querySelectorAll(".list-item[data-type='event']").forEach(card => {
         card.addEventListener("click", (e) => {
           if (e.target.closest(".list-item__actions")) return;
-          openOverlay(card);
+          openSheet(card);
         });
       });
 
+      // Close sheet
+      function closeSheet() {
+        panel.classList.remove("visible");
+        setTimeout(() => sheet.style.display = "none", 200);
+      }
+
       backBtn.addEventListener("click", () => {
         const fromFav = sessionStorage.getItem("cameFromFavorites");
-
-        if (fromFav === "yes") {
+        if (fromFav) {
           sessionStorage.removeItem("cameFromFavorites");
           window.location.href = "favorites.html";
         } else {
-          overlay.classList.remove("is-visible");
+          closeSheet();
         }
       });
 
+      backdrop.addEventListener("click", closeSheet);
 
-      learnBtn.addEventListener("click", () => {
-        if (currentUrl) window.open(currentUrl, "_blank");
-      });
-
-      // --- FIXED OVERLAY HEART LOGIC ---
+      // FAVORITE BUTTON (same logic as your event detail overlay)
       favBtn.addEventListener("click", () => {
         let favs = loadFavorites();
         const isFav = favs.some(f => f.id === currentId);
 
         if (isFav) {
-          // SHOW UNSAVE CONFIRMATION MODAL
           openUnsaveModal(currentId, () => {
             favs = favs.filter(f => f.id !== currentId);
             saveFavorites(favs);
 
-            // update UI in detail overlay
             favBtn.textContent = "♡";
             favBtn.classList.remove("is-active");
 
-            // also update event list page heart
-            const listHeart = document.querySelector(
-              `.list-item[data-id="${currentId}"] .event-fav-btn`
-            );
+            const listHeart = document.querySelector(`.list-item[data-id="${currentId}"] .event-fav-btn`);
             if (listHeart) {
               listHeart.textContent = "♡";
               listHeart.classList.remove("is-active");
@@ -493,25 +549,21 @@
           });
 
         } else {
-          // ADD FAVORITE
+          const card = document.querySelector(`.list-item[data-id="${currentId}"]`);
+
           favs.push({
             id: currentId,
-            title: titleHeroEl.textContent,
-            subtitle: dateEl.textContent.replace("Date: ", ""),
+            title: titleEl.textContent,
+            subtitle: dateEl.textContent,
             image: imgEl.src,
             type: "event"
           });
 
           saveFavorites(favs);
-
-          // update UI
           favBtn.textContent = "♥";
           favBtn.classList.add("is-active");
 
-          // also update event list page heart
-          const listHeart = document.querySelector(
-            `.list-item[data-id="${currentId}"] .event-fav-btn`
-          );
+          const listHeart = document.querySelector(`.list-item[data-id="${currentId}"] .event-fav-btn`);
           if (listHeart) {
             listHeart.textContent = "♥";
             listHeart.classList.add("is-active");
@@ -519,11 +571,11 @@
         }
       });
 
-
+      // ADD TO ITINERARY
       addBtn.addEventListener("click", () => {
         const pending = {
-          title: titleHeroEl.textContent,
-          date: new Date().toISOString().slice(0, 10),
+          title: titleEl.textContent,
+          date: new Date().toISOString().slice(0,10),
           startTime: "13:00",
           endTime: "14:00",
           location: ""
@@ -535,6 +587,7 @@
 
     })();
     </script>
+
 
     <script>
     document.addEventListener("DOMContentLoaded", () => {
