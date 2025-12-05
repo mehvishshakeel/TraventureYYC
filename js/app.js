@@ -182,6 +182,30 @@ function setupAddToItineraryButtons() {
   });
 }
 
+/* -------------------------
+   UNIVERSAL UNSAVE MODAL
+--------------------------*/
+
+function openUnsaveModal(id, onConfirm) {
+  const modal = document.getElementById("unsaveModal");
+  if (!modal) return;
+
+  modal.style.display = "flex";
+
+  const yesBtn = document.getElementById("unsaveYesBtn");
+  const noBtn = document.getElementById("unsaveNoBtn");
+
+  yesBtn.onclick = () => {
+    onConfirm();
+    modal.style.display = "none";
+  };
+
+  noBtn.onclick = () => {
+    modal.style.display = "none";
+  };
+}
+
+
 
 
 /* ---------------------------------------

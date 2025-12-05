@@ -7,119 +7,7 @@
   <title>Attractions - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
 
-  <style>
-    .activity-detail-overlay {
-      position: fixed;
-      left: 0;
-      right: 0;
-      top: 135px;
-      bottom: 80px;
-      background: transparent;
-      display: none;
-      justify-content: center;
-      align-items: flex-start;
-      z-index: 500;
-    }
-    .activity-detail-overlay.is-visible {
-      display: flex;
-    }
-    .activity-detail-card {
-      background: #fdf9f9;
-      width: 41%;
-      max-width: 390px;
-      margin: 0 auto;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      border-radius: 24px 24px 0 0;
-      overflow: hidden;
-    }
-    .activity-detail-hero {
-      position: relative;
-      overflow: hidden;
-      border-bottom-left-radius: 24px;
-      border-bottom-right-radius: 24px;
-    }
-    .activity-detail-hero img {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-      display: block;
-    }
-    .activity-detail-hero-top {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      right: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .activity-detail-back {
-      width: 32px;
-      height: 32px;
-      border-radius: 16px;
-      border: none;
-      background: #ffffffdd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-    .activity-detail-hero-right {
-      display: flex;
-      gap: 8px;
-    }
 
-    .list-item__fav-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 16px;
-      font-size: 18px;
-      padding: 0;
-    }
-
-    .icon-button {
-      width: 34px;
-      height: 34px;
-      border-radius: 17px;
-      border: none;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    }
-    .icon-button.is-active {
-      background: #ff6b81;
-      color: #fff;
-    }
-    .activity-detail-hero-title-wrap {
-      position: absolute;
-      bottom: 16px;
-      left: 16px;
-      right: 16px;
-    }
-    .activity-detail-hero-title {
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 20px;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-    }
-    .activity-detail-body {
-      padding: 16px;
-      overflow-y: auto;
-    }
-    .activity-detail-body p {
-      margin-bottom: 8px;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-    .activity-detail-address {
-      font-weight: 600;
-    }
-  </style>
 </head>
 <body>
   <div class="app-container">
@@ -177,6 +65,19 @@
 
     <script src="../js/app.js"></script>
 
+    <!-- UNIVERSAL UNSAVE MODAL (same as Events) -->
+    <div id="unsaveModal" class="call-modal-overlay" style="display:none;">
+      <div class="call-modal">
+        <h2>Remove Favorite?</h2>
+        <p>Unsave this item?</p>
+        <div class="modal-btn-row">
+          <button id="unsaveYesBtn" class="modal-confirm-btn">Yes</button>
+          <button id="unsaveNoBtn" class="modal-cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+
     <!-- Content -->
     <div class="content">
       <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-md);">
@@ -202,15 +103,10 @@
             Iconic observation tower in downtown Calgary
           </div>
         </div>
-       <div class="list-item__actions">
-  <button type="button"
-          class="icon-button list-item__fav-btn"
-          aria-label="Add to favourites">
-    ♡
-  </button>
-  <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
-</div>
-
+        <div class="list-item__actions">
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
       </div>
 
       <div class="list-item"
@@ -226,14 +122,9 @@
           </div>
         </div>
         <div class="list-item__actions">
-  <button type="button"
-          class="icon-button list-item__fav-btn"
-          aria-label="Add to favourites">
-    ♡
-  </button>
-  <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
-</div>
-
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
       </div>
 
       <div class="list-item"
@@ -248,15 +139,10 @@
             Famous pedestrian bridge across the Bow River
           </div>
         </div>
-       <div class="list-item__actions">
-  <button type="button"
-          class="icon-button list-item__fav-btn"
-          aria-label="Add to favourites">
-    ♡
-  </button>
-  <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
-</div>
-
+        <div class="list-item__actions">
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
       </div>
 
       <div class="list-item"
@@ -272,14 +158,9 @@
           </div>
         </div>
         <div class="list-item__actions">
-  <button type="button"
-          class="icon-button list-item__fav-btn"
-          aria-label="Add to favourites">
-    ♡
-  </button>
-  <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
-</div>
-
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
       </div>
 
       <div class="list-item"
@@ -295,14 +176,9 @@
           </div>
         </div>
         <div class="list-item__actions">
-  <button type="button"
-          class="icon-button list-item__fav-btn"
-          aria-label="Add to favourites">
-    ♡
-  </button>
-  <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
-</div>
-
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
       </div>
 
       <div class="list-item"
@@ -317,45 +193,39 @@
             Historic downtown street with shops, cafés & nightlife
           </div>
         </div>
-       <div class="list-item__actions">
-  <button type="button"
-          class="icon-button list-item__fav-btn"
-          aria-label="Add to favourites">
-    ♡
-  </button>
-  <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
-</div>
-
+        <div class="list-item__actions">
+          <button class="event-fav-btn icon-button">♡</button>
+          <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
+        </div>
       </div>
     </div>
 
-    <!-- Activity Detail “screen” -->
-    <div id="activityDetailOverlay" class="activity-detail-overlay">
-      <div class="activity-detail-card">
-        <div class="activity-detail-hero">
-          <img id="activityDetailImage" src="" alt="Attraction image">
+    <!-- Event Detail “screen” -->
+    <div id="activityDetailOverlay" class="bottom-sheet-overlay">
+      <div class="bottom-sheet-card">
+        <div class="bottom-sheet-hero">
+          <img id="activityDetailImage">
 
-          <div class="activity-detail-hero-top">
-            <button type="button" class="activity-detail-back" id="activityDetailBack">←</button>
+          <div class="bottom-sheet-hero-top">
+            <button id="activityDetailBack" class="bottom-sheet-back-btn">←</button>
 
-            <div class="activity-detail-hero-right">
-              <button type="button" class="icon-button" id="activityDetailFav" aria-label="Add to favourites">♡</button>
-              <button type="button" class="icon-button" id="activityDetailAdd" aria-label="Add to itinerary">+</button>
+            <div class="bottom-sheet-actions">
+              <button id="activityDetailFav" class="icon-button">♡</button>
+              <button id="activityDetailAdd" class="icon-button">+</button>
             </div>
           </div>
 
-          <div class="activity-detail-hero-title-wrap">
-            <span id="activityDetailTitleHero" class="activity-detail-hero-title">TITLE</span>
+          <div class="bottom-sheet-title-wrap">
+            <span id="activityDetailTitleHero" class="bottom-sheet-title"></span>
           </div>
         </div>
 
-        <div class="activity-detail-body">
+        <div class="bottom-sheet-body">
           <p id="activityDetailIntro"></p>
           <p id="activityDetailAddress" class="activity-detail-address"></p>
           <p id="activityDetailParagraph"></p>
 
-          <button type="button"
-                  id="activityDetailLearnMore"
+          <button id="activityDetailLearnMore"
                   class="btn btn--primary btn--full"
                   style="margin-top: 16px;">
             Learn more ➜
@@ -363,6 +233,8 @@
         </div>
       </div>
     </div>
+
+
 
     <!-- Bottom Navigation -->
         <div class="bottom-nav">
@@ -387,6 +259,30 @@
   </div>
 
   <script src="../js/app.js"></script>
+
+  <script>
+    function loadFavorites() {
+      return JSON.parse(localStorage.getItem("favorites") || "[]");
+    }
+    function saveFavorites(list) {
+      localStorage.setItem("favorites", JSON.stringify(list));
+    }
+
+    function openUnsaveModal(id, onConfirm) {
+      const modal = document.getElementById("unsaveModal");
+      modal.style.display = "flex";
+
+      document.getElementById("unsaveYesBtn").onclick = () => {
+        modal.style.display = "none";
+        onConfirm(); // Execute removal
+      };
+
+      document.getElementById("unsaveNoBtn").onclick = () => {
+        modal.style.display = "none";
+      };
+    }
+    </script>
+
 
   <!-- Detail overlay logic -->
   <script>
@@ -488,15 +384,12 @@
         descEl.textContent        = details.description || "";
 
         // favourite state based on shared store from app.js
-        if (typeof loadFavorites === "function") {
-          const favorites = loadFavorites();
-          const isFav = favorites.some(f => f.id === id);
-          favBtn.classList.toggle("is-active", isFav);
-          favBtn.textContent = isFav ? "♥" : "♡";
-        } else {
-          favBtn.classList.remove("is-active");
-          favBtn.textContent = "♡";
-        }
+  
+        const favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+
+        favBtn.textContent = isFav ? "♥" : "♡";
+        favBtn.classList.toggle("is-active", isFav);
 
         overlay.classList.add("is-visible");
       }
@@ -511,8 +404,15 @@
 
       // Back closes overlay
       backBtn.addEventListener("click", () => {
+      const fromFav = sessionStorage.getItem("cameFromFavorites");
+
+      if (fromFav === "yes") {
+        sessionStorage.removeItem("cameFromFavorites");
+        window.location.href = "favorites.html";
+      } else {
         overlay.classList.remove("is-visible");
-      });
+      }
+    });
 
       // Learn more button
       learnBtn.addEventListener("click", () => {
@@ -521,28 +421,61 @@
         }
       });
 
-      // Favourite toggle – uses same localStorage as hearts
+      // Favourite toggle – uses same localStorage as hearts, with unsave modal
       favBtn.addEventListener("click", () => {
         if (!currentId || typeof loadFavorites !== "function" || typeof saveFavorites !== "function") return;
 
-        const title   = titleHeroEl.textContent || "";
-        const subtitle = ""; // could be filled from details if needed
+        let favs = loadFavorites();
+        const isFav = favs.some(f => f.id === currentId);
+        const title = titleHeroEl.textContent || "";
+        const imgSrc = imgEl.src || "";
+        const subtitle = ""; // optional – you can fill from ATTRACTION_DETAILS if you like
 
-        let favorites = loadFavorites();
-        const idx = favorites.findIndex(f => f.id === currentId);
+        if (isFav) {
+          // Show unsave confirmation
+          openUnsaveModal(currentId, () => {
+            favs = favs.filter(f => f.id !== currentId);
+            saveFavorites(favs);
 
-        if (idx >= 0) {
-          favorites.splice(idx, 1);
-          favBtn.classList.remove("is-active");
-          favBtn.textContent = "♡";
+            // Update overlay heart
+            favBtn.classList.remove("is-active");
+            favBtn.textContent = "♡";
+
+            // Also update list heart
+            const listHeart = document.querySelector(
+              `.list-item[data-id="${currentId}"] .event-fav-btn`
+            );
+            if (listHeart) {
+              listHeart.textContent = "♡";
+              listHeart.classList.remove("is-active");
+            }
+          });
         } else {
-          favorites.push({ id: currentId, title, subtitle, type: "activity" });
+          // Add favourite
+          favs.push({
+            id: currentId,
+            title,
+            subtitle,
+            image: imgSrc,
+            type: "activity"
+          });
+          saveFavorites(favs);
+
+          // Update overlay heart
           favBtn.classList.add("is-active");
           favBtn.textContent = "♥";
-        }
 
-        saveFavorites(favorites);
+          // Also update list heart
+          const listHeart = document.querySelector(
+            `.list-item[data-id="${currentId}"] .event-fav-btn`
+          );
+          if (listHeart) {
+            listHeart.textContent = "♥";
+            listHeart.classList.add("is-active");
+          }
+        }
       });
+
 
       // "+" button: same idea as + on list – pre-fill itinerary edit form
       addBtn.addEventListener("click", () => {
@@ -568,5 +501,88 @@
       });
     })();
   </script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.list-item[data-type="activity"]').forEach(card => {
+      const favBtn = card.querySelector('.event-fav-btn');
+      const addBtn = card.querySelector('.add-to-itinerary-btn');
+      const id = card.dataset.id;
+      const title = card.querySelector('.list-item__title')?.textContent.trim() || "";
+      const subtitle = card.querySelector('.list-item__subtitle')?.textContent.trim() || "";
+      const image = card.querySelector('.list-item__image')?.src || "";
+
+      // Sync heart state from favorites
+      function updateHeart() {
+        const favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+        favBtn.textContent = isFav ? "♥" : "♡";
+        favBtn.classList.toggle("is-active", isFav);
+      }
+
+      updateHeart();
+
+      // Heart click: add/remove with confirmation
+      favBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // don't open overlay
+
+        let favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+
+        if (isFav) {
+          // ask before unsave
+          openUnsaveModal(id, () => {
+            favs = favs.filter(item => item.id !== id);
+            saveFavorites(favs);
+            updateHeart();
+          });
+        } else {
+          favs.push({
+            id,
+            title,
+            subtitle,
+            image,
+            type: "activity"
+          });
+          saveFavorites(favs);
+          updateHeart();
+        }
+      });
+
+      // "+" click: send to itinerary-edit with prefilled data
+      addBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // don't open overlay
+
+        const details = ATTRACTION_DETAILS[id] || {};
+        const address = (details.address || "").replace(/^Address:\s*/i, "");
+
+        const today = new Date();
+        const isoDate = today.toISOString().slice(0, 10); // yyyy-mm-dd
+
+        const pending = {
+          title,
+          date: isoDate,
+          startTime: "13:00",
+          endTime: "14:00",
+          location: address
+        };
+
+        sessionStorage.setItem("pendingItineraryData", JSON.stringify(pending));
+        window.location.href = "itinerary-edit.html?from=attractions";
+      });
+    });
+
+    // Deep-link: open overlay when coming from Favorites with ?id=
+    const params = new URLSearchParams(window.location.search);
+    const openId = params.get("id");
+    if (openId) {
+      const card = document.querySelector(`.list-item[data-id="${openId}"]`);
+      if (card) {
+        card.click();
+      }
+    }
+  });
+  </script>
+
 </body>
 </html>
