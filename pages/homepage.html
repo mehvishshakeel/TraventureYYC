@@ -8,6 +8,29 @@
 
   <!-- Collage grid overrides -->
   <style>
+  .profile-hello {
+    font-family: "Quicksand", "Poppins", sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .main-greeting {
+    font-family: "Quicksand", "Poppins", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #313634e8;
+    margin: 20px 0 14px 4px;
+  }
+
+  .profile-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 4px;
+    margin-top: 8px;
+  }
+
     .homepage-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr); /* 3 columns */
@@ -127,7 +150,7 @@
       <img src="../images/node-2.png" alt="Background" style="opacity: 0.25;">
     </div>
     <div class="page-background">
-      <img src="../images/node-3.png" alt="Background" style="opacity: 0.6;">
+      <img src="../images/node-3.png" alt="Background" style="opacity: 0.6%;">
     </div>
 
     <!-- Top Bar -->
@@ -153,22 +176,26 @@
       </div>
     </div>
 
+    <!-- Language Modal -->
     <div id="langModal" class="call-modal-overlay" style="display:none;">
       <div class="call-modal">
         <h2>Language Feature</h2>
         <p>This feature is currently in development.</p>
-
         <button class="modal-cancel-btn" onclick="closeLangModal()">Close</button>
       </div>
     </div>
     
     <!-- Content -->
     <div class="content">
-      <!-- Profile Section -->
-      <div class="profile-section">
-        <img src="../images/profile-picture-14.png" alt="Profile" class="profile-picture">
-        <div class="profile-greeting" id="profileGreeting">Hello</div>
+
+      <!-- Profile Row (Profile picture + Hello, User!) -->
+      <div class="profile-row">
+        <img src="../images/profile-picture-13.png" alt="Profile" class="profile-picture">
+        <div class="profile-hello" id="profileHello"></div>
       </div>
+
+      <!-- Main Greeting -->
+      <div class="main-greeting" id="mainGreeting"></div>
 
       <!-- Collage Homepage Grid -->
       <div class="homepage-grid">
@@ -191,7 +218,7 @@
           </div>
         </a>
 
-        <!-- Events (middle-right small) -->
+        <!-- Events -->
         <a href="events.html" class="homepage-card homepage-card--itinerary">
           <img src="../images/events1.png" alt="Events" class="homepage-card__image">
           <div class="homepage-card__content">
@@ -199,7 +226,7 @@
           </div>
         </a>
 
-        <!-- Currency (bottom-left) -->
+        <!-- Currency -->
         <a href="currency.html" class="homepage-card homepage-card--currency">
           <img src="../images/currency-image-22.png" alt="Currency Conversion" class="homepage-card__image">
           <div class="homepage-card__content">
@@ -207,7 +234,7 @@
           </div>
         </a>
 
-        <!-- Saved Places (bottom-mid) -->
+        <!-- Favorites -->
         <a href="favorites.html" class="homepage-card homepage-card--saved">
           <img src="../images/favorite1.png" alt="Favorites" class="homepage-card__image">
           <div class="homepage-card__content">
@@ -218,7 +245,7 @@
           </div>
         </a>
 
-        <!-- Activities (tall right card) -->
+        <!-- Activities -->
         <a href="attractions.html" class="homepage-card homepage-card--activities">
           <img src="../images/calgary1.png" alt="Activities" class="homepage-card__image">
           <div class="homepage-card__content">
@@ -226,7 +253,7 @@
           </div>
         </a>
 
-        <!-- Itinerary (wide bottom card) -->
+        <!-- Itinerary -->
         <a href="itinerary.html" class="homepage-card homepage-card--events">
           <img src="../images/Travel-Itinerary.png" alt="Itinerary" class="homepage-card__image" style="opacity: 0.85;">
           <div class="homepage-card__content">
@@ -258,53 +285,44 @@
     </div>
   </div>
 
+  <!-- Greeting Script -->
   <script>
-    // Load current user from sessionStorage and display name
     window.addEventListener('DOMContentLoaded', function() {
+      const helloEl = document.getElementById('profileHello');
+      const mainEl = document.getElementById('mainGreeting');
+      const signupBtn = document.querySelector('.top-bar__actions a');
+
+      let helloText = "";
+      let mainText = "What would you like to do today?";
+
       try {
-        const userData = sessionStorage.getItem('currentUser');
-        const greetingElement = document.getElementById('profileGreeting');
-        const signupBtn = document.querySelector('.top-bar__actions a'); // Sign up button
+        const stored = sessionStorage.getItem('currentUser');
 
-        if (userData) {
-          const user = JSON.parse(userData);
-
-          const isGuest =
-            user.email === 'guest@guest.com' ||
-            user.username === 'guest' ||
-            user.name === 'Guest User';
-
-          if (signupBtn) {
-            signupBtn.style.display = isGuest ? 'inline-block' : 'none';
-          }
-
-          if (greetingElement) {
-            if (isGuest) {
-              greetingElement.textContent = 'Hello';
-            } else if (user.name) {
-              const firstName = user.name.split(' ')[0];
-              greetingElement.textContent = `Hello, ${firstName}`;
-            } else if (user.username) {
-              greetingElement.textContent = `Hello, ${user.username}`;
-            } else {
-              greetingElement.textContent = 'Hello';
-            }
-          }
-
-        } else {
+        if (!stored) {
           if (signupBtn) signupBtn.style.display = 'inline-block';
-          if (greetingElement) greetingElement.textContent = 'Hello';
+          helloText = "Hello!";
+        } else {
+          const user = JSON.parse(stored);
+          const isGuest =
+            user.email === "guest@guest.com" ||
+            user.username === "guest" ||
+            user.name === "Guest User";
+
+          if (isGuest) {
+            if (signupBtn) signupBtn.style.display = 'inline-block';
+            helloText = "Hello!";
+          } else {
+            if (signupBtn) signupBtn.style.display = 'none';
+            const firstName = (user.name || user.username || "User").split(" ")[0];
+            helloText = `Hello, ${firstName}!`;
+          }
         }
-
       } catch (e) {
-        console.error('Error loading user data:', e);
-
-        const greetingElement = document.getElementById('profileGreeting');
-        const signupBtn = document.querySelector('.top-bar__actions a');
-
-        if (greetingElement) greetingElement.textContent = 'Hello';
-        if (signupBtn) signupBtn.style.display = 'inline-block';
+        helloText = "Hello!";
       }
+
+      helloEl.textContent = helloText;
+      mainEl.textContent = mainText;
     });
   </script>
 
