@@ -59,7 +59,10 @@
         let favs = loadFavorites().filter(f => f.id !== pendingRemoveId);
         saveFavorites(favs);
         document.getElementById("unsaveModal").style.display = "none";
-        loadFavoritesList();
+        // Refresh ALL tabs
+        loadFavoritesList();           // events
+        loadFavoriteRestaurants();     // restaurants
+        renderFavoriteActivities();    // activities
       };
 
       document.getElementById("unsaveNoBtn").onclick = function () {
@@ -160,6 +163,12 @@
       div.querySelector(".event-fav-btn").onclick = function (e) {
         e.stopPropagation();
         showUnsaveModal(f.id);
+
+        openUnsaveModal(f.id, () => {
+            let favs = loadFavorites().filter(item => item.id !== f.id);
+            saveFavorites(favs);
+            loadFavoriteRestaurants();
+          });
       };
 
       // Add to itinerary (same as events)
@@ -220,6 +229,12 @@
         div.querySelector(".event-fav-btn").onclick = function (e) {
           e.stopPropagation();
           showUnsaveModal(f.id);
+
+          openUnsaveModal(f.id, () => {
+            let favs = loadFavorites().filter(item => item.id !== f.id);
+            saveFavorites(favs);
+            loadFavoritesList();
+          });
         };
 
         // add to itinerary
