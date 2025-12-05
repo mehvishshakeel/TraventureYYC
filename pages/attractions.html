@@ -351,6 +351,7 @@
     };
 
     (function setupActivityDetailOverlay() {
+      
       const overlay       = document.getElementById("activityDetailOverlay");
       if (!overlay) return;
 
@@ -557,7 +558,7 @@
         const address = (details.address || "").replace(/^Address:\s*/i, "");
 
         const today = new Date();
-        const isoDate = today.toISOString().slice(0, 10); // yyyy-mm-dd
+        const isoDate = "2026-07-14"; // yyyy-mm-dd
 
         const pending = {
           title,
