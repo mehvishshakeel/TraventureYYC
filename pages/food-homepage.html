@@ -76,7 +76,8 @@
 
       <!-- Category Filters -->
       <div class="food-category-filters">
-        <div class="food-category-filter active">Fast Foods</div>
+        <div class="food-category-filter active">All</div>
+             <div class="food-category-filter">Fast Foods</div>
         <div class="food-category-filter">Indian</div>
         <div class="food-category-filter">Halal</div>
         <div class="food-category-filter">Dessert</div>
@@ -131,10 +132,13 @@
               ><img src="../images/Call_Icon.png" class="embassy-action-icon" alt=""></button>
 
               <button
-                id="popupAddBtn"
-                class="list-item__icon-pill popup-icon-pill"
-                aria-label="Add to itinerary"
-              ><img src="../images/plus.jpg" class="embassy-action-icon" alt=""></button>
+  id="popupAddBtn"
+  class="icon-button"
+  aria-label="Add to itinerary"
+>
+  +
+</button>
+
             </div>
           </div>
         </div>
@@ -355,7 +359,7 @@ popupPhoneBtn.onclick = (e) => {
             <div class="popup-dish__info">
               <div class="popup-dish__name">${dish.name}</div>
               <div class="popup-dish__cost">${dish.cost || ""}</div>
-              <div class="popup-dish__desc">${dish.description || ""}</div>
+              
             </div>
           </div>
         `).join("");
@@ -403,13 +407,64 @@ popupPhoneBtn.onclick = (e) => {
       openFoodItineraryModal(place);
     }
 
-    /* ---------- SHARED FAVORITES STORAGE (same as Events/Activities) ----------- */
+
+        /* ---------- SHARED FAVORITES STORAGE (same as Events/Activities) ----------- */
     function loadFavorites() {
       return JSON.parse(localStorage.getItem("favorites") || "[]");
     }
     function saveFavorites(list) {
       localStorage.setItem("favorites", JSON.stringify(list));
     }
+
+    // Reusable heart / favorite button initializer
+function initHeartFavoriteButton(buttonElement, baseItem) {
+  if (!buttonElement || !baseItem || !baseItem.id) return;
+
+  let favorites = loadFavorites();
+  let isFav = favorites.some(f => f.id === baseItem.id);
+
+  // Initial UI
+  buttonElement.textContent = isFav ? "♥" : "♡";
+  buttonElement.classList.toggle("is-active", isFav);
+
+  buttonElement.addEventListener("click", (e) => {
+    e.stopPropagation(); // don't trigger card click
+
+    favorites = loadFavorites();
+    const index = favorites.findIndex(f => f.id === baseItem.id);
+
+    // Helper to actually remove
+    const doRemove = () => {
+      favorites = loadFavorites(); // reload in case it changed
+      const idx = favorites.findIndex(f => f.id === baseItem.id);
+      if (idx >= 0) {
+        favorites.splice(idx, 1);
+        saveFavorites(favorites);
+      }
+      isFav = false;
+      buttonElement.textContent = "♡";
+      buttonElement.classList.remove("is-active");
+    };
+
+    if (index >= 0) {
+      // Already a favorite → show "Remove Favorite? Unsave this item?"
+      if (typeof openUnsaveModal === "function") {
+        openUnsaveModal(baseItem.id, doRemove);
+      } else {
+        // fallback: no modal defined on this page
+        doRemove();
+      }
+    } else {
+      // Add to favorites
+      favorites.push(baseItem);
+      saveFavorites(favorites);
+      isFav = true;
+      buttonElement.textContent = "♥";
+      buttonElement.classList.add("is-active");
+    }
+  });
+}
+
 
     /* ----------- Universal unsave modal (same as events/activities) ------------ */
     function openUnsaveModal(id, onConfirm) {
@@ -482,11 +537,13 @@ function renderPlaces(places) {
 
     // Check if already favorited
     const isFav = favorites.some(f => f.id === place.name);
-    const heartHTML = `
-      <button class="icon-button heart-btn ${isFav ? "is-active" : ""}">
-        ${isFav ? "♥" : "♡"}
-      </button>
-    `;
+const heartHTML = `
+  <button class="event-fav-btn icon-button ${isFav ? "is-active" : ""}">
+    ${isFav ? "♥" : "♡"}
+  </button>
+`;
+
+
 
     item.innerHTML = `
       <div class="list-item__image-wrapper">
@@ -518,33 +575,41 @@ function renderPlaces(places) {
               <img src="../images/Call_Icon.png" class="embassy-action-icon">
             </button>
 
-            <button class="list-item__icon-pill list-item__add-link">
-              <img src="../images/plus.jpg" class="embassy-action-icon">
-            </button>
+         <button
+  class="icon-button list-item__add-link"
+  aria-label="Add to itinerary"
+>
+  +
+</button>
+
+
           </div>
         </div>
       </div>
     `;
+// inside renderPlaces
+const heartBtn = item.querySelector(".event-fav-btn");
 
-    // Whole card click → popup
-    item.addEventListener("click", () => {
-      openPlacePopup(place);
-    });
+const baseItem = {
+  id: place.name,
+  title: place.name,
+  subtitle: place.rating || "",
+  image: FOOD_PLACEHOLDER_IMAGE,
+  type: "restaurant"
+};
 
-    const heartBtn = item.querySelector(".heart-btn");
-    heartBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
+// hook up the heart behaviour
+initHeartFavoriteButton(heartBtn, baseItem);
 
-      const isFav = heartBtn.classList.contains("is-active");
 
-      if (isFav) {
-        removeFoodFavorite(place.name, heartBtn);
-      } else {
-        addFoodToFavorites(place);
-        heartBtn.textContent = "♥";
-        heartBtn.classList.add("is-active");
-      }
-    });
+    // open popup when tapping anywhere on the card
+item.addEventListener("click", () => {
+  openPlacePopup(place);
+});
+
+
+
+
 
     // Map button
     const mapLink = item.querySelector(".list-item__map-link");
@@ -592,6 +657,7 @@ function renderPlaces(places) {
 
           const label = btn.textContent.trim().toLowerCase();
           const map = {
+            "all": "all",
             "fast foods": "fastfood",
             "indian": "indian",
             "halal": "halal",
@@ -605,14 +671,15 @@ function renderPlaces(places) {
     }
 
     // Simple search filter by name within current category
-    function filterAndRender() {
-      const query = (searchInput.value || "").toLowerCase();
-      const filtered = allPlaces.filter(p =>
-        p.category === currentCategory &&
-        (!query || p.name.toLowerCase().includes(query))
-      );
-      renderPlaces(filtered);
-    }
+function filterAndRender() {
+  const query = (searchInput.value || "").toLowerCase();
+  const filtered = allPlaces.filter(p =>
+    (currentCategory === "all" || p.category === currentCategory) &&
+    (!query || p.name.toLowerCase().includes(query))
+  );
+  renderPlaces(filtered);
+}
+
 
     searchInput.addEventListener("input", filterAndRender);
 
@@ -682,9 +749,13 @@ function renderPlaces(places) {
         console.log("reviewsByPlace keys:", Object.keys(reviewsByPlace));
 
         // initial list = fast food
-        const defaultList = allPlaces.filter(p => p.category === "fastfood");
+// initial list = fast food
+        currentCategory = "all"; // start on All
+        const defaultList = allPlaces; // show everything
         renderPlaces(defaultList);
         applyCategoryFilters();
+
+
       })
       .catch(err => {
         console.error("Error loading JSON:", err);
