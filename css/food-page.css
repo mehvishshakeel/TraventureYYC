@@ -488,3 +488,33 @@ body.popup-open {
 .list-item__favorite .activity-detail-hero__icon.is-active {
   transform: scale(1.15);
 }
+
+.search-bar-wrapper {
+  display: block;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+
+/* container for the icon */
+.filter-button-img {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 12px;
+  height: 42px;
+  width: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* force small icon size – overrides global img rule */
+.filter-button-img img {
+  width: 16px !important;
+  height: 16px !important;
+  object-fit: contain;
+  display: block;
+}
+
