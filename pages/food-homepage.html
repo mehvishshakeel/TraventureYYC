@@ -149,13 +149,14 @@
                 aria-label="Call restaurant"
               ><img src="../images/Call_Icon.png" class="embassy-action-icon" alt=""></button>
 
-              <button
+<button
   id="popupAddBtn"
-  class="icon-button"
+  class="list-item__icon-pill popup-icon-pill"
   aria-label="Add to itinerary"
 >
-  +
+  <span class="embassy-action-icon">+</span>
 </button>
+
 
             </div>
           </div>
@@ -584,9 +585,9 @@ const heartHTML = `
 
 
 
-    item.innerHTML = `
+        item.innerHTML = `
       <div class="list-item__image-wrapper">
-    <img src="${getImageForPlace(place)}" class="list-item__image" alt="${place.name}">
+        <img src="${getImageForPlace(place)}" class="list-item__image" alt="${place.name}">
         <div class="list-item__favorite">
           ${heartHTML}
         </div>
@@ -614,18 +615,17 @@ const heartHTML = `
               <img src="../images/Call_Icon.png" class="embassy-action-icon">
             </button>
 
-         <button
-  class="icon-button list-item__add-link"
-  aria-label="Add to itinerary"
->
-  +
-</button>
-
-
+            <button
+              class="list-item__icon-pill list-item__add-link"
+              aria-label="Add to itinerary"
+            >
+              <span class="embassy-action-icon">+</span>
+            </button>
           </div>
         </div>
       </div>
     `;
+
 // inside renderPlaces
 const heartBtn = item.querySelector(".event-fav-btn");
 
@@ -720,8 +720,20 @@ function filterAndRender() {
   renderPlaces(filtered);
 }
 
+const popularTitle = document.querySelector(".popular-section .section-title");
 
-    searchInput.addEventListener("input", filterAndRender);
+searchInput.addEventListener("input", () => {
+  const hasQuery = searchInput.value.trim().length > 0;
+
+  // Hide "Popular Near You" when typing
+  if (popularTitle) {
+    popularTitle.style.display = hasQuery ? "none" : "";
+  }
+
+  // Run your existing search filter
+  filterAndRender();
+});
+
 
     // Fetch JSON + init (with structure detection + better errors)
     Promise.all([

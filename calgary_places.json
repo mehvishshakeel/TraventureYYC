@@ -48,7 +48,7 @@
       "estimated_time": "5–6 min away",
       "address": "3909 17 Avenue SE\nCalgary, AB T2A 0S5",
       "phone": "(587) 356-0005",
-      "img_source": "../images/foodpictures/Fast-food/5. popeyes_louisiana_kitchen_logo 1.png"
+      "img_source": "../images/foodpictures/Fast-food/5. popeyes.jpg"
     },
     {
       "id": "harveys_country_hills",
@@ -68,18 +68,9 @@
       "estimated_time": "13–14 min away",
       "address": "20 Crowfoot Crescent NW\nCalgary, AB T3G 3T2",
       "phone": "(403) 239-0007",
-      "img_source": "../images/foodpictures/Fast-food/8. kfc.jpg"
+      "img_source": "../images/foodpictures/Fast-food/7. kfc.jpg"
     },
-    {
-      "id": "taco_bell_sunridge",
-      "name": "Taco Bell Sunridge",
-      "rating": "3.7 (10.0k)",
-      "category": "fastfood",
-      "estimated_time": "11–12 min away",
-      "address": "3310 32 Street NE\nCalgary, AB T1Y 6B9",
-      "phone": "(403) 250-0008",
-      "img_source": ""
-    },
+  
     {
       "id": "wendys_bowness",
       "name": "Wendy's Bowness",
@@ -88,7 +79,7 @@
       "estimated_time": "3–4 min away",
       "address": "6408 Bowness Road NW\nCalgary, AB T3B 0E7",
       "phone": "(403) 247-0009",
-      "img_source": "../images/foodpictures/Fast-food/7. Wendy.jpg"
+      "img_source": "../images/foodpictures/Fast-food/8. Wendy.jpg"
     },
     {
       "id": "chipotle_4th_street",
@@ -98,7 +89,7 @@
       "estimated_time": "7–8 min away",
       "address": "1800 4 Street SW\nCalgary, AB T2S 2S5",
       "phone": "(403) 262-0010",
-      "img_source": "../images/foodpictures/Fast-food/0. chipotle.jpg"
+      "img_source": "../images/foodpictures/Fast-food/10. chipotle.jpg"
     },
 
 
@@ -211,7 +202,7 @@
   "estimated_time": "15–16 min away",
   "address": "133 9 Avenue SW\nCalgary, AB T2P 2M3",
   "phone": "(403) 262-0021",
-  "img_source": "../images/food/halal/avesta shawarma .jpeg"
+  "img_source": "../images/foodpictures/halal/avesta-shawarma.jpeg"
 },
 {
   "id": "halal_arts",
@@ -221,7 +212,7 @@
   "estimated_time": "14–15 min away",
   "address": "119 12 Avenue SW\nCalgary, AB T2R 0G8",
   "phone": "(403) 266-0022",
-  "img_source": "../images/food/halal/shawrma king.webp"
+  "img_source": "../images/foodpictures/halal/shawrma king.webp"
 },
 {
   "id": "hyatt_regency_calgary",
@@ -231,7 +222,7 @@
   "estimated_time": "14–15 min away",
   "address": "700 Centre Street SE\nCalgary, AB T2G 5P6",
   "phone": "(403) 717-0023",
-  "img_source": "../images/food/halal/jerusalem shawarma.jpg"
+  "img_source": "../images/foodpictures/halal/jerusalem shawarma.jpg"
 },
 {
   "id": "sheraton_suites_eau_claire",
@@ -241,7 +232,7 @@
   "estimated_time": "15–16 min away",
   "address": "255 Barclay Parade SW\nCalgary, AB T2P 5C2",
   "phone": "(403) 266-0024",
-  "img_source": "../images/food/halal/great canadian pizza halal.jpeg"
+  "img_source": "../images/foodpictures/halal/great canadian pizza halal.jpeg"
 },
 {
   "id": "delta_halals_marriott",
@@ -251,7 +242,7 @@
   "estimated_time": "8–9 min away",
   "address": "135 Southland Drive SE\nCalgary, AB T2J 5X5",
   "phone": "(403) 278-0025",
-  "img_source": "../images/food/halal/king solomon jamaica kitchen halal.jpeg"
+  "img_source": "../images/foodpictures/halal/king solomon jamaica kitchen halal.jpeg"
 },
 {
   "id": "the_westin_calgary",
@@ -261,43 +252,7 @@
   "estimated_time": "7–8 min away",
   "address": "320 4 Avenue SW\nCalgary, AB T2P 2S6",
   "phone": "(403) 266-0026",
-  "img_source": "../images/food/halal/ramadan catering & takeout halal.jpeg"
-},
-{
-  "id": "residence_inn_beltline",
-  "name": "Residence Inn by Marriott Beltline",
-  "rating": "4.5 (13k)",
-  "category": "halal",
-  "estimated_time": "15–16 min away",
-  "address": "610 10 Avenue SW\nCalgary, AB T2R 1M3",
-  "phone": "(403) 232-0027"
-},
-{
-  "id": "sandman_signature_downtown",
-  "name": "Sandman Signature Calgary Downtown",
-  "rating": "4.1 (14k)",
-  "category": "halal",
-  "estimated_time": "4–5 min away",
-  "address": "888 7 Avenue SW\nCalgary, AB T2P 3J3",
-  "phone": "(403) 237-0028"
-},
-{
-  "id": "the_dorian_autograph",
-  "name": "The Dorian Autograph Collection",
-  "rating": "4.6 (15k)",
-  "category": "halal",
-  "estimated_time": "3–4 min away",
-  "address": "525 5 Avenue SW\nCalgary, AB T2P 3R7",
-  "phone": "(403) 410-0029"
-},
-{
-  "id": "alt_halal_east_village",
-  "name": "Alt halal Calgary East Village",
-  "rating": "4.6 (934)",
-  "category": "halal",
-  "estimated_time": "9–10 min away",
-  "address": "635 Confluence Way SE\nCalgary, AB T2G 0G1",
-  "phone": "(403) 441-0030"
+  "img_source": "../images/foodpictures/halal/ramadan catering & takeout halal.jpeg"
 }
 ,
     {
