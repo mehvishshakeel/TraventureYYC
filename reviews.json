@@ -312,73 +312,73 @@
       },
       {
         "customer_name": "Sonia J.",
-        "review": "Good place for sharing plates with friends. Naan was fresh.",
+        "review": "Good place for sharing plates with friends. Naan was bit stale.",
         "date": "2024-11-05",
         "photo": "../images/foods-image-18.png"
       }
     ],
 
-    "Fairmont Palliser": [
+    "Avesta Shawarma": [
       {
-        "customer_name": "Natalie P.",
-        "review": "Elegant setting and beautifully plated dishes. Loved the salmon.",
-        "date": "2024-04-22",
+        "customer_name": "Farhana",
+        "review": "Best shawarma platter in the city!!!",
+        "date": "2025-12-25",
         "photo": "../images/foods-image-18.png"
       },
       {
-        "customer_name": "James C.",
-        "review": "Great for special occasions. Service was very professional.",
-        "date": "2024-12-01",
+        "customer_name": "Tanveer",
+        "review": "Amazing vibes! The people here are so nice",
+        "date": "2024-11-18",
         "photo": "../images/foods-image-18.png"
       }
     ],
 
-    "halal Arts": [
+    "Shawarma King": [
       {
-        "customer_name": "Layla R.",
+        "customer_name": "Mehvish",
         "review": "Falafel platter was fresh and nicely seasoned. Good portion size.",
         "date": "2024-03-31",
         "photo": "../images/foods-image-18.png"
       },
       {
-        "customer_name": "Peter S.",
-        "review": "Nice spot for a casual dinner. Loved the grilled chicken skewers.",
+        "customer_name": "Aly",
+        "review": " Loved the grilled chicken skewers.",
         "date": "2024-09-19",
         "photo": "../images/foods-image-18.png"
       }
     ],
 
-    "Hyatt Regency Calgary": [
+    "Jerusalem Shawarma": [
       {
-        "customer_name": "Olivia D.",
-        "review": "Breakfast and dinner here were both solid. Tomato bisque was delicious.",
+        "customer_name": "Anfaal",
+        "review": "The shawarma could be better. The meat felt undercooked",
         "date": "2024-05-07",
         "photo": "../images/foods-image-18.png"
       },
       {
-        "customer_name": "Michael F.",
-        "review": "Convenient if you're staying at the hotel. Good quality ingredients.",
+        "customer_name": "Akshay",
+        "review": "Not too bad.",
         "date": "2024-10-29",
         "photo": "../images/foods-image-18.png"
       }
     ],
 
-    "Sheraton Suites Calgary Eau Claire": [
+    "Great Canadian Pizza (Halal)": [
       {
-        "customer_name": "Emma G.",
-        "review": "Steak frites were cooked perfectly. Nice view from the dining area.",
+        "customer_name": "Najifa",
+        "review": "Love the pizza from here! Amazing food for late night drives",
         "date": "2024-02-26",
         "photo": "../images/foods-image-18.png"
       },
       {
-        "customer_name": "Lucas H.",
-        "review": "Soup and salad combo was surprisingly filling. Good service.",
+        "customer_name": "Noorah",
+        "review": "Meow meow meow",
         "date": "2024-08-09",
         "photo": "../images/foods-image-18.png"
       }
     ],
 
-    "Delta halals by Marriott Calgary South": [
+    "King Solomon Jamaica Kitchen (Halal)": [
       {
         "customer_name": "Huda A.",
         "review": "Lemon herb salmon was flavourful and not overcooked.",
@@ -393,7 +393,7 @@
       }
     ],
 
-    "The Westin Calgary": [
+    "Ramadan Catering & Takeout (Halal)": [
       {
         "customer_name": "Isabelle R.",
         "review": "Striploin was tender and nicely seasoned. Dessert was great too.",
