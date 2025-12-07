@@ -560,35 +560,25 @@
       }
     ],
 
-    "Fairmont Palliser": [
+    "Avesta Shawarma": [
       {
-        "name": "Grilled Salmon",
-        "cost": "CA $29.00",
-        "description": "Description placeholder"
+        "name": "Chicken Shawarma Platter",
+        "cost": "CA $26.49",
+        "description": "Seasoned chicken shawarma served with rice, hummus, salad, garlic potatoes and pita bread." 
       },
       {
-        "name": "Roasted Chicken Supreme",
-        "cost": "CA $27.50",
-        "description": "Description placeholder"
+        "name": "Beef Donair Wrap",
+        "cost": "CA $17.99",
+        "description": "Spiced beef donair wrapped in pita, with sauce, salad and toppings."
       },
       {
-        "name": "Seasonal Soup",
-        "cost": "CA $11.00",
-        "description": "Description placeholder"
-      },
-      {
-        "name": "Garden Salad",
-        "cost": "CA $12.50",
-        "description": "Description placeholder"
-      },
-      {
-        "name": "Chocolate Torte",
-        "cost": "CA $10.50",
-        "description": "Description placeholder"
+        "name": "Garlic Potatoes (side)",
+        "cost": "CA $7.55",
+        "description": "Golden roasted garlic potatoes — popular side dish."
       }
     ],
 
-    "halal Arts": [
+    "Shawarma King": [
       {
         "name": "Grilled Chicken Skewers",
         "cost": "CA $22.50",
@@ -597,11 +587,6 @@
       {
         "name": "Falafel Platter",
         "cost": "CA $18.00",
-        "description": "Description placeholder"
-      },
-      {
-        "name": "Lentil Soup",
-        "cost": "CA $9.50",
         "description": "Description placeholder"
       },
       {
@@ -616,7 +601,7 @@
       }
     ],
 
-    "Hyatt Regency Calgary": [
+    "Jerusalem Shawarma": [
       {
         "name": "Herb Roasted Chicken",
         "cost": "CA $28.50",
@@ -644,7 +629,7 @@
       }
     ],
 
-    "Sheraton Suites Calgary Eau Claire": [
+    "Great Canadian Pizza (Halal)": [
       {
         "name": "Steak Frites",
         "cost": "CA $32.00",
@@ -672,7 +657,7 @@
       }
     ],
 
-    "Delta halals by Marriott Calgary South": [
+    "King Solomon Jamaica Kitchen (Halal)": [
       {
         "name": "Roast Beef Dinner",
         "cost": "CA $29.50",
@@ -700,7 +685,7 @@
       }
     ],
 
-    "The Westin Calgary": [
+    "Ramadan Catering & Takeout (Halal)": [
       {
         "name": "Grilled Striploin",
         "cost": "CA $34.00",
