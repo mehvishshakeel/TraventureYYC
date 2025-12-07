@@ -361,7 +361,7 @@
         imageSrc = '../images/The_Peace_Bridge_in_Calgary_an_HDR_photo.png';
       } else if (normalizedTitle === 'ten foot henry') {
         imageSrc = '../images/tenfoothenry.png';
-      } else if (normalizedTitle === 'avesta shawarma') {
+      } else if (normalizedTitle.includes('avesta') && normalizedTitle.includes('shawarma')) {
         imageSrc = '../images/avesta.png';
       } else if ((normalizedTitle.includes('river') && normalizedTitle.includes('cafe')) || (normalizedTitle.includes('river') && normalizedTitle.includes('café'))) {
         imageSrc = '../images/riverCafe.png';

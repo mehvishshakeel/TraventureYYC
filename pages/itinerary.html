@@ -182,12 +182,6 @@
             title: 'Ten Foot Henry',
             details: '17:15 - 19:00',
             address: '1209 1 St SW, Calgary, AB T2R 0V3'
-          },
-          {
-            time: '19:00',
-            title: 'Avesta Shawarma',
-            details: '19:00 - 20:00',
-            address: '698 Eau Claire Ave SW, Calgary, AB T2P 5N4'
           }
         ]
       },
@@ -414,13 +408,19 @@
             return (normalized.includes('river') && (normalized.includes('cafe') || normalized.includes('café')));
           };
 
+          // Helper function to check for Avesta Shawarma variations
+          const isAvestaShawarma = (title) => {
+            const normalized = title.trim().toLowerCase();
+            return normalized.includes('avesta') && normalized.includes('shawarma');
+          };
+
           if (normalizedTitle === 'calgary zoo') {
             imageHtml = `<img class="timeline-event__image" src="../images/calgaryZOO.png" alt="Calgary Zoo">`;
           } else if (normalizedTitle === 'peace bridge') {
             imageHtml = `<img class="timeline-event__image" src="../images/The_Peace_Bridge_in_Calgary_an_HDR_photo.png" alt="Peace Bridge">`;
           } else if (normalizedTitle === 'ten foot henry') {
             imageHtml = `<img class="timeline-event__image" src="../images/tenfoothenry.png" alt="Ten Foot Henry">`;
-          } else if (normalizedTitle === 'avesta shawarma') {
+          } else if (isAvestaShawarma(event.title)) {
             imageHtml = `<img class="timeline-event__image" src="../images/avesta.png" alt="Avesta Shawarma">`;
           } else if (isRiverCafe(event.title)) {
             imageHtml = `<img class="timeline-event__image" src="../images/riverCafe.png" alt="River Café">`;

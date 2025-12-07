@@ -899,6 +899,24 @@ img {
   margin-bottom: 10px;
 }
 
+.page-title-wrapper {
+  width: 100%;
+  padding: 0 var(--spacing-md);
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  border-bottom: 2px solid #d9d9d9;
+  padding-bottom: 8px;
+  margin: 0 auto;
+  width: 85%;
+}
+
+
 /* Learn more button */
 .activity-detail-learn {
   display: inline-block;

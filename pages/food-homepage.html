@@ -203,6 +203,19 @@
   </div>
 </div>
 
+<!-- UNIVERSAL UNSAVE MODAL (same as Events/Activities) -->
+<div id="unsaveModal" class="call-modal-overlay" style="display:none;">
+  <div class="call-modal">
+    <h2>Remove Favorite?</h2>
+    <p>Unsave this place?</p>
+    <div class="modal-btn-row">
+      <button id="unsaveYesBtn" class="modal-confirm-btn">Yes</button>
+      <button id="unsaveNoBtn" class="modal-cancel-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
 <!-- ============================
      FOOD PAGE - ADD TO ITINERARY MODAL
      (same style as call modal)
@@ -286,13 +299,7 @@
       if (!place || !place.name) return [];
       return dishesByPlace[place.name] || [];
     }
-function getFavoriteList() {
-  try {
-    return JSON.parse(localStorage.getItem("favoriteRestaurants") || "[]");
-  } catch {
-    return [];
-  }
-}
+
 
     function openPlacePopup(place) {
       document.body.classList.add("popup-open");
@@ -390,49 +397,83 @@ popupPhoneBtn.onclick = (e) => {
     });
     popupCloseBtn.addEventListener("click", closePlacePopup);
 
-// Favorites (heart)
-function handleAddToFavorites(place) {
-  const key = "favoriteRestaurants";
-  const existing = JSON.parse(localStorage.getItem(key) || "[]");
-  const alreadySaved = existing.some(fav => fav.name === place.name);
-
-  if (!alreadySaved) {
-    // Just save silently (no web prompt)
-    existing.push({
-      name: place.name,
-      rating: place.rating,
-      estimated_time: place.estimated_time,
-      image: FOOD_PLACEHOLDER_IMAGE,
-      category: place.category || "restaurant"
-    });
-    localStorage.setItem(key, JSON.stringify(existing));
-    // no alert here on purpose
-  } else {
-    // Show custom modal (same design as openCallModal)
-    openFoodFavoriteModal(place.name);
-  }
-}
-
-
-    function removeFromFavorites(place) {
-      const key = "favoriteRestaurants";
-      const existing = JSON.parse(localStorage.getItem(key) || "[]");
-      const filtered = existing.filter(fav => fav.name !== place.name);
-      localStorage.setItem(key, JSON.stringify(filtered));
-    }
 
     // Add to itinerary (+)
-function handleAddToItinerary(place) {
-  openFoodItineraryModal(place);
-}
+    function handleAddToItinerary(place) {
+      openFoodItineraryModal(place);
+    }
 
+    /* ---------- SHARED FAVORITES STORAGE (same as Events/Activities) ----------- */
+    function loadFavorites() {
+      return JSON.parse(localStorage.getItem("favorites") || "[]");
+    }
+    function saveFavorites(list) {
+      localStorage.setItem("favorites", JSON.stringify(list));
+    }
 
+    /* ----------- Universal unsave modal (same as events/activities) ------------ */
+    function openUnsaveModal(id, onConfirm) {
+      const modal = document.getElementById("unsaveModal");
+      modal.style.display = "flex";
+
+      document.getElementById("unsaveYesBtn").onclick = () => {
+        modal.style.display = "none";
+        onConfirm();
+      };
+      document.getElementById("unsaveNoBtn").onclick = () => {
+        modal.style.display = "none";
+      };
+    }
+
+    /* ---------- Add favorite (FOOD becomes type: "restaurant") ---------- */
+    function addFoodToFavorites(place) {
+      let favs = loadFavorites();
+      const exists = favs.some(f => f.id === place.name);
+
+      if (!exists) {
+        favs.push({
+          id: place.name,
+          title: place.name,
+          subtitle: place.rating || "",
+          image: "../images/foods-image-18.png",
+          type: "restaurant"
+        });
+        saveFavorites(favs);
+      }
+    }
+
+   /* ---------------- Remove favorite (with modal) ----------------- */
+    function removeFoodFavorite(placeName, listHeartEl) {
+      openUnsaveModal(placeName, () => {
+        let favs = loadFavorites().filter(f => f.id !== placeName);
+        saveFavorites(favs);
+
+        // Update UI heart (Food page card)
+        if (listHeartEl) {
+          listHeartEl.textContent = "♡";
+          listHeartEl.classList.remove("is-active");
+        }
+
+        // Update popup heart (if open)
+        const popupHeart = document.getElementById("popupFavBtn");
+        if (popupHeart && popupHeart.dataset.id === placeName) {
+          popupHeart.textContent = "♡";
+          popupHeart.classList.remove("is-active");
+        }
+
+        // Immediately refresh Restaurants tab in Favorites page
+        if (typeof loadFavoriteRestaurants === "function") {
+          try { loadFavoriteRestaurants(); } catch (e) {}
+        }
+      });
+    }
 
    // Render list of places into cards
 function renderPlaces(places) {
   listContainer.innerHTML = "";
 
-  const favorites = getFavoriteList();
+  const favorites = loadFavorites().filter(f => f.type === "restaurant");
+
 
   places.forEach(place => {
     const mapUrl = `map.html?place=${encodeURIComponent(place.name)}&return=food`;
@@ -440,16 +481,20 @@ function renderPlaces(places) {
     item.className = "list-item";
 
     // Check if already favorited
-    const isFav = favorites.some(f => f.name === place.name);
-    const heartIcon = isFav ? "❤️" : "♡";
-    const heartState = isFav ? "true" : "false";
+    const isFav = favorites.some(f => f.id === place.name);
+    const heartHTML = `
+      <button class="icon-button heart-btn ${isFav ? "is-active" : ""}">
+        ${isFav ? "♥" : "♡"}
+      </button>
+    `;
 
     item.innerHTML = `
       <div class="list-item__image-wrapper">
         <img src="${FOOD_PLACEHOLDER_IMAGE}" class="list-item__image" alt="${place.name}">
-        <div class="list-item__favorite heart-btn" data-fav="${heartState}">${heartIcon}</div>
+        <div class="list-item__favorite">
+          ${heartHTML}
+        </div>
       </div>
-
       <div class="list-item__details">
         <div class="list-item__title">${place.name}</div>
 
@@ -486,23 +531,18 @@ function renderPlaces(places) {
       openPlacePopup(place);
     });
 
-    // Heart toggle
-    const favoriteButton = item.querySelector(".heart-btn");
-    favoriteButton.addEventListener("click", (event) => {
-      event.stopPropagation();
+    const heartBtn = item.querySelector(".heart-btn");
+    heartBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
 
-      const isFavNow = favoriteButton.dataset.fav === "true";
+      const isFav = heartBtn.classList.contains("is-active");
 
-      if (!isFavNow) {
-        favoriteButton.dataset.fav = "true";
-        favoriteButton.classList.add("active");
-        favoriteButton.textContent = "❤️";
-        handleAddToFavorites(place);
+      if (isFav) {
+        removeFoodFavorite(place.name, heartBtn);
       } else {
-        favoriteButton.dataset.fav = "false";
-        favoriteButton.classList.remove("active");
-        favoriteButton.textContent = "♡";
-        removeFromFavorites(place);
+        addFoodToFavorites(place);
+        heartBtn.textContent = "♥";
+        heartBtn.classList.add("is-active");
       }
     });
 

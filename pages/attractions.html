@@ -7,105 +7,7 @@
   <title>Attractions - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
 
-  <!-- Detail overlay styles (you can move this into main.css if you prefer) -->
-  <style>
-    .activity-detail-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.35);
-      display: none;
-      justify-content: center;
-      align-items: flex-start;
-      z-index: 500;
-    }
-    .activity-detail-overlay.is-visible {
-      display: flex;
-    }
-    .activity-detail-card {
-      background: #fdf9f9;
-      width: 100%;
-      max-width: 414px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    .activity-detail-hero {
-      position: relative;
-      overflow: hidden;
-      border-bottom-left-radius: 24px;
-      border-bottom-right-radius: 24px;
-    }
-    .activity-detail-hero img {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-      display: block;
-    }
-    .activity-detail-hero-top {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      right: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .activity-detail-back {
-      width: 32px;
-      height: 32px;
-      border-radius: 16px;
-      border: none;
-      background: #ffffffdd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-    .activity-detail-hero-right {
-      display: flex;
-      gap: 8px;
-    }
-    .icon-button {
-      width: 36px;
-      height: 36px;
-      border-radius: 18px;
-      border: none;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    }
-    .icon-button.is-active {
-      background: #ff6b81;
-      color: #fff;
-    }
-    .activity-detail-hero-title-wrap {
-      position: absolute;
-      bottom: 16px;
-      left: 16px;
-      right: 16px;
-    }
-    .activity-detail-hero-title {
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 20px;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-    }
-    .activity-detail-body {
-      padding: 16px;
-      overflow-y: auto;
-    }
-    .activity-detail-body p {
-      margin-bottom: 8px;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-    .activity-detail-address {
-      font-weight: 600;
-    }
-  </style>
+
 </head>
 <body>
   <div class="app-container">
@@ -163,10 +65,23 @@
 
     <script src="../js/app.js"></script>
 
+    <!-- UNIVERSAL UNSAVE MODAL (same as Events) -->
+    <div id="unsaveModal" class="call-modal-overlay" style="display:none;">
+      <div class="call-modal">
+        <h2>Remove Favorite?</h2>
+        <p>Unsave this item?</p>
+        <div class="modal-btn-row">
+          <button id="unsaveYesBtn" class="modal-confirm-btn">Yes</button>
+          <button id="unsaveNoBtn" class="modal-cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+
     <!-- Content -->
     <div class="content">
       <h1 style="font-size: 24px; font-weight: 700; margin-bottom: var(--spacing-md);">
-        Attractions
+        Activities
       </h1>
 
       <!-- Search Bar -->
@@ -189,9 +104,7 @@
           </div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png"
-               alt="Favorite"
-               class="list-item__icon">
+          <button class="event-fav-btn icon-button">♡</button>
           <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
         </div>
       </div>
@@ -209,9 +122,7 @@
           </div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png"
-               alt="Favorite"
-               class="list-item__icon">
+          <button class="event-fav-btn icon-button">♡</button>
           <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
         </div>
       </div>
@@ -229,9 +140,7 @@
           </div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png"
-               alt="Favorite"
-               class="list-item__icon">
+          <button class="event-fav-btn icon-button">♡</button>
           <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
         </div>
       </div>
@@ -249,9 +158,7 @@
           </div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png"
-               alt="Favorite"
-               class="list-item__icon">
+          <button class="event-fav-btn icon-button">♡</button>
           <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
         </div>
       </div>
@@ -269,9 +176,7 @@
           </div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png"
-               alt="Favorite"
-               class="list-item__icon">
+          <button class="event-fav-btn icon-button">♡</button>
           <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
         </div>
       </div>
@@ -289,41 +194,38 @@
           </div>
         </div>
         <div class="list-item__actions">
-          <img src="../images/heart-icon-36.png"
-               alt="Favorite"
-               class="list-item__icon">
+          <button class="event-fav-btn icon-button">♡</button>
           <span class="add-to-itinerary-btn" style="font-size: 20px;">+</span>
         </div>
       </div>
     </div>
 
-    <!-- Activity Detail “screen” -->
-    <div id="activityDetailOverlay" class="activity-detail-overlay">
-      <div class="activity-detail-card">
-        <div class="activity-detail-hero">
-          <img id="activityDetailImage" src="" alt="Attraction image">
+    <!-- Event Detail “screen” -->
+    <div id="activityDetailOverlay" class="bottom-sheet-overlay">
+      <div class="bottom-sheet-card">
+        <div class="bottom-sheet-hero">
+          <img id="activityDetailImage">
 
-          <div class="activity-detail-hero-top">
-            <button type="button" class="activity-detail-back" id="activityDetailBack">←</button>
+          <div class="bottom-sheet-hero-top">
+            <button id="activityDetailBack" class="bottom-sheet-back-btn">←</button>
 
-            <div class="activity-detail-hero-right">
-              <button type="button" class="icon-button" id="activityDetailFav" aria-label="Add to favourites">♡</button>
-              <button type="button" class="icon-button" id="activityDetailAdd" aria-label="Add to itinerary">+</button>
+            <div class="bottom-sheet-actions">
+              <button id="activityDetailFav" class="icon-button">♡</button>
+              <button id="activityDetailAdd" class="icon-button">+</button>
             </div>
           </div>
 
-          <div class="activity-detail-hero-title-wrap">
-            <span id="activityDetailTitleHero" class="activity-detail-hero-title">TITLE</span>
+          <div class="bottom-sheet-title-wrap">
+            <span id="activityDetailTitleHero" class="bottom-sheet-title"></span>
           </div>
         </div>
 
-        <div class="activity-detail-body">
+        <div class="bottom-sheet-body">
           <p id="activityDetailIntro"></p>
           <p id="activityDetailAddress" class="activity-detail-address"></p>
           <p id="activityDetailParagraph"></p>
 
-          <button type="button"
-                  id="activityDetailLearnMore"
+          <button id="activityDetailLearnMore"
                   class="btn btn--primary btn--full"
                   style="margin-top: 16px;">
             Learn more ➜
@@ -331,6 +233,8 @@
         </div>
       </div>
     </div>
+
+
 
     <!-- Bottom Navigation -->
         <div class="bottom-nav">
@@ -356,6 +260,30 @@
 
   <script src="../js/app.js"></script>
 
+  <script>
+    function loadFavorites() {
+      return JSON.parse(localStorage.getItem("favorites") || "[]");
+    }
+    function saveFavorites(list) {
+      localStorage.setItem("favorites", JSON.stringify(list));
+    }
+
+    function openUnsaveModal(id, onConfirm) {
+      const modal = document.getElementById("unsaveModal");
+      modal.style.display = "flex";
+
+      document.getElementById("unsaveYesBtn").onclick = () => {
+        modal.style.display = "none";
+        onConfirm(); // Execute removal
+      };
+
+      document.getElementById("unsaveNoBtn").onclick = () => {
+        modal.style.display = "none";
+      };
+    }
+    </script>
+
+
   <!-- Detail overlay logic -->
   <script>
     // Rich text + URLs for each attraction (keyed by data-id)
@@ -368,7 +296,7 @@
         description:
           "At the Peace Bridge, you’ll experience one of Calgary’s most recognizable landmarks. Designed by Spanish architect Santiago Calatrava and opened in 2012, this striking red pedestrian and cyclist bridge connects downtown to the north side of the Bow River. Whether you’re walking, biking, or just taking in the skyline, it’s a perfect spot for photos and slow evening strolls. The fully covered design means it’s comfortable in all seasons, making it a must-see stop on any Calgary visit.",
         learnMoreUrl:
-          "https://www.visitcalgary.com/things-to-do/peace-bridge"
+          "https://www.atlasobscura.com/places/peace-bridge"
       },
       "calgary-tower": {
         intro:
@@ -398,7 +326,7 @@
         description:
         "At Prince’s Island Park, you step off busy city streets and onto an island in the middle of the Bow River. The park features tree-lined walking paths, open fields for picnics or games, and several viewpoints where you can look back at the Calgary skyline. In summer, it often hosts outdoor concerts and festivals, while in winter the riverbanks and bridges become peaceful spots for a quiet walk. It’s an easy, low-effort stop that fits well between other downtown activities or meals along nearby Eau Claire and the river pathway.",
         learnMoreUrl:
-          "https://www.visitcalgary.com/places/princes-island-park"
+          "https://www.calgary.ca/parks/princes-island-park.html"
       },
       "stephen-avenue": {
         intro:
@@ -408,7 +336,7 @@
         description:
           "On Stephen Avenue Walk, you stroll past heritage sandstone buildings that now house boutiques, restaurants, pubs, and coffee shops. Parts of the street are pedestrian-only, so it’s a comfortable place to wander, people-watch, and stop for a drink or a quick meal. In warmer months, patios spill onto the sidewalk and street performers or pop-up events often appear along the blocks. It’s a natural link between other downtown landmarks like the Calgary Tower, Olympic Plaza, and nearby shopping centres.",
         learnMoreUrl:
-          "https://www.visitcalgary.com/stephen-avenue-walk"
+          "https://zeidler.com/projects/stephen-avenue-place/"
       },
       "bow-river-pathway": {
         intro:
@@ -418,11 +346,12 @@
         description:
         "Along the Bow River Pathway, you can walk, run, or cycle while staying close to the water and surrounded by greenery. The pathway links key spots like Prince’s Island Park, the Peace Bridge, and several riverfront parks, so you can choose a short stroll or a longer outing. Benches and lookout points appear regularly, giving you easy places to pause for photos or a snack. It’s a relaxed way to experience the city from a more local perspective, away from busy roads but still close to downtown.",
         learnMoreUrl:
-          "https://www.visitcalgary.com/places/bow-river-pathway"
+          "https://www.andrewswalks.co.uk/calgary.html"
       }
     };
 
     (function setupActivityDetailOverlay() {
+      
       const overlay       = document.getElementById("activityDetailOverlay");
       if (!overlay) return;
 
@@ -456,15 +385,12 @@
         descEl.textContent        = details.description || "";
 
         // favourite state based on shared store from app.js
-        if (typeof loadFavorites === "function") {
-          const favorites = loadFavorites();
-          const isFav = favorites.some(f => f.id === id);
-          favBtn.classList.toggle("is-active", isFav);
-          favBtn.textContent = isFav ? "♥" : "♡";
-        } else {
-          favBtn.classList.remove("is-active");
-          favBtn.textContent = "♡";
-        }
+  
+        const favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+
+        favBtn.textContent = isFav ? "♥" : "♡";
+        favBtn.classList.toggle("is-active", isFav);
 
         overlay.classList.add("is-visible");
       }
@@ -479,8 +405,15 @@
 
       // Back closes overlay
       backBtn.addEventListener("click", () => {
+      const fromFav = sessionStorage.getItem("cameFromFavorites");
+
+      if (fromFav === "yes") {
+        sessionStorage.removeItem("cameFromFavorites");
+        window.location.href = "favorites.html";
+      } else {
         overlay.classList.remove("is-visible");
-      });
+      }
+    });
 
       // Learn more button
       learnBtn.addEventListener("click", () => {
@@ -489,28 +422,61 @@
         }
       });
 
-      // Favourite toggle – uses same localStorage as hearts
+      // Favourite toggle – uses same localStorage as hearts, with unsave modal
       favBtn.addEventListener("click", () => {
         if (!currentId || typeof loadFavorites !== "function" || typeof saveFavorites !== "function") return;
 
-        const title   = titleHeroEl.textContent || "";
-        const subtitle = ""; // could be filled from details if needed
+        let favs = loadFavorites();
+        const isFav = favs.some(f => f.id === currentId);
+        const title = titleHeroEl.textContent || "";
+        const imgSrc = imgEl.src || "";
+        const subtitle = ""; // optional – you can fill from ATTRACTION_DETAILS if you like
 
-        let favorites = loadFavorites();
-        const idx = favorites.findIndex(f => f.id === currentId);
+        if (isFav) {
+          // Show unsave confirmation
+          openUnsaveModal(currentId, () => {
+            favs = favs.filter(f => f.id !== currentId);
+            saveFavorites(favs);
 
-        if (idx >= 0) {
-          favorites.splice(idx, 1);
-          favBtn.classList.remove("is-active");
-          favBtn.textContent = "♡";
+            // Update overlay heart
+            favBtn.classList.remove("is-active");
+            favBtn.textContent = "♡";
+
+            // Also update list heart
+            const listHeart = document.querySelector(
+              `.list-item[data-id="${currentId}"] .event-fav-btn`
+            );
+            if (listHeart) {
+              listHeart.textContent = "♡";
+              listHeart.classList.remove("is-active");
+            }
+          });
         } else {
-          favorites.push({ id: currentId, title, subtitle, type: "activity" });
+          // Add favourite
+          favs.push({
+            id: currentId,
+            title,
+            subtitle,
+            image: imgSrc,
+            type: "activity"
+          });
+          saveFavorites(favs);
+
+          // Update overlay heart
           favBtn.classList.add("is-active");
           favBtn.textContent = "♥";
-        }
 
-        saveFavorites(favorites);
+          // Also update list heart
+          const listHeart = document.querySelector(
+            `.list-item[data-id="${currentId}"] .event-fav-btn`
+          );
+          if (listHeart) {
+            listHeart.textContent = "♥";
+            listHeart.classList.add("is-active");
+          }
+        }
       });
+
 
       // "+" button: same idea as + on list – pre-fill itinerary edit form
       addBtn.addEventListener("click", () => {
@@ -532,9 +498,92 @@
         };
 
         sessionStorage.setItem("pendingItineraryData", JSON.stringify(pending));
-        window.location.href = "itinerary-edit.html";
+        window.location.href = "itinerary-edit.html?from=attractions";
       });
     })();
   </script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.list-item[data-type="activity"]').forEach(card => {
+      const favBtn = card.querySelector('.event-fav-btn');
+      const addBtn = card.querySelector('.add-to-itinerary-btn');
+      const id = card.dataset.id;
+      const title = card.querySelector('.list-item__title')?.textContent.trim() || "";
+      const subtitle = card.querySelector('.list-item__subtitle')?.textContent.trim() || "";
+      const image = card.querySelector('.list-item__image')?.src || "";
+
+      // Sync heart state from favorites
+      function updateHeart() {
+        const favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+        favBtn.textContent = isFav ? "♥" : "♡";
+        favBtn.classList.toggle("is-active", isFav);
+      }
+
+      updateHeart();
+
+      // Heart click: add/remove with confirmation
+      favBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // don't open overlay
+
+        let favs = loadFavorites();
+        const isFav = favs.some(f => f.id === id);
+
+        if (isFav) {
+          // ask before unsave
+          openUnsaveModal(id, () => {
+            favs = favs.filter(item => item.id !== id);
+            saveFavorites(favs);
+            updateHeart();
+          });
+        } else {
+          favs.push({
+            id,
+            title,
+            subtitle,
+            image,
+            type: "activity"
+          });
+          saveFavorites(favs);
+          updateHeart();
+        }
+      });
+
+      // "+" click: send to itinerary-edit with prefilled data
+      addBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // don't open overlay
+
+        const details = ATTRACTION_DETAILS[id] || {};
+        const address = (details.address || "").replace(/^Address:\s*/i, "");
+
+        const today = new Date();
+        const isoDate = "2026-07-14"; // yyyy-mm-dd
+
+        const pending = {
+          title,
+          date: isoDate,
+          startTime: "13:00",
+          endTime: "14:00",
+          location: address
+        };
+
+        sessionStorage.setItem("pendingItineraryData", JSON.stringify(pending));
+        window.location.href = "itinerary-edit.html?from=attractions";
+      });
+    });
+
+    // Deep-link: open overlay when coming from Favorites with ?id=
+    const params = new URLSearchParams(window.location.search);
+    const openId = params.get("id");
+    if (openId) {
+      const card = document.querySelector(`.list-item[data-id="${openId}"]`);
+      if (card) {
+        card.click();
+      }
+    }
+  });
+  </script>
+
 </body>
 </html>
