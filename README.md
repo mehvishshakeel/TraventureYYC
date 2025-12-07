@@ -746,9 +746,8 @@ The application comes pre-loaded with events for July 11-20, 2026, including:
 
 1. **Sign Up**: Disabled for demo purposes (shows error message)
 2. **Social Login**: Buttons present but not functional (placeholder)
-3. **Map Integration**: Requires external mapping service API
-4. **Currency Rates**: Uses mock exchange rates (not real-time)
-5. **Backend**: No server-side storage (all data in browser)
+3. **Currency Rates**: Uses mock exchange rates (not real-time)
+4. **Backend**: No server-side storage (all data in browser)
 
 ---
 
