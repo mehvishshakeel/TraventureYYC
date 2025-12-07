@@ -521,7 +521,7 @@ This walkthrough demonstrates the authentication flow: starting as a guest, then
    - **Nearest Hospitals/Clinics** card (🏥 icon)
    - **Embassy & Consulate** card (🏛️ icon)
    - **Other Services** card (📞 icon)
-2. **Say**: "The emergency button is prominently placed on every page for immediate visibility in urgent situations."
+   - "The emergency button is prominently placed on every page for immediate visibility in urgent situations."
 
 #### Step 3: Access 911 Information (Optional Demo)
 1. **Click**: "Call 911" button (large red button at top)
@@ -529,34 +529,32 @@ This walkthrough demonstrates the authentication flow: starting as a guest, then
    - Title: "Emergency Services (911)"
    - Information explaining that 911 is Canada's emergency number
    - Instructions for life-threatening emergencies
-3. **Say**: "For international tourists who may not know that 911 is Canada's emergency number, this button displays helpful information."
+   - "For international tourists who may not know that 911 is Canada's emergency number, this button displays helpful information."
 4. **Click**: "Cancel" or close button to dismiss modal
 
 #### Step 4: Find Nearby Hospital
 1. **Click**: "Nearest Hospitals/Clinics" card (🏥 icon)
 2. **Observe**: Navigate to hospitals page showing list of:
    - Hospitals
-   - Urgent care centers
+   - Medical Clinics 
    - Pharmacies
    - Each showing:
      - Name
      - Address
-     - Phone number
      - Hours (if available)
      - Distance (if available)
 
 #### Step 5: Select Hospital and Get Directions
 1. **Review**: Scroll through the hospital list
 2. **Find**: Nearest or most convenient option
-3. **Click**: On a hospital/clinic card
-4. **Observe**: Hospital details page or map opens showing:
+3. **Click**: On the call button OR directions button (call button opens a confirmation modal that has the phone number link)
+4. **Observe**: Hospital details map opens showing:
    - Hospital name
    - Full address
    - Phone number
    - Map with location marker
-5. **Click**: "Get Directions" button or map link (if available)
 6. **Observe**: Navigation map opens with directions options (car, public transit, walk)
-7. **Say**: "Steve can quickly locate the nearest hospital and get directions using integrated map services."
+7. "Steve can quickly locate the nearest hospital and get directions using integrated map services."
 
 ---
 
