@@ -495,8 +495,11 @@ This walkthrough demonstrates the authentication flow: starting as a guest, then
    - **Click**: "+ Add" button to add restaurant to itinerary
    - **Observe**: Restaurant added to itinerary
 2. **Option B - Get Directions**:
-   - **Click**: Map or "Get Directions" button (if available)
+   - **Click**: Map or "Get Directions" button
    - **Observe**: Opens map with navigation options
+3. **Option C - Add To Favourites**:
+   - **Click**: Heart icon on the restaurant card
+   - **Observe**: Heart icon gets filled with pink signifying that it's been added to favourites
 
 ---
 
