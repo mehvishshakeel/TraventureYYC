@@ -50,7 +50,7 @@ You have two ways to run it locally:
 - Double-click `index.html`, or  
 - Right-click `index.html` → “Open with” → choose your browser
 
-2. **Initial Screen**
+**Initial Screen**
    - You will see the welcome page with two options:
      - "Sign Up / Sign In" button (top button)
      - "Continue as a Guest" button (bottom button)
