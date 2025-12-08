@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupAddEventTickButtons();   // ✅ NEW
   setupBottomNavHighlight();
   setupCurrencyConverter();     // ✅ NEW
+  hideSignUpIfLoggedIn();       // ✅ NEW
 });
 
 
@@ -391,5 +392,31 @@ document.addEventListener('click', (event) => {
     addBtn.textContent = '✓';   // keep it as tick to show it's added
   }, 600);
 });
+
+/* ---------------------------------------
+   8. HIDE SIGN UP LINK IF USER IS LOGGED IN
+   --------------------------------------- */
+
+function hideSignUpIfLoggedIn() {
+  try {
+    const currentUserStr = sessionStorage.getItem('currentUser');
+    if (currentUserStr) {
+      const currentUser = JSON.parse(currentUserStr);
+      // Hide sign up link if user is logged in (not a guest)
+      if (currentUser && currentUser.email && currentUser.email !== 'guest@guest.com') {
+        // Find all sign up links in the top bar
+        const signUpLinks = document.querySelectorAll('a[href*="signup.html"]');
+        signUpLinks.forEach(link => {
+          // Only hide if it's in the top-bar__actions area
+          if (link.closest('.top-bar__actions')) {
+            link.style.display = 'none';
+          }
+        });
+      }
+    }
+  } catch (e) {
+    console.warn('Error checking user login status', e);
+  }
+}
 
 
