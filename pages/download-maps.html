@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Download Maps - TraventureYYC</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body class="settings-subpage">
+  <div class="app-container">
+  
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-bar__left">
+        <div class="status-bar__time">9:41</div>
+      </div>
+      <div class="status-bar__right">
+        <div class="status-bar__signal">
+          <img src="../images/mobile-signal-60.svg" alt="Signal">
+        </div>
+        <div class="status-bar__wifi">
+          <img src="../images/wifi-59.svg" alt="WiFi">
+        </div>
+        <div class="status-bar__battery">
+          <img src="../images/combined-shape-57.svg" alt="Battery">
+          <img src="../images/rectangle-58.svg" alt="Battery level">
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <a href="settings.html" class="top-bar__back">←</a>
+      <div class="top-bar__logo">Download Maps</div>
+      <div class="top-bar__actions"></div>
+    </header>
+
+    <main class="content settings-content">
+      <h1 class="page-title">Download Maps</h1>
+      <p class="page-description">
+        Download Calgary’s full offline map to explore the city without Wi-Fi or data.
+      </p>
+
+      <!-- Calgary Map Download Card -->
+      <div class="card" style="padding: 20px; border-radius: 12px;">
+        <h3 style="margin-bottom: 10px;">Calgary Offline Map</h3>
+        <p style="margin-bottom: 20px;">
+          Includes all districts, major roads, attractions, food locations, transit routes, and emergency services.
+        </p>
+
+        <a 
+          href="../offline/calgary-map.zip"
+          download="calgary-offline-map.zip"
+          class="btn btn--primary btn--full"
+        >
+          Download Calgary Map (120MB)
+        </a>
+      </div>
+
+      <p style="margin-top: 16px; font-size: 13px; color: gray;">
+        Once downloaded, TraventureYYC will automatically use the offline map when you have limited connectivity.
+      </p>
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <a href="itinerary.html" class="bottom-nav__item">
+        <img src="../images/calendar-39.svg" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Itinerary</span>
+      </a>
+      <a href="homepage.html" class="bottom-nav__item">
+        <img src="../images/home-42.svg" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Home</span>
+      </a>
+      <a href="emergency.html" class="bottom-nav__item">
+        <img src="../images/icon-emergency-44.png" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Emergency</span>
+      </a>
+      <a href="settings.html" class="bottom-nav__item active">
+        <img src="../images/node-46.png" class="bottom-nav__icon">
+        <span class="bottom-nav__label">Settings</span>
+      </a>
+    </nav>
+  </div>
+</body>
+</html>

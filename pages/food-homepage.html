@@ -308,7 +308,7 @@ document.getElementById("filterModal").addEventListener("click", function (e) {
     closeFilterModal();
   }
 });
-    const PLACES_JSON_URL  = "../calgary_places.json";
+    const PLACES_JSON_URL  = "../food-places.json";
     const DISHES_JSON_URL  = "../dishes.json";
     const REVIEWS_JSON_URL = "../reviews.json";
 
@@ -713,12 +713,23 @@ item.addEventListener("click", () => {
     // Simple search filter by name within current category
 function filterAndRender() {
   const query = (searchInput.value || "").toLowerCase();
-  const filtered = allPlaces.filter(p =>
-    (currentCategory === "all" || p.category === currentCategory) &&
-    (!query || p.name.toLowerCase().includes(query))
-  );
+
+  const filtered = allPlaces.filter(p => {
+    // if "All" is selected, only include items with filter === "all"
+    const matchesCategory =
+      currentCategory === "all"
+        ? p.filter === "all"
+        : p.category === currentCategory;
+
+    const matchesSearch =
+      !query || p.name.toLowerCase().includes(query);
+
+    return matchesCategory && matchesSearch;
+  });
+
   renderPlaces(filtered);
 }
+
 
 const popularTitle = document.querySelector(".popular-section .section-title");
 
