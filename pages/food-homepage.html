@@ -971,6 +971,46 @@ if (foodConfirmItineraryBtn) {
 }
 
   </script>
+  <script>
+  window.addEventListener('DOMContentLoaded', function() {
+    // Find the "Sign up" link in the top bar on this page
+    const signupBtn = document.querySelector('.top-bar__actions a');
+
+    // If this page doesn't have a sign up button, do nothing
+    if (!signupBtn) return;
+
+    try {
+      const stored = sessionStorage.getItem('currentUser');
+
+      // No user stored → show "Sign up"
+      if (!stored) {
+        signupBtn.style.display = 'inline-block';
+        return;
+      }
+
+      const user = JSON.parse(stored);
+      const isGuest =
+        user.email === 'guest@guest.com' ||
+        user.username === 'guest' ||
+        user.name === 'Guest User';
+
+      // Real logged-in user → hide "Sign up"
+      // Guest / test account → still show "Sign up"
+      if (isGuest) {
+        signupBtn.style.display = 'inline-block';
+      } else {
+        signupBtn.style.display = 'none';
+      }
+    } catch (e) {
+      // On any error, fall back to showing it
+      signupBtn.style.display = 'inline-block';
+    }
+  });
+</script>
+
+<script src="../js/app.js"></script>
+
+
 </body>
 </html>
 
