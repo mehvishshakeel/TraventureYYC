@@ -25,16 +25,30 @@ TraventureYYC is a mobile-responsive web application that provides travelers wit
 
 ## Getting Started
 
-### Running the Application
 
-1. **Open the Application**
-   - Navigate to the project directory
-   - Open `index.html` in a web browser (Chrome, Firefox, Safari, or Edge)
-   - Alternatively, use a local web server:
-     ```bash
-     python3 -m http.server 8000
-     ```
-     Then access `http://localhost:8000/` in your browser
+### Accessing TraventureYYC
+
+You can explore the TraventureYYC prototype in two ways:
+
+#### Option 1 — Hosted Demo (Recommended)
+
+You can access the live version of the application here:
+
+- **Live Demo:** https://traventureyyc.vercel.app/ 
+
+No setup is required — open the link in any modern browser (Chrome, Firefox, Safari, Edge).
+
+#### Option 2 — Run Locally
+
+1. **Download or clone** the project to your computer.
+2. Open the project folder.
+
+You have two ways to run it locally:
+
+**a) Open directly in a browser**
+
+- Double-click `index.html`, or  
+- Right-click `index.html` → “Open with” → choose your browser
 
 2. **Initial Screen**
    - You will see the welcome page with two options:
