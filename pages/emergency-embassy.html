@@ -6,7 +6,28 @@
   <title>Embassy - TraventureYYC</title>
   <link rel="stylesheet" href="../css/main.css">
 </head>
+<style>
+.close-pill,  
+.open-pill {
+  display: inline-block;
+  background-color: #d9f5e5;
+  color: #1a8f3c;    
+  font-weight: 600;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-bottom: 4px;
+}
 
+.close-pill{
+  color: rgb(155, 92, 92);
+  background-color: #e69994;
+}
+
+.hours-line {
+  color: #555;
+}
+</style>
 <div id="callModal" class="call-modal-overlay" style="display: none;">
   <div class="call-modal">
     <h2 id="modalTitle"></h2>
@@ -20,6 +41,17 @@
 </div>
 
 <body>
+  <div id="callModal" class="call-modal-overlay" style="display: none;">
+    <div class="call-modal">
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription"></p>
+
+      <div class="modal-number-box" id="modalNumberDisplay"></div>
+
+      <button class="modal-call-btn" id="confirmCallBtn">Call</button>
+      <button class="modal-cancel-btn" onclick="closeCallModal()">Cancel</button>
+    </div>
+  </div>  
   <div class="app-container">
     <!-- Status Bar -->
     <div class="status-bar">
@@ -98,7 +130,7 @@
           <a onclick="openCallModal(
             'U.S. Consulate General',
             '403-266-8962',
-            'For passport help, emergency citizen services, travel documents & U.S. consular support.'
+            'General consulate services, passport and citizen assistance.'
           )">
             <img src="../images/Call_Icon.png" class="embassy-action-icon">
           </a>
@@ -112,11 +144,16 @@
       <div class="list-item list-item--emergency">
         <div class="list-item__content">
           <div class="list-item__title">Consul (Honorary) of the Federal Republic of Germany</div>
-          <div class="list-item__subtitle">Encor Place, 645 7 Ave SW #2300, Calgary, AB T2P 4G8</div>
+          <div class="list-item__subtitle">Encor Place, 645 7 Ave SW #2300</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span> 8:00 AM–4:00 PM</div>
           <div class="list-item__subtitle">2 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567">
+          <a onclick="openCallModal(
+            'Consulate of Germany',
+            '403-123-4567',
+            'General consulate services, passport and citizen assistance.'
+          )">
             <img src="../images/Call_Icon.png" class="embassy-action-icon">
           </a>
           <a href="map.html?place=Consul (Honorary) of the Federal Republic of Germany&return=embassy">
@@ -125,14 +162,20 @@
         </div>
       </div>
 
+
       <div class="list-item list-item--emergency">
         <div class="list-item__content">
           <div class="list-item__title">Consulate General of the Philippines</div>
-          <div class="list-item__subtitle">1001 1st St SE Suite 100, Calgary, AB T2G 5G3</div>
+          <div class="list-item__subtitle">1001 1st St SE Suite 100</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span> 8:00 AM–4:00 PM</div>
           <div class="list-item__subtitle">3 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567">
+          <a onclick="openCallModal(
+            'Consulate General of the Philippines',
+            '403-123-4567',
+            'General consulate services, passport and citizen assistance.'
+          )">
             <img src="../images/Call_Icon.png" class="embassy-action-icon">
           </a>
           <a href="map.html?place=Consulate General of the Philippines&return=embassy">
@@ -141,14 +184,20 @@
         </div>
       </div>
 
+
       <div class="list-item list-item--emergency">
         <div class="list-item__content">
           <div class="list-item__title">Consulate of Mexico</div>
-          <div class="list-item__subtitle">407 2 St SW #400, Calgary, AB T2P 2Y3</div>
+          <div class="list-item__subtitle">407 2 St SW #400</div>
+          <div class="list-item__subtitle"><span class="open-pill">OPEN</span> 8:00 AM–4:00 PM</div>
           <div class="list-item__subtitle">2.5 km away</div>
         </div>
         <div class="emergency-actions">
-          <a href="tel:4031234567">
+          <a onclick="openCallModal(
+            'Consulate of Mexico',
+            '403-123-4567',
+            'General consulate services, passport and citizen assistance.'
+          )">
             <img src="../images/Call_Icon.png" class="embassy-action-icon">
           </a>
           <a href="map.html?place=Consulate of Mexico&return=embassy">
@@ -156,8 +205,8 @@
           </a>
         </div>
       </div>
-    </div>
 
+    </div>
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
       <a href="itinerary.html" class="bottom-nav__item">

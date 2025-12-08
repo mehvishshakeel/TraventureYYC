@@ -25,18 +25,32 @@ TraventureYYC is a mobile-responsive web application that provides travelers wit
 
 ## Getting Started
 
-### Running the Application
 
-1. **Open the Application**
-   - Navigate to the project directory
-   - Open `index.html` in a web browser (Chrome, Firefox, Safari, or Edge)
-   - Alternatively, use a local web server:
-     ```bash
-     python3 -m http.server 8000
-     ```
-     Then access `http://localhost:8000/` in your browser
+### Accessing TraventureYYC
 
-2. **Initial Screen**
+You can explore the TraventureYYC prototype in two ways:
+
+#### Option 1 — Hosted Demo (Recommended)
+
+You can access the live version of the application here:
+
+- **Live Demo:** https://traventureyyc.vercel.app/ 
+
+No setup is required — open the link in any modern browser (Chrome, Firefox, Safari, Edge).
+
+#### Option 2 — Run Locally
+
+1. **Download or clone** the project to your computer.
+2. Open the project folder.
+
+You have two ways to run it locally:
+
+**a) Open directly in a browser**
+
+- Double-click `index.html`, or  
+- Right-click `index.html` → “Open with” → choose your browser
+
+**Initial Screen**
    - You will see the welcome page with two options:
      - "Sign Up / Sign In" button (top button)
      - "Continue as a Guest" button (bottom button)
@@ -521,7 +535,7 @@ This walkthrough demonstrates the authentication flow: starting as a guest, then
    - **Nearest Hospitals/Clinics** card (🏥 icon)
    - **Embassy & Consulate** card (🏛️ icon)
    - **Other Services** card (📞 icon)
-2. **Say**: "The emergency button is prominently placed on every page for immediate visibility in urgent situations."
+   - "The emergency button is prominently placed on every page for immediate visibility in urgent situations."
 
 #### Step 3: Access 911 Information (Optional Demo)
 1. **Click**: "Call 911" button (large red button at top)
@@ -529,34 +543,32 @@ This walkthrough demonstrates the authentication flow: starting as a guest, then
    - Title: "Emergency Services (911)"
    - Information explaining that 911 is Canada's emergency number
    - Instructions for life-threatening emergencies
-3. **Say**: "For international tourists who may not know that 911 is Canada's emergency number, this button displays helpful information."
+   - "For international tourists who may not know that 911 is Canada's emergency number, this button displays helpful information."
 4. **Click**: "Cancel" or close button to dismiss modal
 
 #### Step 4: Find Nearby Hospital
 1. **Click**: "Nearest Hospitals/Clinics" card (🏥 icon)
 2. **Observe**: Navigate to hospitals page showing list of:
    - Hospitals
-   - Urgent care centers
+   - Medical Clinics 
    - Pharmacies
    - Each showing:
      - Name
      - Address
-     - Phone number
      - Hours (if available)
      - Distance (if available)
 
 #### Step 5: Select Hospital and Get Directions
 1. **Review**: Scroll through the hospital list
 2. **Find**: Nearest or most convenient option
-3. **Click**: On a hospital/clinic card
-4. **Observe**: Hospital details page or map opens showing:
+3. **Click**: On the call button OR directions button (call button opens a confirmation modal that has the phone number link)
+4. **Observe**: Hospital details map opens showing:
    - Hospital name
    - Full address
    - Phone number
    - Map with location marker
-5. **Click**: "Get Directions" button or map link (if available)
 6. **Observe**: Navigation map opens with directions options (car, public transit, walk)
-7. **Say**: "Steve can quickly locate the nearest hospital and get directions using integrated map services."
+7. "Steve can quickly locate the nearest hospital and get directions using integrated map services."
 
 ---
 
@@ -749,9 +761,8 @@ The application comes pre-loaded with events for July 11-20, 2026, including:
 
 1. **Sign Up**: Disabled for demo purposes (shows error message)
 2. **Social Login**: Buttons present but not functional (placeholder)
-3. **Map Integration**: Requires external mapping service API
-4. **Currency Rates**: Uses mock exchange rates (not real-time)
-5. **Backend**: No server-side storage (all data in browser)
+3. **Currency Rates**: Uses mock exchange rates (not real-time)
+4. **Backend**: No server-side storage (all data in browser)
 
 ---
 

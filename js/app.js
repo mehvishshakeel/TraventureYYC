@@ -25,10 +25,33 @@ function setupSearchFilters() {
       if (!content) return;
 
       const items = content.querySelectorAll('.list-item');
+
+      let visibleCount = 0;
+
       items.forEach(item => {
         const text = item.textContent.toLowerCase();
-        item.style.display = text.includes(query) ? '' : 'none';
+        const match = text.includes(query);
+        item.style.display = match ? '' : 'none';
+        if (match) visibleCount++;
       });
+
+      // ----- No Results Message -----
+      let msg = content.querySelector('.no-results-message');
+
+      if (visibleCount === 0) {
+        if (!msg) {
+          msg = document.createElement('div');
+          msg.className = 'no-results-message';
+          msg.textContent = 'No results found.';
+          msg.style.textAlign = 'center';
+          msg.style.marginTop = '20px';
+          msg.style.color = '#777';
+          msg.style.fontSize = '15px';
+          content.appendChild(msg);
+        }
+      } else {
+        if (msg) msg.remove();
+      }
     });
   });
 }
